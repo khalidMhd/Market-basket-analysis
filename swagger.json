@@ -1,0 +1,224 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "version": "1.0.0",
+        "title": "RULE BASED EXPERT SYSTEM FOR PRODUCT EXCHANGE IN MALLS",
+        "description": "FYP Project Application API",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "servers": [
+        {
+          "url": "http://localhost:5000/api",
+          "description": "Local server"
+        }
+      ],
+    "tags": [
+        
+        {
+            "name": "Filter Dataset",
+            "description": "APIs related to Manage Dataset."
+        },
+        {
+            "name": "Algorithm",
+            "description": "APIs related to regulare items."
+        },
+        {
+            "name": "User",
+            "description": "APIs related to item category."
+        },
+        {
+            "name": "Message",
+            "description": "APIs related to item unit."
+        }
+    ],
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    },
+    "paths": {
+        
+        "/filter/dataset": {
+            "get": {
+                "security": [{ "bearerAuth": [] }],
+                "tags": [ "Filter Dataset" ],
+                "summary": "Get all complaint in the database.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Filter_Dataset"
+                        }
+                    }
+                }
+            },
+             "post": {
+                "security": [{ "bearerAuth": [] }],
+                "tags": [ "Filter Dataset" ],
+                "summary": "Create a new Complaint in system",
+                "requestBody": {
+                    "description": "Complaint Object",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties":{
+                                    "media":{
+                                        "type": "string",
+                                        "format": "base64"
+                                    }
+                                },
+                                "$ref": "#/definitions/Filter_Dataset"
+                            }
+                        }
+                    }
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed Bad post data."
+                    }
+                }
+            }
+        },
+
+        "/signin": {
+             "post": {
+                "tags": [ "User" ],
+                "summary": "Login in system",
+                "requestBody": {
+                    "description": "User Object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/definitions/Login"
+                            }
+                        }
+                    }
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed Bad post data."
+                    }
+                }
+            }
+        },
+
+        "/update/password": {
+             "put": {
+                "security": [{ "bearerAuth": [] }],
+                "tags": [ "User" ],
+                "summary": "Update password in system",
+                "requestBody": {
+                    "description": "User Object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/definitions/UpdatePassword"
+                            }
+                        }
+                    }
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed Bad post data."
+                    }
+                }
+            }
+        }
+       
+    },
+
+    "definitions": {
+        "id": {
+            "properties": {
+                "uuid": {
+                    "type": "string"
+                }
+            }
+        },
+        
+        "Filter_Dataset": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string"
+                },
+                "file": {
+                    "type": "file"
+                }
+            }
+        },
+        
+        "Login": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        
+        "UpdatePassword": {
+            "type": "object",
+            "properties": {
+                "currentPassword": {
+                    "type": "string"
+                },
+                "updatePassword": {
+                    "type": "string"
+                }
+            }
+        }
+    
+    }
+}

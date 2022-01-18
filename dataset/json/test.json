@@ -1,0 +1,127 @@
+[
+    {
+        "Receipt": 116478,
+        "Product_Code": [
+            "8964000346846",
+            "620514015408",
+            "n10"
+        ],
+        "Product_Name": [
+            "Nestle"
+        ]
+    },
+    {
+        "Receipt": 116478,
+        "Product_Code": [
+            "8964000346846",
+            "620514015408",
+            "n10"
+        ],
+        "Product_Name": [
+            "Dairy",
+            "Dairy",
+            "Salt",
+            "Nestle"
+        ]
+    },
+    {
+        "Receipt": 116480,
+        "Product_Code": [
+            "8964002526321",
+            "8964002755899",
+            "8964002755875"
+        ],
+        "Product_Name": [
+            "Butter",
+            "Sooper"
+        ]
+    },
+    {
+        "Receipt": 116481,
+        "Product_Code": [
+            "8961014106251",
+            "8964000006108",
+            "620514008790"
+        ],
+        "Product_Name": [
+            "LiptonYellow",
+            "Oil",
+            "Gosht"
+        ]
+    },
+    {
+        "Receipt": 146767,
+        "Product_Code": [
+            "8964000346334",
+            "8964000346334",
+            "188552000218"
+        ],
+        "Product_Name": [
+            "Olper",
+            "Sugar",
+            "Cocomo"
+
+        ]
+    },
+    {
+        "Receipt": 142743,
+        "Product_Code": [
+            "8964000346334",
+            "8964000341374",
+            "188552002618",
+            "188552000218"
+
+        ],
+        "Product_Name": [
+            "Olper",
+            "Sugar",
+            "Egg",
+            "Cocomo"
+        ]
+    },
+    {
+        "Receipt": 1163467,
+        "Product_Code": [
+            "8961014206551",
+            "8964000002158",
+            "620514001760"
+        ],
+        "Product_Name": [
+            "whole milk",
+            "soda"
+        ]
+    },
+    {
+        "Receipt": 1267467,
+        "Product_Code": [
+            "8961014206551",
+            "8964234802158"
+        ],
+        "Product_Name": [
+            "whole milk",
+            "rolls/buns"
+        ]
+    },
+    {
+        "Receipt": 1347767,
+        "Product_Code": [
+            "8961014206551",
+            "8144642239158"
+        ],
+        "Product_Name": [
+            "whole milk",
+            "yogurt"
+        ]
+    },
+    {
+        "Receipt": 3276467,
+        "Product_Code": [
+            "89689324552",
+            "81490419158"
+        ],
+        "Product_Name": [
+            "rolls/buns",
+            "other vegetables"
+        ]
+    }
+]
