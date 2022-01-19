@@ -11,7 +11,7 @@ const PremiumChartScreen = (props) => {
     var weeklyTitle = null
 
     return (
-        <>
+        <> 
 
             <div className='d-flex justify-content-between'>
                 <div className=''>
@@ -45,12 +45,12 @@ const PremiumChartScreen = (props) => {
                     options={{
                         // colors: ['#FB7A21'],
                         // backgroundColor: '#2F4F4F',
-                        chart: {
-                            title: 'Company Performance',
-                            subtitle: 'Sales, Expenses, and Profit: 2014-2017',
-                        },
+                        // chart: {
+                        //     title: 'Company Performance',
+                        //     subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+                        // },
                         legend: { position: 'none' },
-                        title: "weeklyTitle",
+                        // title: "weeklyTitle",
                         titleTextStyle: { color: '#FFF' },
                         // vAxis: { title: 'Percentage', titleTextStyle: { color: '#FFF' }, textStyle: { color: '#FFF' } },
                         // hAxis: { title: 'Month', fontSize: 28, titleTextStyle: { color: '#FFF' }, textStyle: { color: '#FFF' } },

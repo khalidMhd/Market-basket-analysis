@@ -63,6 +63,7 @@ const AdminDetailScreen = (props) => {
                                 </ul>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
             </main>

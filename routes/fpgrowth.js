@@ -46,7 +46,7 @@ router.get('/fpgrowth', async (req, res, next) => {
         return data.items.length > 1
       })
 
-      return res.json({totalFrequentItemsets,"frequentItemsets":filterRecord.map(data => data.items)})
+      return res.json({totalFrequentItemsets,"frequentItemsets":filterRecord})
       // return res.json({ totalFrequentItemsets, itemsets})
     });
 })

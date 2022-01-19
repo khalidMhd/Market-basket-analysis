@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import '@fortawesome/fontawesome-free/css/all.css'
 import Navbar from './Navbar';
 import '../../App.css';
+import BootstrapSwitchButton from 'bootstrap-switch-button-react'
 
 const AdminUserScreen = (props) => {
-    let serNo = 0
+    let allSerNo = 0
+    let premiumSerNo = 0
+    let basicSerNo = 0
+    const [premium, setPremium] = useState(false)
 
+    const premiumHandler = () => {
+        setPremium(!premium)
+    }
     return (
         <div className='containerMain'>
 
@@ -66,33 +73,93 @@ const AdminUserScreen = (props) => {
                                             </thead>
                                             <tbody id="myTable">
                                                 <tr>
-                                                    <th scope="row">{serNo += 1}</th>
+                                                    <th scope="row">{allSerNo += 1}</th>
                                                     <td>Khalid</td>
                                                     <td>KhalidMhd@gmail.com</td>
                                                     <td className='text-success'>Premium</td>
                                                     <td>12-9-2020</td>
-                                                    <td>
-                                                        <span className="fas fa-edit fa-lg text-success mx-2" data-toggle="modal" data-target="#exampleModal" style={{ cursor: "pointer" }} ></span>
+                                                    <td onClick={() => { if (window.confirm('Change user account to premium?')) { premiumHandler() } }}>
+                                                        {premium ?
+                                                            <BootstrapSwitchButton
+                                                                checked={true}
+                                                                disabled={true}
+                                                                onlabel='Premium User'
+                                                                onstyle='success'
+                                                                offlabel='Basic User'
+                                                                offstyle='danger'
+                                                                style='w-100'
+                                                            />
+                                                            :
+                                                            <BootstrapSwitchButton
+                                                                checked={false}
+                                                                disabled={true}
+                                                                onlabel='Premium User'
+                                                                onstyle='success'
+                                                                offlabel='Basic User'
+                                                                offstyle='danger'
+                                                                style='w-100'
+                                                            />
+                                                        }
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th scope="row">{serNo += 1}</th>
+                                                    <th scope="row">{allSerNo += 1}</th>
                                                     <td>Noor</td>
                                                     <td>NoorJayaz@gmail.com</td>
                                                     <td className='text-danger'>Basic</td>
                                                     <td>12-9-2020</td>
-                                                    <td>
-                                                        <span className="fas fa-edit fa-lg text-success mx-2" data-toggle="modal" data-target="#exampleModal" style={{ cursor: "pointer" }} ></span>
+                                                    <td onClick={() => { if (window.confirm('Change user account to premium?')) { premiumHandler() } }}>
+                                                        {false ?
+                                                            <BootstrapSwitchButton
+                                                                checked={true}
+                                                                disabled={true}
+                                                                onlabel='Premium User'
+                                                                onstyle='success'
+                                                                offlabel='Basic User'
+                                                                offstyle='danger'
+                                                                style='w-100'
+                                                            />
+                                                            :
+                                                            <BootstrapSwitchButton
+                                                                checked={false}
+                                                                disabled={true}
+                                                                onlabel='Premium User'
+                                                                onstyle='success'
+                                                                offlabel='Basic User'
+                                                                offstyle='danger'
+                                                                style='w-100'
+                                                            />
+                                                        }
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th scope="row">{serNo += 1}</th>
+                                                    <th scope="row">{allSerNo += 1}</th>
                                                     <td>Hamad</td>
                                                     <td>hamad@gmail.com</td>
                                                     <td className='text-danger'>Basic</td>
                                                     <td>12-12-2020</td>
-                                                    <td>
-                                                        <span className="fas fa-edit fa-lg text-success mx-2" data-toggle="modal" data-target="#exampleModal" style={{ cursor: "pointer" }} ></span>
+                                                    <td onClick={() => { if (window.confirm('Change user account to premium?')) { premiumHandler() } }}>
+                                                        {false ?
+                                                            <BootstrapSwitchButton
+                                                                checked={true}
+                                                                disabled={true}
+                                                                onlabel='Premium User'
+                                                                onstyle='success'
+                                                                offlabel='Basic User'
+                                                                offstyle='danger'
+                                                                style='w-100'
+                                                            />
+                                                            :
+                                                            <BootstrapSwitchButton
+                                                                checked={false}
+                                                                disabled={true}
+                                                                onlabel='Premium User'
+                                                                onstyle='success'
+                                                                offlabel='Basic User'
+                                                                offstyle='danger'
+                                                                style='w-100'
+                                                            />
+                                                        }
                                                     </td>
                                                 </tr>
 
@@ -125,23 +192,63 @@ const AdminUserScreen = (props) => {
                                             </thead>
                                             <tbody id="myTable">
                                                 <tr>
-                                                    <th scope="row">{serNo += 1}</th>
+                                                    <th scope="row">{premiumSerNo += 1}</th>
                                                     <td>Khalid</td>
                                                     <td>KhalidMhd@gmail.com</td>
                                                     <td className='text-success'>Premium</td>
                                                     <td>12-9-2020</td>
-                                                    <td>
-                                                        <span className="fas fa-edit fa-lg text-success mx-2" data-toggle="modal" data-target="#exampleModal" style={{ cursor: "pointer" }} ></span>
+                                                    <td onClick={() => { if (window.confirm('Change user account to premium?')) { premiumHandler() } }}>
+                                                        {premium ?
+                                                            <BootstrapSwitchButton
+                                                                checked={true}
+                                                                disabled={true}
+                                                                onlabel='Premium User'
+                                                                onstyle='success'
+                                                                offlabel='Basic User'
+                                                                offstyle='danger'
+                                                                style='w-100'
+                                                            />
+                                                            :
+                                                            <BootstrapSwitchButton
+                                                                checked={false}
+                                                                disabled={true}
+                                                                onlabel='Premium User'
+                                                                onstyle='success'
+                                                                offlabel='Basic User'
+                                                                offstyle='danger'
+                                                                style='w-100'
+                                                            />
+                                                        }
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th scope="row">{serNo += 1}</th>
+                                                    <th scope="row">{premiumSerNo += 1}</th>
                                                     <td>Hamad</td>
                                                     <td>hamad@gmail.com</td>
-                                                    <td className='text-danger'>Basic</td>
+                                                    <td className='text-success'>Premium</td>
                                                     <td>12-12-2020</td>
-                                                    <td>
-                                                        <span className="fas fa-edit fa-lg text-success mx-2" data-toggle="modal" data-target="#exampleModal" style={{ cursor: "pointer" }} ></span>
+                                                    <td onClick={() => { if (window.confirm('Change user account to premium?')) { premiumHandler() } }}>
+                                                        {premium ?
+                                                            <BootstrapSwitchButton
+                                                                checked={true}
+                                                                disabled={true}
+                                                                onlabel='Premium User'
+                                                                onstyle='success'
+                                                                offlabel='Basic User'
+                                                                offstyle='danger'
+                                                                style='w-100'
+                                                            />
+                                                            :
+                                                            <BootstrapSwitchButton
+                                                                checked={false}
+                                                                disabled={true}
+                                                                onlabel='Premium User'
+                                                                onstyle='success'
+                                                                offlabel='Basic User'
+                                                                offstyle='danger'
+                                                                style='w-100'
+                                                            />
+                                                        }
                                                     </td>
                                                 </tr>
 
@@ -174,23 +281,63 @@ const AdminUserScreen = (props) => {
                                             </thead>
                                             <tbody id="myTable">
                                                 <tr>
-                                                    <th scope="row">{serNo += 1}</th>
+                                                    <th scope="row">{basicSerNo += 1}</th>
                                                     <td>Khalid</td>
                                                     <td>KhalidMhd@gmail.com</td>
-                                                    <td className='text-success'>Premium</td>
+                                                    <td className='text-danger'>Basic</td>
                                                     <td>12-9-2020</td>
-                                                    <td>
-                                                        <span className="fas fa-edit fa-lg text-success mx-2" data-toggle="modal" data-target="#exampleModal" style={{ cursor: "pointer" }} ></span>
+                                                    <td onClick={() => { if (window.confirm('Change user account to premium?')) { premiumHandler() } }}>
+                                                        {premium ?
+                                                            <BootstrapSwitchButton
+                                                                checked={true}
+                                                                disabled={true}
+                                                                onlabel='Premium User'
+                                                                onstyle='success'
+                                                                offlabel='Basic User'
+                                                                offstyle='danger'
+                                                                style='w-100'
+                                                            />
+                                                            :
+                                                            <BootstrapSwitchButton
+                                                                checked={false}
+                                                                disabled={true}
+                                                                onlabel='Premium User'
+                                                                onstyle='success'
+                                                                offlabel='Basic User'
+                                                                offstyle='danger'
+                                                                style='w-100'
+                                                            />
+                                                        }
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th scope="row">{serNo += 1}</th>
+                                                    <th scope="row">{basicSerNo += 1}</th>
                                                     <td>Noor</td>
                                                     <td>NoorJayaz@gmail.com</td>
                                                     <td className='text-danger'>Basic</td>
                                                     <td>12-9-2020</td>
-                                                    <td>
-                                                        <span className="fas fa-edit fa-lg text-success mx-2" data-toggle="modal" data-target="#exampleModal" style={{ cursor: "pointer" }} ></span>
+                                                    <td onClick={() => { if (window.confirm('Change user account to premium?')) { premiumHandler() } }}>
+                                                        {premium ?
+                                                            <BootstrapSwitchButton
+                                                                checked={true}
+                                                                disabled={true}
+                                                                onlabel='Premium User'
+                                                                onstyle='success'
+                                                                offlabel='Basic User'
+                                                                offstyle='danger'
+                                                                style='w-100'
+                                                            />
+                                                            :
+                                                            <BootstrapSwitchButton
+                                                                checked={false}
+                                                                disabled={true}
+                                                                onlabel='Premium User'
+                                                                onstyle='success'
+                                                                offlabel='Basic User'
+                                                                offstyle='danger'
+                                                                style='w-100'
+                                                            />
+                                                        }
                                                     </td>
                                                 </tr>
 
