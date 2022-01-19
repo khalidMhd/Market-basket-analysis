@@ -30,7 +30,7 @@ const Navbar = () => {
     return (
         <>
 
-            <nav className="navbar shadow">
+            <nav className="navbar_main shadow">
                 <div className="nav_icon" onClick={() => openSidebar()}>
                     <i className="fa fa-bars" aria-hidden="true"></i>
                 </div>
