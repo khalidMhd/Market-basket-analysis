@@ -87,7 +87,7 @@ const RequestPremiumScreen = (props) => {
                                         <td>NoorJayaz@gmail.com</td>
                                         <td>12-9-2020</td>
                                         <td onClick={() => { if (window.confirm('Change user account to premium?')) { premiumHandler() } }}>
-                                            {premium ?
+                                            {false ?
                                                 <BootstrapSwitchButton
                                                     checked={true}
                                                     disabled={true}
@@ -116,7 +116,7 @@ const RequestPremiumScreen = (props) => {
                                         <td>hamad@gmail.com</td>
                                         <td>12-12-2020</td>
                                         <td onClick={() => { if (window.confirm('Change user account to premium?')) { premiumHandler() } }}>
-                                            {premium ?
+                                            {false ?
                                                 <BootstrapSwitchButton
                                                     checked={true}
                                                     disabled={true}
