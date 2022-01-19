@@ -118,7 +118,7 @@ const DashboardScreen = (props) => {
                                 </div>
                                 <div className="svg-text">
                                     <h3 style={{ color: '#F75A5F' }}>1%</h3>
-                                    <p className=' text-muted'>Pending User</p>
+                                    <p className=' text-muted'>Premium Requests</p>
                                 </div>
                             </div>
                         </div>

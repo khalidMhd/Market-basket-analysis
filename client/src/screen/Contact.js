@@ -16,13 +16,13 @@ const ContactScreen = () => {
                             <h3 className='text-muted text-center pb-3'>Get in touch </h3>
 
                             <form>
-                                <div className="form-group ">
+                                {/* <div className="form-group ">
                                     <input type="text" className="form-control rounded border-top-0 border-left-0 border-right-0 bg-light rounded" id="exampleFormControlInput1" placeholder="Name" />
                                 </div>
 
                                 <div className="form-group">
                                     <input type="email" className="form-control rounded border-top-0 border-left-0 border-right-0 bg-light rounded" id="exampleFormControlInput1" placeholder="Email" />
-                                </div>
+                                </div> */}
 
 
                                 <div className="form-group custom-file mb-3">

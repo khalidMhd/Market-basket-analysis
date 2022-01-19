@@ -8,14 +8,14 @@ const Navbar = () => {
     <>
       <nav className="navbar navbar-expand-lg bg-white shadow-sm ">
         <Link to="/" className="navbar-brand mb-0 h1 mx-2">Expert System</Link>
-        <button className="navbar-toggler text-success" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
+        <button className="navbar-toggler bg-success text-info" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon text-info"></span>
         </button>
 
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item active">
-              <Link to="/contact" className="nav-link mb-0 h6 text-muted mx-2" href="#">Contact Us <span className="sr-only">(current)</span></Link>
+              <Link to="/contact" className="nav-link mb-0 h6 text-muted mx-2" >Get Support <span className="sr-only">(current)</span></Link>
             </li>
           </ul>
 
