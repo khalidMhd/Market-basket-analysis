@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
 import Navbar from '../admin/Navbar';
+import BootstrapSwitchButton from 'bootstrap-switch-button-react'
 
 const SignupScreen = (props) => {
     const dispatch = useDispatch()
@@ -39,7 +40,7 @@ const SignupScreen = (props) => {
             <Navbar />
             <main>
                 <form onSubmit={submitHandler} className='card text-dark bg-white shadow rounded-lg mb-3' style={{ maxWidth: '500px', margin: '20px auto' }}>
-                    <h5 className="card-header text-center text-dark">User Registeration </h5>
+                    <h5 className="card-header text-center text-dark">Add User </h5>
                     <div className="card-body">
                         {loading &&
                             <div class="text-center">
@@ -63,6 +64,18 @@ const SignupScreen = (props) => {
                             {/* <label className="card-title bg-info w-100 text-white" for="pwd">Password:</label> */}
                             <input type="password" className="form-control border-top-0 border-left-0 border-right-0" id="pwd" placeholder="Enter password" name="pswd" onChange={(e) => setPassword(e.target.value)} required />
                         </div>
+
+                        <div className="form-group">
+                            <BootstrapSwitchButton
+                                checked={true}
+                                onlabel='Sub Admin'
+                                onstyle='info'
+                                offlabel='Super Admin'
+                                offstyle='warning'
+                                style='w-100'
+                            />
+                        </div>
+
                         <button type="submit" style={{ width: '100%' }} className="btn btn-success shadow rounded-lg font-weight-bold">Submit</button>
                     </div>
                 </form>
