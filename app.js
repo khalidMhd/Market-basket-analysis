@@ -8,6 +8,8 @@ const path = require('path');
 const swaggerUi = require('swagger-ui-express'),
 swaggerDocument = require('./swagger.json');
 const PORT =process.env.PORT || 5000
+const dotenv = require('dotenv').config();
+
 
 app.use(express.static(path.resolve('../server')));
 app.use(cors())
@@ -17,6 +19,15 @@ app.use('/api', require('./routes/app'))
 app.use('/api', require('./routes/filter_dataset'))
 app.use('/api', require('./routes/apriori'))
 app.use('/api', require('./routes/fpgrowth'))
+//client
+app.use('/api', require('./routes/client/auth'))
+app.use('/api', require('./routes/client/requestPremium'))
+app.use('/api', require('./routes/client/messages'))
+//admin
+app.use('/api/admin', require('./routes/admin/auth'))
+app.use('/api/admin', require('./routes/admin/requestPremium'))
+app.use('/api/admin', require('./routes/admin/user'))
+app.use('/api/admin', require('./routes/admin/message'))
 
 app.use( '/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
