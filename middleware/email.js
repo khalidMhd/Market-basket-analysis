@@ -1,46 +1,50 @@
 const nodemailer = require('nodemailer')
 const { google } = require('googleapis')
 
-const oAuth2Client = new google.auth.OAuth2(
-    process.env.CLIENT_ID,
-    process.env.CLEINT_SECRET,
-    process.env.REDIRECT_URI
-);
+// These id's and secrets should come from .env file.
+const CLIENT_ID = '577765959532-v93tmd8o0bblimrrdle2umo2tljv19b7.apps.googleusercontent.com';
+const CLEINT_SECRET = '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';
+const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
+const REFRESH_TOKEN = '1//04y2lENKo394jCgYIARAAGAQSNwF-L9IrM6l0Vbq_ipxnNW2ldVgK7MY1Qs2-UZshWCgIqU0QgVp6RGcJAaGJ_Pu9aCrNyNJ1e4s';
+const EMAIL_ID = 'webdev1137@gmail.com';
+const NAME = 'khalid mehmood';
 
-oAuth2Client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN });
+const oAuth2Client = new google.auth.OAuth2(
+  CLIENT_ID,
+  CLEINT_SECRET,
+  REDIRECT_URI
+);
+oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 
 const sendMail = async (email, html, subject) => {
-    try {
-        const accessToken = await oAuth2Client.getAccessToken();
+  try {
+    const accessToken = await oAuth2Client.getAccessToken();
 
-        const transport = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                type: 'OAuth2',
-                user: process.env.EMAIL_ID,
-                clientId: process.env.CLIENT_ID,
-                clientSecret: process.env.CLEINT_SECRET,
-                refreshToken: process.env.REFRESH_TOKEN,
-                accessToken: accessToken,
-            },
-            tls:{
-                rejectUnauthorized:false
-            }
-        });
+    const transport = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        type: 'OAuth2',
+        user: EMAIL_ID,
+        clientId: CLIENT_ID,
+        clientSecret: CLEINT_SECRET,
+        refreshToken: REFRESH_TOKEN,
+        accessToken: accessToken,
+      },
+    });
 
-        const mailOptions = {
-            from: `${process.env.USER_NAME} <${process.env.EMAIL_ID}>`,
-            to: email,
-            subject: subject,
-            text: 'FYP Expert System',
-            html: html,
-        };
+    const mailOptions = {
+      from: `${NAME} <${EMAIL_ID}>`,
+      to: email,
+      subject: subject,
+      text: 'Expert system',
+      html: html,
+    };
 
-        const result = await transport.sendMail(mailOptions);
-        return result;
-    } catch (error) {
-        return error;
-    }
+    const result = await transport.sendMail(mailOptions);
+    return result;
+  } catch (error) {
+    return error;
+  }
 }
 
 module.exports = sendMail

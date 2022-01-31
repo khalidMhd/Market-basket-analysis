@@ -17,6 +17,7 @@ import ClientNewPasswordScreen from './screen/newPassword';
 import ProfileScreen from './screen/Profile';
 import UplaodFileScreen from './screen/admin/UplaodFile';
 import RequestPremiumScreen from './screen/admin/RequestPremium';
+import VerifiedScreen from './screen/verified';
 
 function App() {
   var location = useLocation();
@@ -31,6 +32,7 @@ function App() {
         <Route exact path='/signup' component={ClientSignupScreen} />
         <Route exact path='/reset-password' component={ClientForgotPasswordScreen} />
         <Route exact path='/new-password/:token' component={ClientNewPasswordScreen} />
+        <Route exact path='/account/confirm/:token' component={VerifiedScreen} />
       </>
       <div>
         <Route exact path='/admin/signin' component={SigninScreen} />

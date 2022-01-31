@@ -42,12 +42,13 @@ router.post('/register', async (req, res) => {
                         const { _id, name, email } = user
 
                         const subject = "Email Verification"
-                        const html = `<p>Please verify your account by clicking the link: 
+                        const html = `<p>Click on link to verify your account: <br>
                         <a href="http://${process.env.HOST}/account/confirm/${token}">http://${process.env.HOST}/account/confirm/${token}</a> </p>`
 
                         sendMail(email, html, subject).then(result => {
                             console.log(result)
                         }).catch(err => {
+                            console.log(err);
                             return res.status(422).json({ message: "Some-thing went wrong!" })
                         })
                         return res.status(200).json({ message: "A verification mail has been sent.", token, user: { _id, name, email } })
@@ -69,36 +70,34 @@ router.post('/login', (req, res) => {
     if (!email || !password) {
         return res.status(422).json({ message: "Please fill all the fields!" })
     }
-    userModel.findOne({ email: email.toLowerCase() })
-        .then(savedUser => {
-            console.log(savedUser);
-            if (savedUser) {
-                if (savedUser.isVerified === false) {
-                    return res.status(422).json({ message: "Email not verified" })
-                }
-                if (savedUser.accStatus === false) {
-                    return res.status(422).json({ message: "Account disabled!" })
-                } else {
-                    bcrypt.compare(password, savedUser.password).then(doMatch => {
-                        if (doMatch) {
-                            const token = jwt.sign({ _id: savedUser._id }, process.env.JWT_SECRET)
-                            const { _id, name, email } = savedUser
-                            return res.json({ message: "Successfully signed in", token, user: { _id, name, email } })
-                        }
-                        else {
-                            return res.status(422).json({ error: "Invalid Email or password" })
-                        }
-                    }).catch(err => {
-                        return res.status(422).json({ message: "Some-thing went wrong!" })
-                    })
-                }
-            } else {
-                return res.status(422).json({ error: "Invalid Email or password" })
+    userModel.findOne({ email: email?.toLowerCase(), accStatus:true }).then(savedUser => {
+        if (savedUser) {
+            if (savedUser.isVerified === false) {
+                return res.status(422).json({ message: "Email not verified" })
             }
+            if (savedUser.accStatus === false) {
+                return res.status(422).json({ message: "Account disabled!" })
+            } else {
+                bcrypt.compare(password, savedUser.password).then(doMatch => {
+                    if (doMatch) {
+                        const token = jwt.sign({ _id: savedUser._id }, process.env.JWT_SECRET)
+                        const { _id, name, email } = savedUser
+                        return res.json({ message: "Successfully signed in", token, user: { _id, name, email } })
+                    }
+                    else {
+                        return res.status(422).json({ message: "Invalid Email or password" })
+                    }
+                }).catch(err => {
+                    return res.status(422).json({ message: "Some-thing went wrong!" })
+                })
+            }
+        } else {
+            return res.status(422).json({ message: "User not registered" })
+        }
 
-        }).catch(err => {
-            return res.status(422).json({ message: "Some-thing went wrong!" })
-        })
+    }).catch(err => {
+        return res.status(422).json({ message: "Some-thing went wrong!" })
+    })
 })
 
 // verify token/user
@@ -117,7 +116,7 @@ router.post("/confirmation/:token", async (req, res) => {
         verifyUser.save().then(data => {
             return res.status(200).json({ message: "User verified successfully" })
         }).catch(err => {
-            return res.status(422).json({ message: "Some-thing went wrong!" })
+            return res.status(422).json({ message: "Something went wrong!" })
         })
     }
     else {
@@ -148,7 +147,7 @@ router.post('/reset-password', (req, res) => {
                     const html = `<p>You requested for password reset</p>
                                 <h5>click <a href="http://localhost:3000/reset/${token}">link</a> to reset password</h5>`
                     const subject = "Password Reset"
-                    sendMail(email.toLowerCase(), html, subject).then(result => {
+                    sendMail(email?.toLowerCase(), html, subject).then(result => {
                         console.log(result)
                     }).catch(err => {
                         return res.status(422).json({ message: "Some-thing went wrong!" })
