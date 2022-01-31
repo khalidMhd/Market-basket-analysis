@@ -38,11 +38,11 @@ router.post('/message', upload.single('file'), async (req, res, next) => {
             messageDetails.save().then((rec) => {
                 res.status(200).json({ message: "Message send send successfully." })
             }).catch((err) => {
-                res.status(422).json({ message: "Some-thing went wrong!" })
+                res.status(422).json({ message: "Something went wrong!" })
             });
 
         }).catch((err) => {
-            res.status(422).json({ message: "Some-thing went wrong!" })
+            res.status(422).json({ message: "Something went wrong!" })
         });
 
     }

@@ -31,7 +31,7 @@ function App() {
         <Route exact path='/signin' component={ClientSigninScreen} />
         <Route exact path='/signup' component={ClientSignupScreen} />
         <Route exact path='/reset-password' component={ClientForgotPasswordScreen} />
-        <Route exact path='/new-password/:token' component={ClientNewPasswordScreen} />
+        <Route exact path='/reset/:token' component={ClientNewPasswordScreen} />
         <Route exact path='/account/confirm/:token' component={VerifiedScreen} />
       </>
       <div>

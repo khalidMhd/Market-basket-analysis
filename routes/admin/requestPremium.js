@@ -29,7 +29,7 @@ router.get('/request-premium', async (req, res) => {
         }
 
     }).catch((err) => {
-        return res.status(422).json({ message: "Some-thing went wrong!" })
+        return res.status(422).json({ message: "Something went wrong!" })
     });
 })
 
@@ -46,7 +46,7 @@ router.post("/confirm-premium/:id", async (req, res) => {
         updatePremium.save().then(data => {
             return res.status(200).json({ message: "Changes Updated" })
         }).catch(err => {
-            return res.status(422).json({ message: "Some-thing went wrong!" })
+            return res.status(422).json({ message: "Something went wrong!" })
         })
     }
     else {
@@ -67,7 +67,7 @@ router.post("/confirm-basic/:id", async (req, res) => {
         updateBasic.save().then(data => {
             return res.status(200).json({ message: "Changes Updated" })
         }).catch(err => {
-            return res.status(422).json({ message: "Some-thing went wrong!" })
+            return res.status(422).json({ message: "Something went wrong!" })
         })
     }
     else {

@@ -26,23 +26,23 @@ router.post('/request-premium', (req, res) => {
                         requestPremiumModelDetals.save().then((result) => {
                             res.status(200).json({ message: "Request sended, wait for confirmation." })
                         }).catch((err) => {
-                            res.status(422).json({ message: "Some-thing went wrong!" })
+                            res.status(422).json({ message: "Something went wrong!" })
                         });
                     }
                     else {
                         res.status(200).json({ message: "Your are already premium user!" })
                     }
                 }).catch((err) => {
-                    res.status(422).json({ message: "Some-thing went wrong!" })
+                    res.status(422).json({ message: "Something went wrong!" })
                 });
             } else {
                 res.status(422).json(result)
             }
         }).catch((err) => {
-            res.status(422).json({ message: "Some-thing went wrong!" })
+            res.status(422).json({ message: "Something went wrong!" })
         });
     } else {
-        res.status(422).json({ message: "Some-thing went wrong!" })
+        res.status(422).json({ message: "Something went wrong!" })
     }
 })
 

@@ -49,16 +49,16 @@ router.post('/register', async (req, res) => {
                             console.log(result)
                         }).catch(err => {
                             console.log(err);
-                            return res.status(422).json({ message: "Some-thing went wrong!" })
+                            return res.status(422).json({ message: "Something went wrong!" })
                         })
                         return res.status(200).json({ message: "A verification mail has been sent.", token, user: { _id, name, email } })
                     })
                 }).catch(err => {
-                    return res.status(422).json({ message: "Some-thing went wrong!!" })
+                    return res.status(422).json({ message: "Something went wrong!!" })
                 })
             }
         }).catch(err => {
-            return res.status(422).json({ message: "Some-thing went wrong!" })
+            return res.status(422).json({ message: "Something went wrong!" })
         })
     }
 })
@@ -70,7 +70,7 @@ router.post('/login', (req, res) => {
     if (!email || !password) {
         return res.status(422).json({ message: "Please fill all the fields!" })
     }
-    userModel.findOne({ email: email?.toLowerCase(), accStatus:true }).then(savedUser => {
+    userModel.findOne({ email: email?.toLowerCase(), accStatus: true }).then(savedUser => {
         if (savedUser) {
             if (savedUser.isVerified === false) {
                 return res.status(422).json({ message: "Email not verified" })
@@ -88,7 +88,7 @@ router.post('/login', (req, res) => {
                         return res.status(422).json({ message: "Invalid Email or password" })
                     }
                 }).catch(err => {
-                    return res.status(422).json({ message: "Some-thing went wrong!" })
+                    return res.status(422).json({ message: "Something went wrong!" })
                 })
             }
         } else {
@@ -96,7 +96,7 @@ router.post('/login', (req, res) => {
         }
 
     }).catch(err => {
-        return res.status(422).json({ message: "Some-thing went wrong!" })
+        return res.status(422).json({ message: "Something went wrong!" })
     })
 })
 
@@ -135,30 +135,30 @@ router.post('/reset-password', (req, res) => {
             console.log("errrrrrr" + err)
         }
         const token = buffer.toString("hex")
-        userModel.findOne({ email: email.toLowerCase() })
-            .then(user => {
-                if (!user) {
-                    return res.status(422).json({ message: "User dont exists with that email" })
-                }
-                user.resetToken = token
-                user.expireToken = Date.now() + 3600000 // 1hour
+        userModel.findOne({ email: email.toLowerCase() }).then(user => {
+            if (!user) {
+                return res.status(422).json({ message: "User dont exists with that email" })
+            }
+            user.resetToken = token
+            user.expireToken = Date.now() + 3600000 // 1hour
 
-                user.save().then((result) => {
-                    const html = `<p>You requested for password reset</p>
-                                <h5>click <a href="http://localhost:3000/reset/${token}">link</a> to reset password</h5>`
-                    const subject = "Password Reset"
-                    sendMail(email?.toLowerCase(), html, subject).then(result => {
-                        console.log(result)
-                    }).catch(err => {
-                        return res.status(422).json({ message: "Some-thing went wrong!" })
-                    })
-                    return res.status(200).json({ message: "check your email" })
-                }).catch(error => {
-                    return res.status(422).json({ message: "Some-thing went wrong!" })
+            user.save().then((result) => {
+                const html = `<p>We received a request to reset the password for your account.</p>
+                                <p>To reset your password, Click the bellow link.</p> 
+                                <h5><a href="http://localhost:3000/reset/${token}">Clink me, to reset password</a></h5>`
+                const subject = "Password Reset"
+                sendMail(email?.toLowerCase(), html, subject).then(result => {
+                    console.log(result)
+                }).catch(err => {
+                    return res.status(422).json({ message: "Something went wrong!" })
                 })
+                return res.status(200).json({ message: "Check your email" })
             }).catch(error => {
-                return res.status(422).json({ message: "Some-thing went wrong!" })
+                return res.status(422).json({ message: "Something went wrong!" })
             })
+        }).catch(error => {
+            return res.status(422).json({ message: "Something went wrong!" })
+        })
     })
 })
 
@@ -181,11 +181,11 @@ router.post('/new-password', (req, res) => {
                 user.save().then((saveduser) => {
                     return res.status(200).json({ message: "password updated success" })
                 }).catch(err => {
-                    return res.status(422).json({ message: "Some-thing went wrong!" })
+                    return res.status(422).json({ message: "Something went wrong!" })
                 })
             })
         }).catch(err => {
-            return res.status(422).json({ message: "Some-thing went wrong!" })
+            return res.status(422).json({ message: "Something went wrong!" })
         })
 })
 
@@ -207,16 +207,16 @@ router.post("/change-password/:id", async (req, res) => {
                     changePassord.save().then(data => {
                         return res.json({ message: "Password Changed Successfully" })
                     }).catch(err => {
-                        return res.status(422).json({ message: "Some-thing went wrong!" })
+                        return res.status(422).json({ message: "Something went wrong!" })
                     })
                 }).catch(err => {
-                    return res.status(422).json({ message: "Some-thing went wrong!" })
+                    return res.status(422).json({ message: "Something went wrong!" })
                 })
             } else {
                 return res.status(422).json({ error: "Invalid password" })
             }
         }).catch(err => {
-            return res.status(422).json({ message: "Some-thing went wrong!" })
+            return res.status(422).json({ message: "Something went wrong!" })
         })
     }
     else {

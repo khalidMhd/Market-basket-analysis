@@ -23,7 +23,7 @@ router.get('/message', (req, res) => {
     messageModel.find().populate('user', 'name email').then(data => {
         res.status(200).json(data)
     }).catch((err) => {
-        res.status(422).json({ message: "Some-thing went wrong!" })
+        res.status(422).json({ message: "Something went wrong!" })
     });
 })
 

@@ -29,7 +29,7 @@ router.post("/de-activate-user/:id", async (req, res) => {
         deActivate.save().then(data => {
             return res.status(200).json({ message: "User De-activated" })
         }).catch(err => {
-            return res.status(422).json({ message: "Some-thing went wrong!" })
+            return res.status(422).json({ message: "Something went wrong!" })
         })
     }
     else {
@@ -45,7 +45,7 @@ router.post("/activate-user/:id", async (req, res) => {
         deActivate.save().then(data => {
             return res.status(200).json({ message: "User activated" })
         }).catch(err => {
-            return res.status(422).json({ message: "Some-thing went wrong!" })
+            return res.status(422).json({ message: "Something went wrong!" })
         })
     }
     else {

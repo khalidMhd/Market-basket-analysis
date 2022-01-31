@@ -34,14 +34,14 @@ router.post('/register', async (req, res) => {
                         const { _id, name, email } = user
                         return res.status(200).json({ message: "A verification mail has been sent.", token, user: { _id, name, email } })
                     }).catch(err => {
-                        return res.status(422).json({ message: "Some-thing went wrong!" })
+                        return res.status(422).json({ message: "Something went wrong!" })
                     })
                 }).catch(err => {
-                    return res.status(422).json({ message: "Some-thing went wrong!!" })
+                    return res.status(422).json({ message: "Something went wrong!!" })
                 })
             }
         }).catch(err => {
-            return res.status(422).json({ message: "Some-thing went wrong!" })
+            return res.status(422).json({ message: "Something went wrong!" })
         })
     }
 })
@@ -71,7 +71,7 @@ router.post('/login', (req, res) => {
                         }
                     }).catch(err => {
                         console.log(err);
-                        return res.status(422).json({ message: "Some-thing went wrong!!!" })
+                        return res.status(422).json({ message: "Something went wrong!!!" })
                     })
                 }
             } else {
@@ -79,7 +79,7 @@ router.post('/login', (req, res) => {
             }
 
         }).catch(err => {
-            return res.status(422).json({ message: "Some-thing went wrong!" })
+            return res.status(422).json({ message: "Something went wrong!" })
         })
 })
 
@@ -101,16 +101,16 @@ router.post("/change-password/:id", async (req, res) => {
                     changePassord.save().then(data => {
                         return res.json({ message: "Password Changed Successfully" })
                     }).catch(err => {
-                        return res.status(422).json({ message: "Some-thing went wrong!" })
+                        return res.status(422).json({ message: "Something went wrong!" })
                     })
                 }).catch(err => {
-                    return res.status(422).json({ message: "Some-thing went wrong!" })
+                    return res.status(422).json({ message: "Something went wrong!" })
                 })
             } else {
                 return res.status(422).json({ error: "Invalid password" })
             }
         }).catch(err => {
-            return res.status(422).json({ message: "Some-thing went wrong!" })
+            return res.status(422).json({ message: "Something went wrong!" })
         })
     } else {
         return res.status(401).json({ message: "We were unable to update." })

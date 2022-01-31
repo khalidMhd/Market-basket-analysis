@@ -9,6 +9,7 @@ const VerifiedScreen = (props) => {
     const token = props.match.params.token
     const accountConformationRed = useSelector(state => state.accountConformationRed);
     const { loading, success, accConfirm, error } = accountConformationRed;
+    
     useEffect(() => {
         if (token) {
             dispatch(accountConformation(token))
@@ -18,26 +19,28 @@ const VerifiedScreen = (props) => {
 
     return (
         <>
-            {loading &&
-                <div class="text-center">
-                    <div class="spinner-border text-primary" role="status">
+            {loading?
+                <div class="d-flex justify-content-center align-items-center vh-100">
+                    <div class="spinner-border text-primary " role="status">
                         <span class="sr-only">Loading...</span>
                     </div>
-                </div>
-            }
+                </div>:
+            
             <div className="jumbotron text-center">
                 <h1 className="display-3">Thank You!</h1>
                 {error && <p className="lead text-danger"><strong>{error.message}</strong></p>}
-                {success && <p className="lead"><strong>{success.message}</strong></p>}
+                {success && <p className="lead"><strong>{accConfirm.message}</strong></p>}
 
                 {/* <hr> */}
                 {/* <p>
-          Having trouble? <a href="">Contact us</a>
-        </p> */}
+                Having trouble? <a href="">Contact us</a>
+                </p> 
+                */}
                 <p className="lead">
                     <Link to='/signin' className="btn btn-primary btn-sm" role="button">Continue to login</Link>
                 </p>
             </div>
+}
         </>
     )
 }
