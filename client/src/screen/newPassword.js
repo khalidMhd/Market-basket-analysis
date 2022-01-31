@@ -19,10 +19,11 @@ const ClientNewPasswordScreen = (props) => {
         e.preventDefault()
         dispatch(newPassword(password, token))
     }
+    
     return (
         <div className="clientLogin ">
 
-            <Navbar />
+            {/* <Navbar /> */}
             <div className=" ">
                 <div className='d-flex align-content-center flex-end justify-content-md-around justify-content-center' style={{ marginTop: "100px" }} >
                     <div className='cart shadow bg-white rounded col-sm-4 m-2'>

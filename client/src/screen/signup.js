@@ -14,15 +14,22 @@ const ClientSignupScreen = (props) => {
     const userSignup = useSelector(state => state.userSignup);
     const { loading, success, userInfo, error } = userSignup;
 
+    const userSignin = useSelector(state => state.userSignin);
+    const { userInfo: saveUserInfo } = userSignin;
+
     const submitHandler = (e) => {
         e.preventDefault();
         dispatch(signup(name, email, password))
     }
 
+    useEffect(() => {
+        saveUserInfo ? props.history.push('/') : props.history.push('/signin')
+    }, [saveUserInfo])
+
     return (
         <div className="clientLogin ">
 
-            <Navbar />
+            {/* <Navbar /> */}
             <div className=" ">
                 <div className='d-flex align-content-center flex-end justify-content-md-around justify-content-center' style={{ marginTop: "100px" }} >
                     <div className='cart shadow bg-white rounded col-sm-4 m-2'>

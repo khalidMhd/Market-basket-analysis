@@ -1,8 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom'
 import ProfileImg from './assets/profile.png'
+import Cookie from 'js-cookie'
 
-const Navbar = () => {
+const Navbar = (props) => {
+
+  const userSignin = useSelector(state => state.userSignin);
+  const { loading, success, userInfo, error } = userSignin;
+
+  const logoutHandler = () => {
+    Cookie.remove("userInfo");
+    window.location.href = "/signin"
+  };
+
   return (
     <nav className="navbar navbar-expand-lg bg-white shadow-sm ">
       <NavLink to="/" exact={true} activeClassName='text-success' className="navbar-brand mb-0 h1 mx-2 ">Expert System</NavLink>
@@ -29,7 +40,7 @@ const Navbar = () => {
                       <h5 className="card-title text-center">User name</h5>
                       <div className="card-body text-center">
                         {/* <NavLink to='/profile' className=" btn btn-info shadow rounded mr-2"> <i className="fas fa-user"></i></NavLink> */}
-                        <button onClick={() => { if (window.confirm('Are you sure you want to log out?')) { }; }} className=" btn btn-danger shadow rounded"> <i className="fas fa-sign-out-alt"></i></button>
+                        <button onClick={() => { if (window.confirm('Are you sure you want to log out?')) {logoutHandler() }; }} className=" btn btn-danger shadow rounded"> <i className="fas fa-sign-out-alt"></i></button>
                         <NavLink to="/profile" exact={true} activeClassName='text-success' className=" btn btn-success shadow rounded mx-2"> <i className="fas fa-user-alt"></i></NavLink>
                       </div>
                     </div>

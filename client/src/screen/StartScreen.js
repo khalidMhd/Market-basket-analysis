@@ -1,12 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navbar from './Navbar';
 import uplaodImg from './assets/upload.png'
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 const StartScreen = (props) => {
 
     const submitHandler = () => {
         props.history.push('/detail')
     }
+
+
+  const userSignin = useSelector(state => state.userSignin);
+    const { loading, success, userInfo, error } = userSignin;
+
+    useEffect(() => {
+            userInfo ? props.history.push('/') : props.history.push('/signin')
+	}, [userInfo])
 
     return (
         <>

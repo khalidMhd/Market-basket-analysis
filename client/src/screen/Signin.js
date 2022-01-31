@@ -8,6 +8,7 @@ import Navbar from './Navbar'
 import { Link } from 'react-router-dom'
 import { signin } from '../action/auth'
 import axios from 'axios'
+
 const ClientSigninScreen = (props) => {
     const dispatch = useDispatch()
     const [email, setEmail] = useState("")
@@ -15,6 +16,10 @@ const ClientSigninScreen = (props) => {
 
     const userSignin = useSelector(state => state.userSignin);
     const { loading, success, userInfo, error } = userSignin;
+
+    useEffect(() => {
+            userInfo ? props.history.push('/') : props.history.push('/signin')
+    }, [userInfo])
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -24,7 +29,7 @@ const ClientSigninScreen = (props) => {
     return (
         <div className="clientLogin ">
 
-            <Navbar />
+            {/* <Navbar /> */}
             <div className=" ">
                 <div className='d-flex align-content-center flex-end justify-content-md-around justify-content-center' style={{ marginTop: "100px" }} >
                     <div className='cart shadow bg-white rounded col-sm-4 m-2'>

@@ -14,7 +14,13 @@ const ClientForgotPasswordScreen = (props) => {
 
     const forgotPasswordRed = useSelector(state => state.forgotPasswordRed);
     const { loading, forgotPass, error, success } = forgotPasswordRed
-
+    
+    const userSignin = useSelector(state => state.userSignin);
+    const { userInfo} = userSignin;
+    
+    useEffect(() => {
+        userInfo ? props.history.push('/') : props.history.push('/signin')
+    }, [userInfo])
 
     const submitHandler = (e) => {
         e.preventDefault()
@@ -23,7 +29,7 @@ const ClientForgotPasswordScreen = (props) => {
     return (
         <div className="clientLogin ">
 
-            <Navbar />
+            {/* <Navbar /> */}
             <div className=" ">
                 <div className='d-flex align-content-center flex-end justify-content-md-around justify-content-center' style={{ marginTop: "100px" }} >
                     <div className='cart shadow bg-white rounded col-sm-4 m-2'>
