@@ -15,7 +15,7 @@ const StartScreen = (props) => {
 
     useEffect(() => {
             userInfo ? props.history.push('/') : props.history.push('/signin')
-	}, [userInfo])
+        }, [userInfo])
 
     return (
         <>

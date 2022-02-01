@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import ProfileImg from './assets/profile.png'
 import Cookie from 'js-cookie'
 import { premiumRequest } from '../action/premium';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Navbar = (props) => {
   const dispatch = useDispatch()
@@ -14,6 +16,8 @@ const Navbar = (props) => {
   const premiumRequestRed = useSelector(state => state.premiumRequestRed);
   const { loading, success, premiumReq, error } = premiumRequestRed;
 
+  console.log(error);
+
   const logoutHandler = () => {
     Cookie.remove("userInfo");
     window.location.href = "/signin"
@@ -22,6 +26,13 @@ const Navbar = (props) => {
   const premiumHandler = () => {
     // e.preventDefault()
     dispatch(premiumRequest())
+  }
+
+  if (success) {
+    toast.success(premiumReq.message);
+  }
+  if (error) {
+    toast.error(error.message);
   }
 
   return (
@@ -51,7 +62,7 @@ const Navbar = (props) => {
                       <div className="card-body text-center">
                         {/* <NavLink to='/profile' className=" btn btn-info shadow rounded mr-2"> <i className="fas fa-user"></i></NavLink> */}
                         <button onClick={() => { if (window.confirm('Are you sure you want to log out?')) {logoutHandler() }; }} className=" btn btn-danger shadow rounded"> <i className="fas fa-sign-out-alt"></i></button>
-                        <NavLink to="/profile" exact={true} activeClassName='text-success' className=" btn btn-success shadow rounded mx-2"> <i className="fas fa-user-alt"></i></NavLink>
+                        <Link to="/profile" exact={true} activeClassName='text-success' className=" btn btn-success shadow rounded mx-2"> <i className="fas fa-user-alt"></i></Link>
                       </div>
                     </div>
                   </div>
@@ -60,8 +71,9 @@ const Navbar = (props) => {
               </div>
             </li>
             <li className="nav-item active my-1">
-              <button onClick={() => { if (window.confirm('Request a Premium Account?')) { premiumHandler()} }} className=" btn btn-success shadow rounded mx-2"> <i className="fas fa-crown"></i></button>
+              {userInfo?.user?.isPremium === false && <button onClick={() => { if (window.confirm('Request a Premium Account?')) { premiumHandler()} }} className=" btn btn-success shadow rounded mx-2"> <i className="fas fa-crown"></i></button>} 
             </li>
+            <ToastContainer />
           </ul>
         }
       </div>

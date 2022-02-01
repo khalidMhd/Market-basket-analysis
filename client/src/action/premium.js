@@ -3,9 +3,8 @@ import Cookie from 'js-cookie'
 import { USER_PREMIUM_FAIL, USER_PREMIUM_REQUEST, USER_PREMIUM_SUCCESS } from "../contant/premium";
 
 const userInfo = Cookie.getJSON("userInfo") || null
-console.log(userInfo.token);
 if (userInfo) {
-  Axios.defaults.headers.common.Authorization =userInfo?.token
+  Axios.defaults.headers.common.Authorization = userInfo?.token
 }
 
 const premiumRequest = () => async (dispatch) => {

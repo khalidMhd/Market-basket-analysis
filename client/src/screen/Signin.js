@@ -18,7 +18,7 @@ const ClientSigninScreen = (props) => {
     const { loading, success, userInfo, error } = userSignin;
 
     useEffect(() => {
-            userInfo ? props.history.push('/') : props.history.push('/signin')
+            userInfo ? window.location.href = "/" : props.history.push('/signin')
     }, [userInfo])
 
     const submitHandler = (e) => {

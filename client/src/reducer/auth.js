@@ -66,12 +66,12 @@ function newPasswordReduser(state = {}, action) {
 }
 
 
-function PasswordEditReducer(state = { passwordEdit: {} }, action) {
+function changePasswordReducer(state = { changePass: {} }, action) {
     switch (action.type) {
         case UPDATE_PASSWORD_REQUEST:
-            return { loading: true, passwordEdit: {} }
+            return { loading: true, changePass: {} }
         case UPDATE_PASSWORD_SUCCESS:
-            return { loading: false, success: true, passwordEdit: action.payload }
+            return { loading: false, success: true, changePass: action.payload }
         case UPDATE_PASSWORD_FAIL:
             return { loading: false, error: action.payload }
         default:
@@ -82,5 +82,5 @@ function PasswordEditReducer(state = { passwordEdit: {} }, action) {
 
 export {
     signinReducer, signupReducer, accountConformationReducer, forgotPasswordReducer,
-    newPasswordReduser
+    newPasswordReduser, changePasswordReducer
 };

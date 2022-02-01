@@ -2,10 +2,11 @@ import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import Cookie from 'js-cookie'
 import {
-    accountConformationReducer, forgotPasswordReducer,
+    accountConformationReducer, changePasswordReducer, forgotPasswordReducer,
     newPasswordReduser, signinReducer, signupReducer
 } from '../reducer/auth'
 import { premiumRequestReducer } from '../reducer/premium'
+import { messageRequestReducer } from '../reducer/message'
 
 const userInfo = Cookie.getJSON("userInfo") || null
 
@@ -16,7 +17,9 @@ const reducer = combineReducers({
     accountConformationRed: accountConformationReducer,
     forgotPasswordRed: forgotPasswordReducer,
     newPasswordRed: newPasswordReduser,
-    premiumRequestRed:premiumRequestReducer
+    premiumRequestRed: premiumRequestReducer,
+    messageRequestRed: messageRequestReducer,
+    changePasswordRed: changePasswordReducer
 })
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

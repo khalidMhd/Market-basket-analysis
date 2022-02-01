@@ -7,7 +7,7 @@ import {
 
 const userInfo = Cookie.getJSON("userInfo") || null
 if (userInfo) {
-  Axios.defaults.headers.common.Authorization = userInfo?.data?.access_token
+  Axios.defaults.headers.common.Authorization = userInfo?.token
 }
 
 const signin = (email, password) => async (dispatch) => {
@@ -56,4 +56,13 @@ const newPassword = (password, token) => async (dispatch) => {
   })
 }
 
-export { signin, signup, accountConformation, forgotPassword, newPassword};
+const changePassword = (id,password, newPassword) => async (dispatch) => {
+  dispatch({ type: UPDATE_PASSWORD_REQUEST, payload: {id, password, newPassword } });
+  Axios.post("/api/change-password/"+id, {password, newPassword}).then(data => {
+    dispatch({ type: UPDATE_PASSWORD_SUCCESS, payload: data.data });
+  }).catch(error => {
+    dispatch({ type: UPDATE_PASSWORD_FAIL, payload: error.response.data });
+  })
+}
+
+export { signin, signup, accountConformation, forgotPassword, newPassword, changePassword};

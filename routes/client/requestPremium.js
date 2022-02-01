@@ -13,7 +13,7 @@ const userIdFromJWT = require('../../middleware/userIdJWT');
 
 // request premium
 
-router.post('/request-premium', (req, res) => {
+router.post('/request-premium', loginRequire, (req, res) => {
     if (req.headers && req.headers.authorization) {
         userIdFromJWT(req.headers.authorization).then((result) => {
             if (result._id) {
@@ -30,7 +30,7 @@ router.post('/request-premium', (req, res) => {
                         });
                     }
                     else {
-                        res.status(422).json({ message: "Your are already premium user!" })
+                        res.status(422).json({ message: "Awaiting premium conformation!" })
                     }
                 }).catch((err) => {
                     res.status(422).json({ message: "Something went wrong!" })
