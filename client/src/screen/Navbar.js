@@ -6,17 +6,20 @@ import Cookie from 'js-cookie'
 import { premiumRequest } from '../action/premium';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { refreshUser } from '../action/user';
 
 const Navbar = (props) => {
   const dispatch = useDispatch()
   
   const userSignin = useSelector(state => state.userSignin);
   const {userInfo } = userSignin;
+  
+  const userRefreshRed = useSelector(state => state.userRefreshRed);
+  const {userRef } = userRefreshRed;
+console.log(userRef);
 
   const premiumRequestRed = useSelector(state => state.premiumRequestRed);
   const { loading, success, premiumReq, error } = premiumRequestRed;
-
-  console.log(error);
 
   const logoutHandler = () => {
     Cookie.remove("userInfo");
@@ -34,6 +37,10 @@ const Navbar = (props) => {
   if (error) {
     toast.error(error.message);
   }
+
+  useEffect(() =>{
+    dispatch(refreshUser())
+  },[])
 
   return (
     <nav className="navbar navbar-expand-lg bg-white shadow-sm ">
@@ -67,11 +74,11 @@ const Navbar = (props) => {
                     </div>
                   </div>
                 </span>
-                <span className="text-dark mx-2 h6">{userInfo?.user?.name}</span>
+                <span className="text-dark mx-2 h6"> {userRef?.isPremium === true &&<span className='fas fa-crown text-success'></span>} {userInfo?.user?.name}</span>
               </div>
             </li>
             <li className="nav-item active my-1">
-              {userInfo?.user?.isPremium === false && <button onClick={() => { if (window.confirm('Request a Premium Account?')) { premiumHandler()} }} className=" btn btn-success shadow rounded mx-2"> <i className="fas fa-crown"></i></button>} 
+              {userRef?.isPremium === false && <button onClick={() => { if (window.confirm('Request a Premium Account?')) { premiumHandler()} }} className=" btn btn-success shadow rounded mx-2"> <i className="fas fa-crown"></i></button>} 
             </li>
             <ToastContainer />
           </ul>

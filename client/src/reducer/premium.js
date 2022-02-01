@@ -1,3 +1,4 @@
+import { CONFIRM_PREMIUM_FAIL, CONFIRM_PREMIUM_REQUEST, CONFIRM_PREMIUM_SUCCESS } from "../contant/admin/premium";
 import { USER_PREMIUM_FAIL, USER_PREMIUM_REQUEST, USER_PREMIUM_SUCCESS } from "../contant/premium";
 
 function premiumRequestReducer(state = {}, action) {

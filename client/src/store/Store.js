@@ -7,10 +7,16 @@ import {
 } from '../reducer/auth'
 import { premiumRequestReducer } from '../reducer/premium'
 import { messageRequestReducer } from '../reducer/message'
+import { userRefreshReducer } from '../reducer/user'
+import { adminChangePasswordReducer, adminSigninReducer, adminSignupReducer } from '../reducer/admin/auth'
+import { messageListReducer } from '../reducer/admin/message'
+import { confirmBasicReducer, confirmPremiumReducer, premiumListReducer } from '../reducer/admin/premium'
+import { confirmActivateUserReducer, confirmDeActivateUserReducer, userListReducer } from '../reducer/admin/user'
 
 const userInfo = Cookie.getJSON("userInfo") || null
+const adminInfo = Cookie.getJSON("adminInfo") || null
 
-const initialState = { userSignin: { userInfo }, }
+const initialState = { userSignin: { userInfo }, adminSignin: { adminInfo } }
 const reducer = combineReducers({
     userSignin: signinReducer,
     userSignup: signupReducer,
@@ -19,7 +25,20 @@ const reducer = combineReducers({
     newPasswordRed: newPasswordReduser,
     premiumRequestRed: premiumRequestReducer,
     messageRequestRed: messageRequestReducer,
-    changePasswordRed: changePasswordReducer
+    changePasswordRed: changePasswordReducer,
+    userRefreshRed: userRefreshReducer,
+    //admin
+    adminSignin: adminSigninReducer,
+    adminSignup: adminSignupReducer,
+    adminChangePasswordRed: adminChangePasswordReducer,
+    messageListRed: messageListReducer,
+    premiumListRed: premiumListReducer,
+    confirmPremiumRed: confirmPremiumReducer,
+    confirmBasicRed: confirmBasicReducer,
+    userListRed: userListReducer,
+    confirmActivateUserRed: confirmActivateUserReducer,
+    confirmDeActivateUserRed: confirmDeActivateUserReducer
+
 })
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

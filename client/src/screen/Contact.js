@@ -11,12 +11,7 @@ const ContactScreen = (props) => {
     var formData = new FormData();
     formData.append('file', file);
     formData.append('message', message);
-    // photo.append('message', message);
-
-    formData.forEach((value,key) => {
-        console.log(key+" "+value)
-      });
-
+    
     const userSignin = useSelector(state => state.userSignin);
     const { userInfo } = userSignin;
 
@@ -58,7 +53,7 @@ const ContactScreen = (props) => {
 
 
                                 <div className="form-group custom-file mb-3">
-                                    <input onChange={(e) => setFile(e.target.files[0])} className="form-control-file" type="file" id="customFile" />
+                                    <input onChange={(e) => setFile(e.target.files[0])} className="form-control-file rounded border-top-0 border-left-0 border-right-0 bg-light rounded" type="file" id="customFile" />
                                     {/* <input onChange={(e) => setFile(e.target.files[0])} type="file" className="custom-file-input " id="customFile"  />
                                     <label  className="form-control rounded border-top-0 border-left-0 border-right-0 custom-file-label bg-light rounded" for="customFile">Choose file (Optional) </label> */}
                                 </div>

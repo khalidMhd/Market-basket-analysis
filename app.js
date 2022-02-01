@@ -23,6 +23,7 @@ app.use('/api', require('./routes/fpgrowth'))
 app.use('/api', require('./routes/client/auth'))
 app.use('/api', require('./routes/client/requestPremium'))
 app.use('/api', require('./routes/client/messages'))
+app.use('/api', require('./routes/client/user'))
 //admin
 app.use('/api/admin', require('./routes/admin/auth'))
 app.use('/api/admin', require('./routes/admin/requestPremium'))
