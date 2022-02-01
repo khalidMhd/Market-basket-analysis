@@ -1,18 +1,28 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import ProfileImg from './assets/profile.png'
 import Cookie from 'js-cookie'
+import { premiumRequest } from '../action/premium';
 
 const Navbar = (props) => {
-
+  const dispatch = useDispatch()
+  
   const userSignin = useSelector(state => state.userSignin);
-  const { loading, success, userInfo, error } = userSignin;
+  const {userInfo } = userSignin;
+
+  const premiumRequestRed = useSelector(state => state.premiumRequestRed);
+  const { loading, success, premiumReq, error } = premiumRequestRed;
 
   const logoutHandler = () => {
     Cookie.remove("userInfo");
     window.location.href = "/signin"
   };
+
+  const premiumHandler = () => {
+    // e.preventDefault()
+    dispatch(premiumRequest())
+  }
 
   return (
     <nav className="navbar navbar-expand-lg bg-white shadow-sm ">
@@ -37,7 +47,7 @@ const Navbar = (props) => {
                   <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                     <div style={{ width: '200px', margin: 'auto' }}>
                       <img src={ProfileImg} className="card-img-top rounded-circle" style={{ width: '100px', display: "block", margin: 'auto' }} alt="Card image cap" />
-                      <h5 className="card-title text-center">User name</h5>
+                      <h5 className="card-title text-center">{userInfo?.user?.name}</h5>
                       <div className="card-body text-center">
                         {/* <NavLink to='/profile' className=" btn btn-info shadow rounded mr-2"> <i className="fas fa-user"></i></NavLink> */}
                         <button onClick={() => { if (window.confirm('Are you sure you want to log out?')) {logoutHandler() }; }} className=" btn btn-danger shadow rounded"> <i className="fas fa-sign-out-alt"></i></button>
@@ -46,11 +56,11 @@ const Navbar = (props) => {
                     </div>
                   </div>
                 </span>
-                <span className="text-dark mx-2 h6">User Name</span>
+                <span className="text-dark mx-2 h6">{userInfo?.user?.name}</span>
               </div>
             </li>
             <li className="nav-item active my-1">
-              <button onClick={() => { if (window.confirm('Request a Premium Account?')) { }; }} className=" btn btn-success shadow rounded mx-2"> <i className="fas fa-crown"></i></button>
+              <button onClick={() => { if (window.confirm('Request a Premium Account?')) { premiumHandler()} }} className=" btn btn-success shadow rounded mx-2"> <i className="fas fa-crown"></i></button>
             </li>
           </ul>
         }

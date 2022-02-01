@@ -5,6 +5,7 @@ import {
     accountConformationReducer, forgotPasswordReducer,
     newPasswordReduser, signinReducer, signupReducer
 } from '../reducer/auth'
+import { premiumRequestReducer } from '../reducer/premium'
 
 const userInfo = Cookie.getJSON("userInfo") || null
 
@@ -14,7 +15,8 @@ const reducer = combineReducers({
     userSignup: signupReducer,
     accountConformationRed: accountConformationReducer,
     forgotPasswordRed: forgotPasswordReducer,
-    newPasswordRed: newPasswordReduser
+    newPasswordRed: newPasswordReduser,
+    premiumRequestRed:premiumRequestReducer
 })
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

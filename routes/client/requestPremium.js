@@ -30,7 +30,7 @@ router.post('/request-premium', (req, res) => {
                         });
                     }
                     else {
-                        res.status(200).json({ message: "Your are already premium user!" })
+                        res.status(422).json({ message: "Your are already premium user!" })
                     }
                 }).catch((err) => {
                     res.status(422).json({ message: "Something went wrong!" })

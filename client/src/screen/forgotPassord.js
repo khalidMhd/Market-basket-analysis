@@ -19,7 +19,7 @@ const ClientForgotPasswordScreen = (props) => {
     const { userInfo} = userSignin;
     
     useEffect(() => {
-        userInfo ? props.history.push('/') : props.history.push('/signin')
+        userInfo ? props.history.push('/') : props.history.push('/reset-password')
     }, [userInfo])
 
     const submitHandler = (e) => {

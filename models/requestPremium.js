@@ -6,6 +6,5 @@ const requestPremiumSchema = new mongoose.Schema({
     createdAt: {type: Date, default: Date.now}
 })
 
-
 const requestPremiumModel = mongoose.model('req-premium', requestPremiumSchema)
 module.exports = requestPremiumModel

@@ -23,7 +23,7 @@ const ClientSignupScreen = (props) => {
     }
 
     useEffect(() => {
-        saveUserInfo ? props.history.push('/') : props.history.push('/signin')
+        saveUserInfo ? props.history.push('/') : props.history.push('/signup')
     }, [saveUserInfo])
 
     return (

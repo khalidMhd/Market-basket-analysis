@@ -7,7 +7,7 @@ import {
 
 const userInfo = Cookie.getJSON("userInfo") || null
 if (userInfo) {
-  Axios.defaults.headers.common.Authorization = "Bearer " + userInfo?.data?.access_token
+  Axios.defaults.headers.common.Authorization = userInfo?.data?.access_token
 }
 
 const signin = (email, password) => async (dispatch) => {
