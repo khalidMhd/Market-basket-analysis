@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import '@fortawesome/fontawesome-free/css/all.css'
 import Navbar from './Navbar';
 import '../../App.css';
 import BootstrapSwitchButton from 'bootstrap-switch-button-react'
+import { useDispatch, useSelector } from 'react-redux';
+import { userListAction } from '../../action/admin/user';
 
 const AdminUserScreen = (props) => {
+    const dispatch = useDispatch()
     let allSerNo = 0
     let premiumSerNo = 0
     let basicSerNo = 0
@@ -21,6 +24,26 @@ const AdminUserScreen = (props) => {
 
     const activateHandler = () => {
     }
+
+    const userListRed = useSelector(state => state.userListRed)
+    const { laoding, error, userList } = userListRed
+
+    useEffect(() => {
+        dispatch(userListAction())
+    }, [])
+
+    const filterPremium = userList && userList.filter(user => {
+        return user?.isPremium === true
+    })
+
+    const filterBasic = userList && userList.filter(user => {
+        return user?.isPremium === false
+    })
+
+    const filterDelete = userList && userList.filter(user => {
+        return user?.accStatus === false
+    })
+
     return (
         <div className='containerMain'>
 
@@ -51,19 +74,19 @@ const AdminUserScreen = (props) => {
                             <ul className="nav nav-tabs md-tabs nav-justified rounded-lg" id="myTabMD" role="tablist">
 
                                 <li className="nav-item waves-effect waves-light">
-                                    <a className="nav-link active" id="all-tab-md" data-toggle="tab" href="#all-md" role="tab" aria-controls="all-md" aria-selected="true">All Users <span className="badge badge-primary"> 3</span></a>
+                                    <a className="nav-link active" id="all-tab-md" data-toggle="tab" href="#all-md" role="tab" aria-controls="all-md" aria-selected="true">All Users <span className="badge badge-primary"> {userList?.length}</span></a>
                                 </li>
 
                                 <li className="nav-item waves-effect waves-light">
-                                    <a className="nav-link" id="premium-tab-md" data-toggle="tab" href="#premium-md" role="tab" aria-controls="premium-md" aria-selected="false">Premium Users <span className="badge badge-primary"> 2</span></a>
+                                    <a className="nav-link" id="premium-tab-md" data-toggle="tab" href="#premium-md" role="tab" aria-controls="premium-md" aria-selected="false">Premium Users <span className="badge badge-primary"> {filterPremium?.length}</span></a>
                                 </li>
 
                                 <li className="nav-item waves-effect waves-light">
-                                    <a className="nav-link" id="basic-tab-md" data-toggle="tab" href="#basic-md" role="tab" aria-controls="basic-md" aria-selected="false">Basic Users <span className="badge badge-primary"> 2</span></a>
+                                    <a className="nav-link" id="basic-tab-md" data-toggle="tab" href="#basic-md" role="tab" aria-controls="basic-md" aria-selected="false">Basic Users <span className="badge badge-primary"> {filterBasic?.length}</span></a>
                                 </li>
 
                                 <li className="nav-item waves-effect waves-light">
-                                    <a className="nav-link" id="deactivate-tab-md" data-toggle="tab" href="#deactivate-md" role="tab" aria-controls="deactivate-md" aria-selected="false">Deactivate Users <span className="badge badge-primary"> 2</span></a>
+                                    <a className="nav-link" id="deactivate-tab-md" data-toggle="tab" href="#deactivate-md" role="tab" aria-controls="deactivate-md" aria-selected="false">Deactivate Users <span className="badge badge-primary"> {filterDelete?.length}</span></a>
                                 </li>
                             </ul>
 
@@ -83,109 +106,44 @@ const AdminUserScreen = (props) => {
                                                 </tr>
                                             </thead>
                                             <tbody id="myTable">
-                                                <tr>
-                                                    <th scope="row">{allSerNo += 1}</th>
-                                                    <td>Khalid</td>
-                                                    <td>KhalidMhd@gmail.com</td>
-                                                    <td className='text-success'>Premium</td>
-                                                    <td>12-9-2020</td>
-                                                    <td >
-                                                        <span onClick={() => { if (window.confirm('Change user account to premium?')) { premiumHandler() } }}>
+                                                {userList && userList.map(data =>
+                                                    <tr>
+                                                        <th scope="row">{allSerNo += 1}</th>
+                                                        <td>{data?.name}</td>
+                                                        <td>{data?.email}</td>
+                                                        {data?.isPremium ? <td className='text-success'>Premium</td>
+                                                            : <td className='text-primary'>Basic</td>
+                                                        }
+                                                        <td>12-9-2020</td>
+                                                        <td >
+                                                            <span onClick={() => { if (window.confirm('Change user account to premium?')) { premiumHandler() } }}>
 
-                                                            {premium ?
-                                                                <BootstrapSwitchButton
-                                                                    checked={true}
-                                                                    disabled={true}
-                                                                    onlabel='Premium User'
-                                                                    onstyle='success'
-                                                                    offlabel='Basic User'
-                                                                    offstyle='danger'
-                                                                    style='w-75'
-                                                                />
-                                                                :
-                                                                <BootstrapSwitchButton
-                                                                    checked={false}
-                                                                    disabled={true}
-                                                                    onlabel='Premium User'
-                                                                    onstyle='success'
-                                                                    offlabel='Basic User'
-                                                                    offstyle='danger'
-                                                                    style='w-75'
-                                                                />
-                                                            }
-                                                        </span>
-                                                        <span className='fa fa-user-minus mx-2 fa-lg text-danger' style={{cursor:"pointer"}} onClick={() => { if (window.confirm('Are you sure to deactivate this user?')) { deactivateHandler() } }}></span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">{allSerNo += 1}</th>
-                                                    <td>Noor</td>
-                                                    <td>NoorJayaz@gmail.com</td>
-                                                    <td className='text-danger'>Basic</td>
-                                                    <td>12-9-2020</td>
-                                                    <td >
-                                                        <span onClick={() => { if (window.confirm('Change user account to premium?')) { premiumHandler() } }}>
-
-                                                            {false ?
-                                                                <BootstrapSwitchButton
-                                                                    checked={true}
-                                                                    disabled={true}
-                                                                    onlabel='Premium User'
-                                                                    onstyle='success'
-                                                                    offlabel='Basic User'
-                                                                    offstyle='danger'
-                                                                    style='w-75'
-                                                                />
-                                                                :
-                                                                <BootstrapSwitchButton
-                                                                    checked={false}
-                                                                    disabled={true}
-                                                                    onlabel='Premium User'
-                                                                    onstyle='success'
-                                                                    offlabel='Basic User'
-                                                                    offstyle='danger'
-                                                                    style='w-75'
-                                                                />
-                                                            }
-                                                        </span>
-                                                        <span className='fa fa-user-minus mx-2 fa-lg text-danger' style={{cursor:"pointer"}} onClick={() => { if (window.confirm('Are you sure to deactivate this user?')) { deactivateHandler() } }}></span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">{allSerNo += 1}</th>
-                                                    <td>Hamad</td>
-                                                    <td>hamad@gmail.com</td>
-                                                    <td className='text-danger'>Basic</td>
-                                                    <td>12-12-2020</td>
-                                                    <td >
-                                                        <span onClick={() => { if (window.confirm('Change user account to premium?')) { premiumHandler() } }}>
-
-                                                            {false ?
-                                                                <BootstrapSwitchButton
-                                                                    checked={true}
-                                                                    disabled={true}
-                                                                    onlabel='Premium User'
-                                                                    onstyle='success'
-                                                                    offlabel='Basic User'
-                                                                    offstyle='danger'
-                                                                    style='w-75'
-                                                                />
-                                                                :
-                                                                <BootstrapSwitchButton
-                                                                    checked={false}
-                                                                    disabled={true}
-                                                                    onlabel='Premium User'
-                                                                    onstyle='success'
-                                                                    offlabel='Basic User'
-                                                                    offstyle='danger'
-                                                                    style='w-75'
-                                                                />
-                                                            }
-                                                        </span>
-                                                        <span className='fa fa-user-minus mx-2 fa-lg text-danger' style={{cursor:"pointer"}} onClick={() => { if (window.confirm('Are you sure to deactivate this user?')) { deactivateHandler() } }}></span>
-                                                    </td>
-                                                </tr>
-
+                                                                {data?.isPremium ?
+                                                                    <BootstrapSwitchButton
+                                                                        checked={true}
+                                                                        disabled={true}
+                                                                        onlabel='Premium User'
+                                                                        onstyle='success'
+                                                                        offlabel='Basic User'
+                                                                        offstyle='danger'
+                                                                        style='w-75'
+                                                                    />
+                                                                    :
+                                                                    <BootstrapSwitchButton
+                                                                        checked={false}
+                                                                        disabled={true}
+                                                                        onlabel='Premium User'
+                                                                        onstyle='success'
+                                                                        offlabel='Basic User'
+                                                                        offstyle='danger'
+                                                                        style='w-75'
+                                                                    />
+                                                                }
+                                                            </span>
+                                                            <span className='fa fa-user-minus mx-2 fa-lg text-danger' style={{ cursor: "pointer" }} onClick={() => { if (window.confirm('Are you sure to deactivate this user?')) { deactivateHandler() } }}></span>
+                                                        </td>
+                                                    </tr>
+                                                )}
                                             </tbody>
 
                                         </table>
@@ -214,75 +172,44 @@ const AdminUserScreen = (props) => {
                                                 </tr>
                                             </thead>
                                             <tbody id="myTable">
-                                                <tr>
-                                                    <th scope="row">{premiumSerNo += 1}</th>
-                                                    <td>Khalid</td>
-                                                    <td>KhalidMhd@gmail.com</td>
-                                                    <td className='text-success'>Premium</td>
-                                                    <td>12-9-2020</td>
-                                                    <td >
-                                                        <span onClick={() => { if (window.confirm('Change user account to premium?')) { premiumHandler() } }}>
+                                                {userList && filterPremium.map(data =>
+                                                    <tr>
+                                                        <th scope="row">{allSerNo += 1}</th>
+                                                        <td>{data?.name}</td>
+                                                        <td>{data?.email}</td>
+                                                        {data?.isPremium ? <td className='text-success'>Premium</td>
+                                                            : <td className='text-primary'>Basic</td>
+                                                        }
+                                                        <td>12-9-2020</td>
+                                                        <td >
+                                                            <span onClick={() => { if (window.confirm('Change user account to premium?')) { premiumHandler() } }}>
 
-                                                            {premium ?
-                                                                <BootstrapSwitchButton
-                                                                    checked={true}
-                                                                    disabled={true}
-                                                                    onlabel='Premium User'
-                                                                    onstyle='success'
-                                                                    offlabel='Basic User'
-                                                                    offstyle='danger'
-                                                                    style='w-75'
-                                                                />
-                                                                :
-                                                                <BootstrapSwitchButton
-                                                                    checked={false}
-                                                                    disabled={true}
-                                                                    onlabel='Premium User'
-                                                                    onstyle='success'
-                                                                    offlabel='Basic User'
-                                                                    offstyle='danger'
-                                                                    style='w-75'
-                                                                />
-                                                            }
-                                                        </span>
-                                                        <span className='fa fa-user-minus mx-2 fa-lg text-danger' style={{cursor:"pointer"}} onClick={() => { if (window.confirm('Are you sure to deactivate this user?')) { deactivateHandler() } }}></span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">{premiumSerNo += 1}</th>
-                                                    <td>Hamad</td>
-                                                    <td>hamad@gmail.com</td>
-                                                    <td className='text-success'>Premium</td>
-                                                    <td>12-12-2020</td>
-                                                    <td >
-                                                        <span onClick={() => { if (window.confirm('Change user account to premium?')) { premiumHandler() } }}>
-
-                                                            {true ?
-                                                                <BootstrapSwitchButton
-                                                                    checked={true}
-                                                                    disabled={true}
-                                                                    onlabel='Premium User'
-                                                                    onstyle='success'
-                                                                    offlabel='Basic User'
-                                                                    offstyle='danger'
-                                                                    style='w-75'
-                                                                />
-                                                                :
-                                                                <BootstrapSwitchButton
-                                                                    checked={false}
-                                                                    disabled={true}
-                                                                    onlabel='Premium User'
-                                                                    onstyle='success'
-                                                                    offlabel='Basic User'
-                                                                    offstyle='danger'
-                                                                    style='w-75'
-                                                                />
-                                                            }
-                                                        </span>
-                                                        <span className='fa fa-user-minus mx-2 fa-lg text-danger' style={{cursor:"pointer"}} onClick={() => { if (window.confirm('Are you sure to deactivate this user?')) { deactivateHandler() } }}></span>
-                                                    </td>
-                                                </tr>
-
+                                                                {data?.isPremium ?
+                                                                    <BootstrapSwitchButton
+                                                                        checked={true}
+                                                                        disabled={true}
+                                                                        onlabel='Premium User'
+                                                                        onstyle='success'
+                                                                        offlabel='Basic User'
+                                                                        offstyle='danger'
+                                                                        style='w-75'
+                                                                    />
+                                                                    :
+                                                                    <BootstrapSwitchButton
+                                                                        checked={false}
+                                                                        disabled={true}
+                                                                        onlabel='Premium User'
+                                                                        onstyle='success'
+                                                                        offlabel='Basic User'
+                                                                        offstyle='danger'
+                                                                        style='w-75'
+                                                                    />
+                                                                }
+                                                            </span>
+                                                            <span className='fa fa-user-minus mx-2 fa-lg text-danger' style={{ cursor: "pointer" }} onClick={() => { if (window.confirm('Are you sure to deactivate this user?')) { deactivateHandler() } }}></span>
+                                                        </td>
+                                                    </tr>
+                                                )}
                                             </tbody>
 
                                         </table>
@@ -311,75 +238,44 @@ const AdminUserScreen = (props) => {
                                                 </tr>
                                             </thead>
                                             <tbody id="myTable">
-                                                <tr>
-                                                    <th scope="row">{basicSerNo += 1}</th>
-                                                    <td>Khalid</td>
-                                                    <td>KhalidMhd@gmail.com</td>
-                                                    <td className='text-danger'>Basic</td>
-                                                    <td>12-9-2020</td>
-                                                    <td >
-                                                        <span onClick={() => { if (window.confirm('Change user account to premium?')) { premiumHandler() } }}>
+                                                {userList && filterBasic.map(data =>
+                                                    <tr>
+                                                        <th scope="row">{allSerNo += 1}</th>
+                                                        <td>{data?.name}</td>
+                                                        <td>{data?.email}</td>
+                                                        {data?.isPremium ? <td className='text-success'>Premium</td>
+                                                            : <td className='text-primary'>Basic</td>
+                                                        }
+                                                        <td>12-9-2020</td>
+                                                        <td >
+                                                            <span onClick={() => { if (window.confirm('Change user account to premium?')) { premiumHandler() } }}>
 
-                                                            {false ?
-                                                                <BootstrapSwitchButton
-                                                                    checked={true}
-                                                                    disabled={true}
-                                                                    onlabel='Premium User'
-                                                                    onstyle='success'
-                                                                    offlabel='Basic User'
-                                                                    offstyle='danger'
-                                                                    style='w-75'
-                                                                />
-                                                                :
-                                                                <BootstrapSwitchButton
-                                                                    checked={false}
-                                                                    disabled={true}
-                                                                    onlabel='Premium User'
-                                                                    onstyle='success'
-                                                                    offlabel='Basic User'
-                                                                    offstyle='danger'
-                                                                    style='w-75'
-                                                                />
-                                                            }
-                                                        </span>
-                                                        <span className='fa fa-user-minus mx-2 fa-lg text-danger' style={{cursor:"pointer"}} onClick={() => { if (window.confirm('Are you sure to deactivate this user?')) { deactivateHandler() } }}></span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">{basicSerNo += 1}</th>
-                                                    <td>Noor</td>
-                                                    <td>NoorJayaz@gmail.com</td>
-                                                    <td className='text-danger'>Basic</td>
-                                                    <td>12-9-2020</td>
-                                                    <td >
-                                                        <span onClick={() => { if (window.confirm('Change user account to premium?')) { premiumHandler() } }}>
-
-                                                            {false ?
-                                                                <BootstrapSwitchButton
-                                                                    checked={true}
-                                                                    disabled={true}
-                                                                    onlabel='Premium User'
-                                                                    onstyle='success'
-                                                                    offlabel='Basic User'
-                                                                    offstyle='danger'
-                                                                    style='w-75'
-                                                                />
-                                                                :
-                                                                <BootstrapSwitchButton
-                                                                    checked={false}
-                                                                    disabled={true}
-                                                                    onlabel='Premium User'
-                                                                    onstyle='success'
-                                                                    offlabel='Basic User'
-                                                                    offstyle='danger'
-                                                                    style='w-75'
-                                                                />
-                                                            }
-                                                        </span>
-                                                        <span className='fa fa-user-minus mx-2 fa-lg text-danger' style={{cursor:"pointer"}} onClick={() => { if (window.confirm('Are you sure to deactivate this user?')) { deactivateHandler() } }}></span>
-                                                    </td>
-                                                </tr>
-
+                                                                {data?.isPremium ?
+                                                                    <BootstrapSwitchButton
+                                                                        checked={true}
+                                                                        disabled={true}
+                                                                        onlabel='Premium User'
+                                                                        onstyle='success'
+                                                                        offlabel='Basic User'
+                                                                        offstyle='danger'
+                                                                        style='w-75'
+                                                                    />
+                                                                    :
+                                                                    <BootstrapSwitchButton
+                                                                        checked={false}
+                                                                        disabled={true}
+                                                                        onlabel='Premium User'
+                                                                        onstyle='success'
+                                                                        offlabel='Basic User'
+                                                                        offstyle='danger'
+                                                                        style='w-75'
+                                                                    />
+                                                                }
+                                                            </span>
+                                                            <span className='fa fa-user-minus mx-2 fa-lg text-danger' style={{ cursor: "pointer" }} onClick={() => { if (window.confirm('Are you sure to deactivate this user?')) { deactivateHandler() } }}></span>
+                                                        </td>
+                                                    </tr>
+                                                )}
                                             </tbody>
 
                                         </table>
@@ -408,75 +304,44 @@ const AdminUserScreen = (props) => {
                                                 </tr>
                                             </thead>
                                             <tbody id="myTable">
-                                                <tr>
-                                                    <th scope="row">{deactivateSerNo += 1}</th>
-                                                    <td>Khalid</td>
-                                                    <td>KhalidMhd@gmail.com</td>
-                                                    <td className='text-danger'>Basic</td>
-                                                    <td>12-9-2020</td>
-                                                    <td >
-                                                        <span onClick={() => { if (window.confirm('Change user account to premium?')) { premiumHandler() } }}>
+                                                {userList && filterDelete.map(data =>
+                                                    <tr>
+                                                        <th scope="row">{allSerNo += 1}</th>
+                                                        <td>{data?.name}</td>
+                                                        <td>{data?.email}</td>
+                                                        {data?.isPremium ? <td className='text-success'>Premium</td>
+                                                            : <td className='text-primary'>Basic</td>
+                                                        }
+                                                        <td>12-9-2020</td>
+                                                        <td >
+                                                            <span onClick={() => { if (window.confirm('Change user account to premium?')) { premiumHandler() } }}>
 
-                                                            {false ?
-                                                                <BootstrapSwitchButton
-                                                                    checked={true}
-                                                                    disabled={true}
-                                                                    onlabel='Premium User'
-                                                                    onstyle='success'
-                                                                    offlabel='Basic User'
-                                                                    offstyle='danger'
-                                                                    style='w-75'
-                                                                />
-                                                                :
-                                                                <BootstrapSwitchButton
-                                                                    checked={false}
-                                                                    disabled={true}
-                                                                    onlabel='Premium User'
-                                                                    onstyle='success'
-                                                                    offlabel='Basic User'
-                                                                    offstyle='danger'
-                                                                    style='w-75'
-                                                                />
-                                                            }
-                                                        </span>
-                                                        <span className='fa fa-user-plus mx-2 fa-lg text-success' style={{cursor:"pointer"}} onClick={() => { if (window.confirm('Are you sure to activate this user?')) { activateHandler() } }}></span>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">{basicSerNo += 1}</th>
-                                                    <td>Noor</td>
-                                                    <td>NoorJayaz@gmail.com</td>
-                                                    <td className='text-danger'>Basic</td>
-                                                    <td>12-9-2020</td>
-                                                    <td >
-                                                        <span onClick={() => { if (window.confirm('Change user account to premium?')) { premiumHandler() } }}>
-
-                                                            {false ?
-                                                                <BootstrapSwitchButton
-                                                                    checked={true}
-                                                                    disabled={true}
-                                                                    onlabel='Premium User'
-                                                                    onstyle='success'
-                                                                    offlabel='Basic User'
-                                                                    offstyle='danger'
-                                                                    style='w-75'
-                                                                />
-                                                                :
-                                                                <BootstrapSwitchButton
-                                                                    checked={false}
-                                                                    disabled={true}
-                                                                    onlabel='Premium User'
-                                                                    onstyle='success'
-                                                                    offlabel='Basic User'
-                                                                    offstyle='danger'
-                                                                    style='w-75'
-                                                                />
-                                                            }
-                                                        </span>
-                                                        <span className='fa fa-user-plus mx-2 fa-lg text-success' style={{cursor:"pointer"}} onClick={() => { if (window.confirm('Are you sure to activate this user?')) { activateHandler() } }}></span>
-                                                    </td>
-                                                </tr>
-
+                                                                {data?.isPremium ?
+                                                                    <BootstrapSwitchButton
+                                                                        checked={true}
+                                                                        disabled={true}
+                                                                        onlabel='Premium User'
+                                                                        onstyle='success'
+                                                                        offlabel='Basic User'
+                                                                        offstyle='danger'
+                                                                        style='w-75'
+                                                                    />
+                                                                    :
+                                                                    <BootstrapSwitchButton
+                                                                        checked={false}
+                                                                        disabled={true}
+                                                                        onlabel='Premium User'
+                                                                        onstyle='success'
+                                                                        offlabel='Basic User'
+                                                                        offstyle='danger'
+                                                                        style='w-75'
+                                                                    />
+                                                                }
+                                                            </span>
+                                                            <span className='fa fa-user-minus mx-2 fa-lg text-danger' style={{ cursor: "pointer" }} onClick={() => { if (window.confirm('Are you sure to deactivate this user?')) { deactivateHandler() } }}></span>
+                                                        </td>
+                                                    </tr>
+                                                )}
                                             </tbody>
 
                                         </table>

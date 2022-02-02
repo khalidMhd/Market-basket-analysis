@@ -7,7 +7,7 @@ if (adminInfo) {
   Axios.defaults.headers.common.Authorization = adminInfo?.token
 }
 
-const premiumList = () => async (dispatch) => {
+const premiumListAction = () => async (dispatch) => {
   dispatch({ type: PREMIUM_LIST_REQUEST})
   Axios.get('/api/admin/request-premium').then(data => {
     dispatch({ type: PREMIUM_LIST_SUCCESS, payload: data.data })
@@ -16,7 +16,7 @@ const premiumList = () => async (dispatch) => {
   })
 }
 
-const confirmPremium = (id) => async (dispatch) => {
+const confirmPremiumAction = (id) => async (dispatch) => {
   dispatch({ type: CONFIRM_PREMIUM_REQUEST, payload:{id}})
   Axios.post('/api/admin/confirm-premium/'+id).then(data => {
     dispatch({ type: CONFIRM_PREMIUM_SUCCESS, payload: data.data })
@@ -34,4 +34,4 @@ const confirmBasic = (id) => async (dispatch) => {
   })
 }
 
-export {premiumList, confirmPremium, confirmBasic}
+export {premiumListAction, confirmPremiumAction, confirmBasic}

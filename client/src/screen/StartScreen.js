@@ -2,9 +2,10 @@ import React, { useEffect } from 'react';
 import Navbar from './Navbar';
 import uplaodImg from './assets/upload.png'
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { refreshUser } from '../action/user';
 const StartScreen = (props) => {
-
+    const dispatch = useDispatch()
     const submitHandler = () => {
         props.history.push('/detail')
     }
@@ -15,6 +16,7 @@ const StartScreen = (props) => {
 
     useEffect(() => {
             userInfo ? props.history.push('/') : props.history.push('/signin')
+            dispatch(refreshUser())
         }, [userInfo])
 
     return (

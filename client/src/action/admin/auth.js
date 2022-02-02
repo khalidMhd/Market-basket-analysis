@@ -10,7 +10,7 @@ if (adminInfo) {
   Axios.defaults.headers.common.Authorization = adminInfo?.token
 }
 
-const adminSignin = (email, password) => async (dispatch) => {
+const adminSigninAction = (email, password) => async (dispatch) => {
   dispatch({ type: ADMIN_SIGNIN_REQUEST, payload: { email, password } })
   Axios.post('/api/admin/login', { email, password }).then(data => {
     dispatch({ type: ADMIN_SIGNIN_SUCCESS, payload: data.data })
@@ -39,4 +39,4 @@ const adminChangePassword = (id, password, newPassword,) => async (dispatch) => 
   })
 }
 
-export { adminSignin, adminSignup, adminChangePassword };
+export { adminSigninAction, adminSignup, adminChangePassword };

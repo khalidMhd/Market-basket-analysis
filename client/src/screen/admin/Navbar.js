@@ -10,9 +10,11 @@ import '../style/Sidebar.css'
 
 const Navbar = () => {
     const history = useHistory()
-    const userSignin = useSelector(state => state.userSignin);
-    const { userInfo } = userSignin;
+    const adminSignin = useSelector(state => state.adminSignin);
+	const { loading, success, adminInfo, error } = adminSignin;
+
     const [sidebarOpen, setsidebarOpen] = useState(false);
+console.log(adminInfo);
     const openSidebar = () => {
         setsidebarOpen(true);
     };
@@ -21,9 +23,8 @@ const Navbar = () => {
     };
 
     const logoutHandler = () => {
-        Cookie.remove("userInfo");
-        history.push('/signin')
-        window.location.reload()
+        Cookie.remove("adminInfo");
+        window.location.href='/admin/signin'
     };
 
 
@@ -54,7 +55,7 @@ const Navbar = () => {
                             <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                                 <div style={{ width: '200px', margin: 'auto' }}>
                                     <img src={ProfileImg} className="card-img-top rounded-circle" style={{ width: '100px', display: "block", margin: 'auto' }} alt="Card image cap" />
-                                    <h5 className="card-title text-center">{userInfo?.data?.name || "User name"}</h5>
+                                    <h5 className="card-title text-center">{adminInfo?.user?.name || "User name"}</h5>
                                     <div className="card-body text-center">
                                         {/* <Link to='/profile' className=" btn btn-info shadow rounded mr-2"> <i className="fas fa-user"></i></Link> */}
                                         <button onClick={() => { if (window.confirm('Are you sure you want to log out?')) { logoutHandler() }; }} className=" btn btn-danger shadow rounded"> <i className="fas fa-sign-out-alt"></i></button>
@@ -62,7 +63,7 @@ const Navbar = () => {
                                 </div>
                             </div>
                         </span>
-                        <span className="text-dark mx-2 h6">{userInfo?.data?.name || "User Name"}</span>
+                        <span className="text-dark mx-2 h6">{adminInfo?.user?.name || "User Name"}</span>
                     </div>
                 </div>
             </nav>

@@ -5,25 +5,26 @@ import Logo from '../assets/Logo.png'
 import '../style/Login.css'
 import $ from 'jquery'
 import 'jquery-validation'
+import { adminSigninAction } from '../../action/admin/auth'
 
 const SigninScreen = (props) => {
 	const dispatch = useDispatch()
 	const [email, setEmail] = useState();
 	const [password, setPassword] = useState();
-	const userSignin = useSelector(state => state.userSignin);
-	const { loading, userInfo, error } = userSignin;
+
+	const adminSignin = useSelector(state => state.adminSignin);
+	const { loading, success, adminInfo, error } = adminSignin;
 
 	useEffect(() => {
-		if (userInfo) {
-			// window.location.href = "/dashboard"
-			// window.location.reload()
+		if (adminInfo) {
+			window.location.href = "/admin/dashboard"
 		}
-	}, [userInfo])
+	}, [adminInfo])
 
-	// const submitHandler = (e) => {
-	// 	e.preventDefault();
-	// 	dispatch(signin(email, password));
-	// }
+	const submitHandler = (e) => {
+		e.preventDefault();
+		dispatch(adminSigninAction(email, password));
+	}
 
 	return (
 
@@ -35,7 +36,7 @@ const SigninScreen = (props) => {
 					<span className="auth-head-icon"><i className="fa fa-user"></i></span>
 				</div>
 				<div className="ibox login-box">
-					<form className="ibox-body p-3" id="login-form">
+					<form onSubmit={submitHandler} className="ibox-body p-3" id="login-form">
 						<h4 className="font-strong text-center py-4 ">LOG IN</h4>
 
 						{loading &&
@@ -45,7 +46,8 @@ const SigninScreen = (props) => {
 								</div>
 							</div>
 						}
-						{error && <div className="text-danger text-center">Invaled Username or Password</div>}
+						{success && <div className="text-primary text-center h6">{adminInfo.message}</div>}
+						{error && <div className="text-danger text-center h6">{error.message}</div>}
 
 						<div className="form-group mb-4">
 							<input className="form-control form-control-line" onChange={(e) => setEmail(e.target.value)} value={email} type="text" name="email" placeholder="Email" />
@@ -61,7 +63,7 @@ const SigninScreen = (props) => {
 							<a className="color-inherit" >Forgot password?</a>
 						</div> */}
 						<div className="text-center pb-4">
-							<button type='submit' onClick={() => props.history.push('/admin/dashboard')} className="btn btn-success btn-rounded btn-block">LOGIN</button>
+							<button type='submit' className="btn btn-success btn-rounded btn-block">LOGIN</button>
 						</div>
 					</form>
 				</div>

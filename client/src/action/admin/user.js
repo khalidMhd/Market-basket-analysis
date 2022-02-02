@@ -11,7 +11,7 @@ if (adminInfo) {
   Axios.defaults.headers.common.Authorization = adminInfo?.token
 }
 
-const userList = () => async (dispatch) => {
+const userListAction = () => async (dispatch) => {
   dispatch({ type: USER_LIST_REQUEST })
   Axios.get('/api/admin/user').then(data => {
     dispatch({ type: USER_LIST_SUCCESS, payload: data.data })
@@ -38,4 +38,4 @@ const confirmActivateUser = (id) => async (dispatch) => {
   })
 }
 
-export { userList, confirmDeactivateUser, confirmActivateUser }
+export { userListAction, confirmDeactivateUser, confirmActivateUser }

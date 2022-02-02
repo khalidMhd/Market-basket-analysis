@@ -81,7 +81,7 @@ console.log(userRef);
               {userRef?.isPremium === false && <button onClick={() => { if (window.confirm('Request a Premium Account?')) { premiumHandler()} }} className=" btn btn-success shadow rounded mx-2"> <i className="fas fa-crown"></i></button>} 
             </li>
             <ToastContainer />
-          </ul>
+          </ul> 
         }
       </div>
     </nav>

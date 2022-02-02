@@ -9,7 +9,13 @@ import PremiumChartScreen from "./chart.js/PremiumChart";
 
 const DashboardScreen = (props) => {
     const dispatch = useDispatch()
+	const adminSignin = useSelector(state => state.adminSignin);
+	const {adminInfo } = adminSignin;
 
+    useEffect(() => {
+        adminInfo ? props.history.push('/admin/dashboard') : props.history.push('/admin/signin')
+
+    },[adminInfo])
 
     return (
         <div className='containerMain'>

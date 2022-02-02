@@ -67,7 +67,7 @@ router.post('/login', (req, res) => {
                             return res.json({ message: "Successfully signed in", token, user: { _id, name, email } })
                         }
                         else {
-                            return res.status(422).json({ error: "Invalid Email or password" })
+                            return res.status(422).json({ message: "Invalid Email or password" })
                         }
                     }).catch(err => {
                         console.log(err);
@@ -75,7 +75,7 @@ router.post('/login', (req, res) => {
                     })
                 }
             } else {
-                return res.status(422).json({ error: "Invalid Email or password" })
+                return res.status(422).json({ message: "Invalid Email or password" })
             }
 
         }).catch(err => {

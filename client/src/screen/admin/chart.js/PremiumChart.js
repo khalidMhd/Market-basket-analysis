@@ -21,7 +21,7 @@ const PremiumChartScreen = (props) => {
                 <div className=" d-flex justify-content-end mt-2">
 
                     <button className="btn btn-primary mx-1 mb-1" >Weekly</button>
-                    <button className="btn btn-success mx-1 mb-1" >Last 30 dayes</button>
+                    <button className="btn btn-success mx-1 mb-1" >Last 30 days</button>
                     <button className="btn btn-warning mx-1 mb-1" >Yearly</button>
                 </div>
             </div>
