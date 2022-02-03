@@ -32,7 +32,7 @@ router.post('/register', async (req, res) => {
                     userDetails.save().then(user => {
                         const token = jwt.sign({ _id: user._id, accessLevel:user.accessLevel }, process.env.JWT_SECRET)
                         const { _id, name, email } = user
-                        return res.status(200).json({ message: "A verification mail has been sent.", token, user: { _id, name, email } })
+                        return res.status(200).json({ message: "User Registered Successfully.", token, user: { _id, name, email } })
                     }).catch(err => {
                         return res.status(422).json({ message: "Something went wrong!" })
                     })

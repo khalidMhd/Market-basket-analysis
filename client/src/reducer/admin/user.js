@@ -19,11 +19,11 @@ function userListReducer(state = { userList: [] }, action) {
 function confirmActivateUserReducer(state = { conformActivateUser: {} }, action) {
     switch (action.type) {
         case CONFIRM_ACTIVATE_USER_REQUEST:
-            return { loading: true, conformActivateUser: {} }
+            return { activateLoading: true, activateSuccess: false, conformActivateUser: {} }
         case CONFIRM_ACTIVATE_USER_SUCCESS:
-            return { loading: false, conformActivateUser: action.payload }
+            return { activateLoading: false,activateSuccess: true, conformActivateUser: action.payload }
         case CONFIRM_ACTIVATE_USER_FAIL:
-            return { loading: false, error: action.payload };
+            return { activateLoading: false, activateError: action.payload };
         default: return state;
     }
 }
@@ -31,11 +31,11 @@ function confirmActivateUserReducer(state = { conformActivateUser: {} }, action)
 function confirmDeActivateUserReducer(state = { conformDeActivateUser: {} }, action) {
     switch (action.type) {
         case CONFIRM_DEACTIVATE_USER_REQUEST:
-            return { loading: true, conformDeActivateUser: {} }
+            return { deActivateLoading: true, deActivateSuccess: false, conformDeActivateUser: {} }
         case CONFIRM_DEACTIVATE_USER_SUCCESS:
-            return { loading: false, conformDeActivateUser: action.payload }
+            return { deActivateLoading: false, deActivateSuccess: true, conformDeActivateUser: action.payload }
         case CONFIRM_DEACTIVATE_USER_FAIL:
-            return { loading: false, error: action.payload };
+            return { deActivateLoading: false, deActivateError: action.payload };
         default: return state;
     }
 }

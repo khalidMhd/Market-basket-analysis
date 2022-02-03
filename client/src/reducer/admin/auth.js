@@ -17,7 +17,7 @@ function adminSignupReducer(state = {}, action) {
         case ADMIN_SIGNUP_REQUEST:
             return { loading: true }
         case ADMIN_SIGNUP_SUCCESS:
-            return { loading: false, success: true, adminInfo: action.payload }
+            return { loading: false, success: true, adminSignupInfo: action.payload }
         case ADMIN_SIGNUP_FAIL:
             return { loading: false, error: action.payload }
         default: return state

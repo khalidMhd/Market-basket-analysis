@@ -16,7 +16,6 @@ const Navbar = (props) => {
   
   const userRefreshRed = useSelector(state => state.userRefreshRed);
   const {userRef } = userRefreshRed;
-console.log(userRef);
 
   const premiumRequestRed = useSelector(state => state.premiumRequestRed);
   const { loading, success, premiumReq, error } = premiumRequestRed;
@@ -38,9 +37,9 @@ console.log(userRef);
     toast.error(error.message);
   }
 
-  useEffect(() =>{
-    dispatch(refreshUser())
-  },[])
+  // useEffect(() =>{
+  //   dispatch(refreshUser())
+  // },[])
 
   return (
     <nav className="navbar navbar-expand-lg bg-white shadow-sm ">

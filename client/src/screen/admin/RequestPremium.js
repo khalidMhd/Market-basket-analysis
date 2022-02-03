@@ -23,17 +23,20 @@ const RequestPremiumScreen = (props) => {
     const { loading, error, premiumList } = premiumListRed
 
     const confirmPremiumRed = useSelector(state => state.confirmPremiumRed);
-    const { error: saveError, success, confirmPremium } = confirmPremiumRed
+    const { error: saveError, premiumSuccess, confirmPremium } = confirmPremiumRed
     
-    if (success) {
+    if (premiumSuccess) {
         toast.success(confirmPremium.message);
+        window.location.reload()
+
     }
     if (saveError) {
         toast.error(saveError.message);
     }
+
     useEffect(() => {
         dispatch(premiumListAction())
-    }, [success])
+    }, [])
 
     return (
         <div className='containerMain'>

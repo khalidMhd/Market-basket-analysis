@@ -11,7 +11,18 @@ const { google } = require('googleapis')
 const sendMail = require('../../middleware/email');
 const userIdFromJWT = require('../../middleware/userIdJWT');
 
+// router.get('/refresh-user', loginRequire, (req, res) => {
+//     const id = req.body.id
+//     console.log(id);
+//     userModel.findOne({_id:id}).then((result) => {
+//         res.status(200).json(result)
+//     }).catch((err) => {
+//         res.status(422).json({ message: "Something went wrong!" })
+//     });
+// })
+
 router.get('/refresh-user', loginRequire, (req, res) => {
+    console.log(req.headers.authorization);
     if (req.headers && req.headers.authorization) {
         userIdFromJWT(req.headers.authorization).then((result) => {
             if (result._id) {

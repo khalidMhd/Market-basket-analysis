@@ -1,3 +1,4 @@
+import { failedToTransformError } from "simple-excel-to-json";
 import {
     CONFIRM_BASIC_FAIL, CONFIRM_BASIC_REQUEST, CONFIRM_BASIC_SUCCESS,
     CONFIRM_PREMIUM_FAIL, CONFIRM_PREMIUM_REQUEST, CONFIRM_PREMIUM_SUCCESS,
@@ -20,11 +21,11 @@ function premiumListReducer(state = { premiumList: [] }, action) {
 function confirmPremiumReducer(state = {}, action) {
     switch (action.type) {
         case CONFIRM_PREMIUM_REQUEST:
-            return { loading: true }
+            return { premiumLoading: true, premiumSuccess:false }
         case CONFIRM_PREMIUM_SUCCESS:
-            return { loading: false, success: true, confirmPremium: action.payload }
+            return { premiumLoading: false, premiumSuccess: true, confirmPremium: action.payload }
         case CONFIRM_PREMIUM_FAIL:
-            return { loading: false, error: action.payload };
+            return { premiumLoading: false, premiumError: action.payload };
         default: return state;
     }
 }
@@ -32,11 +33,11 @@ function confirmPremiumReducer(state = {}, action) {
 function confirmBasicReducer(state = {}, action) {
     switch (action.type) {
         case CONFIRM_BASIC_REQUEST:
-            return { loading: true }
+            return { basicLoading: true, basicSuccess: false, }
         case CONFIRM_BASIC_SUCCESS:
-            return { loading: false, success: true, confirmBasic: action.payload }
+            return { basicLoading: false, basicSuccess: true, confirmBasic: action.payload }
         case CONFIRM_BASIC_FAIL:
-            return { loading: false, error: action.payload };
+            return { basicLoading: false, basicError: action.payload };
         default: return state;
     }
 }

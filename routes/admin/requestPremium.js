@@ -44,7 +44,7 @@ router.post("/confirm-premium/:id", async (req, res) => {
         updatePremium.updatedAt = Date.now()
 
         updatePremium.save().then(data => {
-            return res.status(200).json({ message: "Changes Updated" })
+            return res.status(200).json({ message: "Account Updated to Premium" })
         }).catch(err => {
             return res.status(422).json({ message: "Something went wrong!" })
         })
@@ -65,7 +65,7 @@ router.post("/confirm-basic/:id", async (req, res) => {
         updateBasic.updatedAt = Date.now()
 
         updateBasic.save().then(data => {
-            return res.status(200).json({ message: "Changes Updated" })
+            return res.status(200).json({ message: "Account Updated to Basic" })
         }).catch(err => {
             return res.status(422).json({ message: "Something went wrong!" })
         })

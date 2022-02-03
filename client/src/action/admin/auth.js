@@ -20,7 +20,13 @@ const adminSigninAction = (email, password) => async (dispatch) => {
   })
 }
 
-const adminSignup = (name, email, password, accessLevel) => async (dispatch) => {
+const adminSignupAction = (name, email, password, visible) => async (dispatch) => {
+  let accessLevel
+  if (visible) {
+    accessLevel = 1
+  } else {
+    accessLevel = 2
+  }
   dispatch({ type: ADMIN_SIGNUP_REQUEST, payload: { name, email, password, accessLevel } });
   Axios.post("/api/admin/register", { name, email, password, accessLevel }).then(data => {
     dispatch({ type: ADMIN_SIGNUP_SUCCESS, payload: data.data });
@@ -39,4 +45,4 @@ const adminChangePassword = (id, password, newPassword,) => async (dispatch) => 
   })
 }
 
-export { adminSigninAction, adminSignup, adminChangePassword };
+export { adminSigninAction, adminSignupAction, adminChangePassword };

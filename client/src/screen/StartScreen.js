@@ -11,13 +11,16 @@ const StartScreen = (props) => {
     }
 
 
-  const userSignin = useSelector(state => state.userSignin);
+    const userSignin = useSelector(state => state.userSignin);
     const { loading, success, userInfo, error } = userSignin;
+    
+    useEffect(() => {
+        userInfo ? props.history.push('/') : props.history.push('/signin')
+    }, [userInfo])
 
     useEffect(() => {
-            userInfo ? props.history.push('/') : props.history.push('/signin')
-            dispatch(refreshUser())
-        }, [userInfo])
+        dispatch(refreshUser())
+    }, [])
 
     return (
         <>

@@ -25,7 +25,7 @@ const confirmPremiumAction = (id) => async (dispatch) => {
   })
 }
 
-const confirmBasic = (id) => async (dispatch) => {
+const confirmBasicAction = (id) => async (dispatch) => {
   dispatch({ type: CONFIRM_BASIC_REQUEST, payload:{id}})
   Axios.post('/api/admin/confirm-basic/'+id).then(data => {
     dispatch({ type: CONFIRM_BASIC_SUCCESS, payload: data.data })
@@ -34,4 +34,4 @@ const confirmBasic = (id) => async (dispatch) => {
   })
 }
 
-export {premiumListAction, confirmPremiumAction, confirmBasic}
+export {premiumListAction, confirmPremiumAction, confirmBasicAction}

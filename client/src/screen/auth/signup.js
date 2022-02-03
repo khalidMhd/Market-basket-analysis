@@ -6,34 +6,31 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
 import Navbar from '../admin/Navbar';
 import BootstrapSwitchButton from 'bootstrap-switch-button-react'
+import { adminSignupAction } from '../../action/admin/auth';
 
 const SignupScreen = (props) => {
     const dispatch = useDispatch()
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
-    const [type, setType] = useState('');
+    const [accessLevel, setAccessLevel] = useState(1);
+    const [visible, setVisible] = useState(true)
 
-    const userSignup = useSelector(state => state.userSignup)
-    const { loading, success, error } = userSignup
+    const adminSignup = useSelector(state => state.adminSignup);
+    const { loading, success, adminSignupInfo, error } = adminSignup;
 
-    const userSignin = useSelector(state => state.userSignin);
-    const { userInfo } = userSignin;
-
+    const adminSignin = useSelector(state => state.adminSignin);
+    const { adminInfo } = adminSignin;
 
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(signup(name, email, type, password));
+        dispatch(adminSignupAction(name, email, password, visible));
     }
+    console.log(visible);
+
     useEffect(() => {
-        // if (!userInfo) {
-        //     props.history.push('/signin');
-        // }
-        if (success) {
-            props.history.push('/registered-user')
-            toast("User Created Successfully!");
-        }
-    }, [userInfo, success])
+        adminInfo ? props.history.push('/admin/add-user') : props.history.push('/admin/signin')
+    }, [adminInfo])
 
     return (
         <div className='containerMain'>
@@ -44,12 +41,14 @@ const SignupScreen = (props) => {
                     <div className="card-body">
                         {loading &&
                             <div class="text-center">
-                                <div class="spinner-border text-primary" style={{ width: '50px', height: '50px' }} role="status">
+                                <div class="spinner-border text-primary" role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>
                             </div>
                         }
-                        {error && <div className="text-danger">User Already Exist</div>}
+                        {error && <div className="text-danger text-center h6">{error.message}</div>}
+                        {success && <div className="text-primary text-center h6">{adminSignupInfo.message}</div>}
+
                         <div className="form-group">
                             {/* <label className="card-title bg-info w-100 text-white" for="name">Name:</label> */}
                             <input type="text" className="form-control border-top-0 border-left-0 border-right-0" id="name" placeholder="Enter Name" name="name" onChange={(e) => setName(e.target.value)} required />
@@ -65,16 +64,19 @@ const SignupScreen = (props) => {
                             <input type="password" className="form-control border-top-0 border-left-0 border-right-0" id="pwd" placeholder="Enter password" name="pswd" onChange={(e) => setPassword(e.target.value)} required />
                         </div>
 
-                        <div className="form-group">
+                        <div className="form-group" >
                             <BootstrapSwitchButton
-                                checked={true}
-                                onlabel='Sub Admin'
-                                onstyle='info'
-                                offlabel='Super Admin'
-                                offstyle='warning'
+                                checked={visible}
+                                onlabel='Super Admin'
+                                onstyle='success'
+                                offlabel='Sub Admin'
+                                offstyle='info'
                                 style='w-100'
+                               onChange={() => setVisible(!visible)}
                             />
                         </div>
+
+
 
                         <button type="submit" style={{ width: '100%' }} className="btn btn-success shadow rounded-lg font-weight-bold">Submit</button>
                     </div>

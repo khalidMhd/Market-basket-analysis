@@ -41,7 +41,7 @@ const ClientSignupScreen = (props) => {
                                         <span class="sr-only">Loading...</span>
                                     </div>
                                 </div>
-                            }
+                            } 
                             {error && <div className="text-danger text-center h6">{error.message}</div>}
                             {success && <div className="text-primary text-center h6">{userInfo.message}</div>}
 

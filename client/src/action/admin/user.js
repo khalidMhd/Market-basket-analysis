@@ -20,16 +20,16 @@ const userListAction = () => async (dispatch) => {
   })
 }
 
-const confirmDeactivateUser = (id) => async (dispatch) => {
+const confirmDeactivateUserAction = (id) => async (dispatch) => {
   dispatch({ type: CONFIRM_DEACTIVATE_USER_REQUEST, payload:{id} })
-  Axios.post('/api/admin/activate-user/'+id).then(data => {
+  Axios.post('/api/admin/de-activate-user/'+id).then(data => {
     dispatch({ type: CONFIRM_DEACTIVATE_USER_SUCCESS, payload: data.data })
   }).catch(error => {
     dispatch({ type: CONFIRM_DEACTIVATE_USER_FAIL, payload: error.response.data })
   })
 }
 
-const confirmActivateUser = (id) => async (dispatch) => {
+const confirmActivateUserAction = (id) => async (dispatch) => {
   dispatch({ type: CONFIRM_ACTIVATE_USER_REQUEST, payload:{id} })
   Axios.post('/api/admin/activate-user/'+id).then(data => {
     dispatch({ type: CONFIRM_ACTIVATE_USER_SUCCESS, payload: data.data })
@@ -38,4 +38,4 @@ const confirmActivateUser = (id) => async (dispatch) => {
   })
 }
 
-export { userListAction, confirmDeactivateUser, confirmActivateUser }
+export { userListAction, confirmDeactivateUserAction, confirmActivateUserAction }
