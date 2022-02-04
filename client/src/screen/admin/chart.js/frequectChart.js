@@ -7,7 +7,7 @@ import Chart from "react-google-charts";
 
 const FrequentChartScreen = (props) => {
     const dispatch = useDispatch()
-    console.log(props);
+
     const getProductAssociation = () => {
         var data = []
         data.push(['Item', "Frequency"])

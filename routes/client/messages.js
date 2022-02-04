@@ -12,7 +12,7 @@ var storage = multer.diskStorage({
     },
 
     filename: function (req, file, cb) {
-        cb(null, file.originalname + "_" + Date.now())
+        cb(null, Date.now() +"_" + file.originalname )
     }
 })
 
@@ -20,9 +20,8 @@ var upload = multer({
     storage: storage,
 })
 
-router.post('/message',loginRequire, upload.single('file'), async (req, res, next) => {
+router.post('/message', upload.single('file'), async (req, res, next) => {
     const { message } = req.body
-console.log(req.file);
     if (!message) {
         return res.status(422).json({ message: "Please fill all the fields!" })
     } else {
@@ -37,7 +36,6 @@ console.log(req.file);
             }
 
             messageDetails.save().then((rec) => {
-                console.log(rec);
                 res.status(200).json({ message: "Message send send successfully." })
             }).catch((err) => {
                 res.status(422).json({ message: "Something went wrong!" })

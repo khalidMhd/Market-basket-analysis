@@ -55,7 +55,6 @@ router.post('/login', (req, res) => {
     }
     userModel.findOne({ email: email.toLowerCase() })
         .then(savedUser => {
-            console.log(savedUser);
             if (savedUser) {
                 if (savedUser.accStatus === false) {
                     return res.status(422).json({ message: "Account disabled!" })
@@ -70,7 +69,6 @@ router.post('/login', (req, res) => {
                             return res.status(422).json({ message: "Invalid Email or password" })
                         }
                     }).catch(err => {
-                        console.log(err);
                         return res.status(422).json({ message: "Something went wrong!!!" })
                     })
                 }

@@ -8,8 +8,14 @@ import Navbar from '../admin/Navbar';
 import uplaodImg from '../assets/upload.png'
 
 const UplaodFileScreen = (props) => {
-
     const dispatch = useDispatch()
+    
+	const adminSignin = useSelector(state => state.adminSignin);
+	const {adminInfo } = adminSignin;
+
+    useEffect(() => {
+        adminInfo ? props.history.push('/admin/product-association') : props.history.push('/admin/signin')
+    },[adminInfo])
 
     const submitHandler = () => {
         props.history.push('/admin/detail')

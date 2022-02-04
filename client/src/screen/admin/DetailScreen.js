@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux'
 import 'bootstrap/dist/css/bootstrap.css';
 import '@fortawesome/fontawesome-free/css/all.css'
 import Navbar from './Navbar';
 
 const AdminDetailScreen = (props) => {
+    const dispatch = useDispatch()
     let serNo = 0
+    
+	const adminSignin = useSelector(state => state.adminSignin);
+	const {adminInfo } = adminSignin;
 
+    useEffect(() => {
+        adminInfo ? props.history.push('/admin/detail') : props.history.push('/admin/signin')
+    },[adminInfo])    
     return (
         <div className='containerMain'>
             <Navbar />

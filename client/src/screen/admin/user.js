@@ -31,6 +31,13 @@ const AdminUserScreen = (props) => {
 
     const confirmDeActivateUserRed = useSelector(state => state.confirmDeActivateUserRed)
     const { deActivateLoading, deActivateError, deActivateSuccess, conformDeActivateUser } = confirmDeActivateUserRed
+    
+    const adminSignin = useSelector(state => state.adminSignin);
+	const {adminInfo } = adminSignin;
+
+    useEffect(() => {
+        adminInfo ? props.history.push('/admin/user') : props.history.push('/admin/signin')
+    },[adminInfo])
 
     if (premiumSuccess) {
         toast.success(confirmPremium.message);

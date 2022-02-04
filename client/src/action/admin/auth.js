@@ -6,9 +6,10 @@ import {
 } from "../../contant/admin/auth";
 
 const adminInfo = Cookie.getJSON("adminInfo") || null
-if (adminInfo) {
-  Axios.defaults.headers.common.Authorization = adminInfo?.token
-}
+const headers = {
+  'Content-Type': 'application/json',
+  "Authorization": adminInfo?.token
+  }
 
 const adminSigninAction = (email, password) => async (dispatch) => {
   dispatch({ type: ADMIN_SIGNIN_REQUEST, payload: { email, password } })
@@ -28,7 +29,7 @@ const adminSignupAction = (name, email, password, visible) => async (dispatch) =
     accessLevel = 2
   }
   dispatch({ type: ADMIN_SIGNUP_REQUEST, payload: { name, email, password, accessLevel } });
-  Axios.post("/api/admin/register", { name, email, password, accessLevel }).then(data => {
+  Axios.post("/api/admin/register", { name, email, password, accessLevel }, { headers }).then(data => {
     dispatch({ type: ADMIN_SIGNUP_SUCCESS, payload: data.data });
   }).catch(error => {
     dispatch({ type: ADMIN_SIGNUP_FAIL, payload: error.response.data });
@@ -38,7 +39,7 @@ const adminSignupAction = (name, email, password, visible) => async (dispatch) =
 
 const adminChangePassword = (id, password, newPassword,) => async (dispatch) => {
   dispatch({ type: ADMIN_UPDATE_PASSWORD_REQUEST, payload: { id, password, newPassword } });
-  Axios.post("/api/admin/change-password/" + id, { password, newPassword }).then(data => {
+  Axios.post("/api/admin/change-password/" + id, { password, newPassword }, { headers }).then(data => {
     dispatch({ type: ADMIN_UPDATE_PASSWORD_SUCCESS, payload: data.data });
   }).catch(error => {
     dispatch({ type: ADMIN_UPDATE_PASSWORD_FAIL, payload: error.response.data });

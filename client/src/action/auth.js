@@ -6,9 +6,10 @@ import {
 } from "../contant/auth";
 
 const userInfo = Cookie.getJSON("userInfo") || null
-if (userInfo) {
-  Axios.defaults.headers.common.Authorization = userInfo?.token
-}
+const headers = {
+  'Content-Type': 'application/json',
+  "Authorization": userInfo?.token
+  }
 
 const signin = (email, password) => async (dispatch) => {
   dispatch({ type: USER_SIGNIN_REQUEST, payload: { email, password } })
@@ -58,7 +59,7 @@ const newPassword = (password, token) => async (dispatch) => {
 
 const changePassword = (id,password, newPassword) => async (dispatch) => {
   dispatch({ type: UPDATE_PASSWORD_REQUEST, payload: {id, password, newPassword } });
-  Axios.post("/api/change-password/"+id, {password, newPassword}).then(data => {
+  Axios.post("/api/change-password/"+id, {password, newPassword}, { headers }).then(data => {
     dispatch({ type: UPDATE_PASSWORD_SUCCESS, payload: data.data });
   }).catch(error => {
     dispatch({ type: UPDATE_PASSWORD_FAIL, payload: error.response.data });

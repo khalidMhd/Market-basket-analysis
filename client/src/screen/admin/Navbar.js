@@ -14,7 +14,7 @@ const Navbar = () => {
 	const { loading, success, adminInfo, error } = adminSignin;
 
     const [sidebarOpen, setsidebarOpen] = useState(false);
-console.log(adminInfo);
+
     const openSidebar = () => {
         setsidebarOpen(true);
     };
@@ -26,7 +26,6 @@ console.log(adminInfo);
         Cookie.remove("adminInfo");
         window.location.href='/admin/signin'
     };
-
 
     return (
         <>

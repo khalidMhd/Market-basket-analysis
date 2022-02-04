@@ -13,6 +13,7 @@ module.exports = (req,res,next)=>{
          if(err) {
            return res.status(401).json({message: "Un-authorized User"})
          }
+         console.log("payload", payload);
          const {_id} = payload
          userModel.findById(_id).then(userData=>{
              req.user = userData

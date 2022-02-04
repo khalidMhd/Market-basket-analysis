@@ -26,7 +26,6 @@ const SignupScreen = (props) => {
         e.preventDefault();
         dispatch(adminSignupAction(name, email, password, visible));
     }
-    console.log(visible);
 
     useEffect(() => {
         adminInfo ? props.history.push('/admin/add-user') : props.history.push('/admin/signin')

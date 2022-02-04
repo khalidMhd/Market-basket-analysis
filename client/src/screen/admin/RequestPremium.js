@@ -15,16 +15,15 @@ const RequestPremiumScreen = (props) => {
 
     const [premium, setPremium] = useState(false)
 
-    const premiumHandler = (id) => {
-        dispatch(confirmPremiumAction(id))
-    }
-
     const premiumListRed = useSelector(state => state.premiumListRed);
     const { loading, error, premiumList } = premiumListRed
 
     const confirmPremiumRed = useSelector(state => state.confirmPremiumRed);
     const { error: saveError, premiumSuccess, confirmPremium } = confirmPremiumRed
-    
+
+    const adminSignin = useSelector(state => state.adminSignin);
+    const { adminInfo } = adminSignin;
+
     if (premiumSuccess) {
         toast.success(confirmPremium.message);
         window.location.reload()
@@ -35,8 +34,15 @@ const RequestPremiumScreen = (props) => {
     }
 
     useEffect(() => {
+        adminInfo ? props.history.push('/admin/request-premium') : props.history.push('/admin/signin')
         dispatch(premiumListAction())
-    }, [])
+
+    }, [adminInfo])
+
+
+    const premiumHandler = (id) => {
+        dispatch(confirmPremiumAction(id))
+    }
 
     return (
         <div className='containerMain'>
@@ -77,7 +83,7 @@ const RequestPremiumScreen = (props) => {
                                             <th scope="col">Action</th>
                                         </tr>
                                     </thead>
-                                    
+
                                     <tbody id="myTable">
                                         {premiumList && premiumList.map(data =>
                                             <tr>

@@ -12,13 +12,12 @@ const sendMail = require('../../middleware/email');
 const userIdFromJWT = require('../../middleware/userIdJWT');
 
 // get request premium
-router.get('/request-premium', async (req, res) => {
+router.get('/request-premium',loginRequire, async (req, res) => {
     requestPremiumModel.find().populate({ path: "user", select: '-password' }).then((result) => {
         if (result) {
             const filterPremium = result.filter((data) => {
                 return data?.user?.isPremium === false && data?.user?.isVerified === true
             })
-            console.log(filterPremium.length);
             if (filterPremium) {
                 return res.status(200).json(filterPremium)
             } else {
@@ -34,7 +33,7 @@ router.get('/request-premium', async (req, res) => {
 })
 
 // confirm premium
-router.post("/confirm-premium/:id", async (req, res) => {
+router.post("/confirm-premium/:id",loginRequire, async (req, res) => {
     const clientId = req.params.id
     const adminId = req.body.adminId
     const updatePremium = await userModel.findOne({ _id: clientId, isVerified: true })

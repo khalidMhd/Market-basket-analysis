@@ -22,7 +22,6 @@ const userIdFromJWT = require('../../middleware/userIdJWT');
 // })
 
 router.get('/refresh-user', loginRequire, (req, res) => {
-    console.log(req.headers.authorization);
     if (req.headers && req.headers.authorization) {
         userIdFromJWT(req.headers.authorization).then((result) => {
             if (result._id) {

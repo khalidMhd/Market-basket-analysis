@@ -14,7 +14,6 @@ const DashboardScreen = (props) => {
 
     useEffect(() => {
         adminInfo ? props.history.push('/admin/dashboard') : props.history.push('/admin/signin')
-
     },[adminInfo])
 
     return (

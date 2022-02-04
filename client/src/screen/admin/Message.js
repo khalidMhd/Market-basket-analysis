@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import '@fortawesome/fontawesome-free/css/all.css'
 import Navbar from './Navbar';
+import { useDispatch, useSelector } from 'react-redux';
+import { messageListAction } from '../../action/admin/message';
 
 const AdminMessageScreen = (props) => {
+    const dispatch = useDispatch()
     let serNo = 0
+
+    const adminSignin = useSelector(state => state.adminSignin);
+    const { adminInfo } = adminSignin;
+
+    const messageListRed = useSelector(state => state.messageListRed);
+    const { loading, error, messageList } = messageListRed;
+
+    useEffect(() => {
+        adminInfo ? props.history.push('/admin/message') : props.history.push('/admin/signin')
+        dispatch(messageListAction())
+    }, [adminInfo])
 
     return (
         <div className='containerMain'>
@@ -16,18 +30,12 @@ const AdminMessageScreen = (props) => {
                     <h5 className="text-muted">Title</h5>
                 </div> */}
 
-                        {/* filter */}
                         <div className='row justify-content-between'>
                             <form className='col-sm-4'>
                                 <div className="form-group">
                                     <input type="text" className="form-control rounded bg-light" id="myInput" placeholder="Search" />
                                 </div>
                             </form>
-                            {/* <div className="mr-3">
-                                <button type="button" onClick={() => props.history.push('/admin/add-user')} className="btn btn-success btn-sm" data-toggle="modal" data-target="#uploadFile">
-                                    <i className="fas fa-user-plus"> Add user </i>
-                                </button>
-                            </div> */}
                         </div>
                         <div className='table-responsive '>
                             <table className="table table-bordered table table-hover">
@@ -41,25 +49,36 @@ const AdminMessageScreen = (props) => {
                                     </tr>
                                 </thead>
                                 <tbody id="myTable">
-                                    <tr>
-                                        <th scope="row">{serNo += 1}</th>
-                                        <td>Khalid</td>
-                                        <td>KhalidMhd@gmail.com</td>
-                                        <td>12-9-2020</td>
-                                        <td>
-                                            <span className="fas fa-download fa-lg text-info" style={{ cursor: "pointer" }}></span>
-                                            <span className="fas fa-eye fa-lg text-success mx-2" data-toggle="modal" data-target="#exampleModal" style={{ cursor: "pointer" }} ></span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">{serNo += 1}</th>
-                                        <td>Noor</td>
-                                        <td>Norr@gmail.com</td>
-                                        <td>12-9-2020</td>
-                                        <td>
-                                            <span className="fas fa-download fa-lg text-info" style={{ cursor: "pointer" }}></span>
-                                            <span className="fas fa-eye fa-lg text-success mx-2" style={{ cursor: "pointer" }} ></span>
-                                        </td>                                    </tr>
+                                    {messageList && messageList.map(data =>
+                                        <tr>
+                                            <th scope="row">{serNo += 1}</th>
+                                            <td>{data?.user?.name}</td>
+                                            <td>{data?.user?.email}</td>
+                                            <td>{new Date(data?.createdAt).getDate() + '-' + new Date(data?.createdAt).getMonth() + '-' + new Date(data?.createdAt).getFullYear()}</td>
+                                            <td>
+                                                {/* <span className="fas fa-download fa-lg text-info" style={{ cursor: "pointer" }}></span> */}
+                                                <a href={`http://localhost:5000/${data?.file}`} download={`http://localhost:5000/${data?.file}`} >download</a>
+                                                <span className="fas fa-eye fa-lg text-success mx-2" data-toggle="modal" data-target={`#exampleModal${data?._id}`} style={{ cursor: "pointer" }} ></span>
+                                            </td>
+                                            <div class="modal fade" id={`exampleModal${data?._id}`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">User Name</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            {data?.message}
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </tr>
+                                    )}
+
                                 </tbody>
                             </table>
 
@@ -69,23 +88,6 @@ const AdminMessageScreen = (props) => {
                                     <li className="page-item px-3 text-muted">3 of 100</li>
                                     <li className="page-item"><button className="page-link">Next</button></li>
                                 </ul>
-                            </div>
-
-                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">User Name</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            Message..
-                                        </div>
-
-                                    </div>
-                                </div>
                             </div>
 
                         </div>
