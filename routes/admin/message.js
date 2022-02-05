@@ -3,23 +3,9 @@ const router = express.Router()
 var multer = require('multer')
 const messageModel = require('../../models/message')
 const userIdFromJWT = require('../../middleware/userIdJWT');
+const adminLoginRequire = require('../../middleware/adminLoginRequire')
 
-// file uplaid middleware
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, './assets/uploads')
-    },
-
-    filename: function (req, file, cb) {
-        cb(null, file.originalname + "_" + Date.now())
-    }
-})
-
-var upload = multer({
-    storage: storage,
-})
-
-router.get('/message', (req, res) => {
+router.get('/message',adminLoginRequire, (req, res) => {
     messageModel.find().sort({"createdAt": -1}).populate('user', 'name email').then(data => {
         res.status(200).json(data)
     }).catch((err) => {

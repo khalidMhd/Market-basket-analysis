@@ -3,7 +3,7 @@ const router = express.Router()
 var bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 const userModel = require('../../models/adminUser')
-const loginRequire = require('../../middleware/requireLogin')
+const adminLoginRequire = require('../../middleware/adminLoginRequire')
 const nodemailer = require('nodemailer')
 const crypto = require('crypto');
 const { google } = require('googleapis')
@@ -12,7 +12,7 @@ const sendMail = require('../../middleware/email')
 // sendMail("khalidmehmood1880@gmail.com").then(result => console.log(result)).catch(err => console.log(err))
 
 // register
-router.post('/register', async (req, res) => {
+router.post('/register',adminLoginRequire, async (req, res) => {
     const { name, email, password, accessLevel } = req.body
 
     if (!name || !email || !password, !accessLevel) {
@@ -82,7 +82,7 @@ router.post('/login', (req, res) => {
 })
 
 //change passwort
-router.post("/change-password/:id", async (req, res) => {
+router.post("/change-password/:id",adminLoginRequire, async (req, res) => {
     const { password, newPassword } = req.body
     const id = req.params.id
 
@@ -105,7 +105,7 @@ router.post("/change-password/:id", async (req, res) => {
                     return res.status(422).json({ message: "Something went wrong!" })
                 })
             } else {
-                return res.status(422).json({ error: "Invalid password" })
+                return res.status(422).json({ message: "Invalid password" })
             }
         }).catch(err => {
             return res.status(422).json({ message: "Something went wrong!" })

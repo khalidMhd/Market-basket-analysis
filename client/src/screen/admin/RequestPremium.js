@@ -13,8 +13,6 @@ const RequestPremiumScreen = (props) => {
     const dispatch = useDispatch()
     let serNo = 0
 
-    const [premium, setPremium] = useState(false)
-
     const premiumListRed = useSelector(state => state.premiumListRed);
     const { loading, error, premiumList } = premiumListRed
 

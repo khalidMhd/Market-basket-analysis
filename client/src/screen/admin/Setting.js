@@ -7,12 +7,29 @@ import Navbar from "./Navbar";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import uplaodImg from '../assets/setting.png'
-
+import { adminChangePassword } from "../../action/admin/auth";
+ 
 const SettingScreen = (props) => {
     const dispatch = useDispatch()
     const [currentPassword, setCurrentPassword] = useState("")
     const [matchPassword, setMatchPassword] = useState("")
     const [updatePassword, setUpdatePassword] = useState("")
+
+    const adminSignin = useSelector(state => state.adminSignin);
+    const { adminInfo } = adminSignin;
+
+    const adminChangePasswordRed = useSelector(state => state.adminChangePasswordRed);
+    const {loading, error, success, adminChangePass } = adminChangePasswordRed;
+
+    useEffect(() => {
+        adminInfo ? props.history.push('/admin/settings') : props.history.push('/admin/signin')
+    }, [adminInfo])
+
+    const id = adminInfo?.user?._id
+    const submitHandler = (e) => {
+        e.preventDefault()
+        dispatch(adminChangePassword(id,currentPassword, updatePassword))
+    }
 
     return (
         <div className='containerMain'>
@@ -31,7 +48,17 @@ const SettingScreen = (props) => {
                                 <img width="40%" src={uplaodImg} />
                             </div>
 
-                            <form className='col-sm-6 py-3'>
+                            <form onSubmit={submitHandler} className='col-sm-6 py-3'>
+                            {loading &&
+                                    <div class="text-center">
+                                        <div class="spinner-border text-primary" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                    </div>
+                                }
+                                {error && <div className="text-danger text-center h6">{error.message}</div>}
+                                {success && <div className="text-primary text-center h6">{adminChangePass?.message}</div>}
+
 
                                 <div className="form-group">
                                     <input type="password" onChange={(e) => setCurrentPassword(e.target.value)} value={currentPassword} className="form-control" id="exampleInputPassword1" placeholder="Current Password" required />
@@ -53,7 +80,6 @@ const SettingScreen = (props) => {
                                 </div>
                             </form>
                         </div>
-
 
                     </div>
                 </div>

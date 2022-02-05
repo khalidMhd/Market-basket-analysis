@@ -14,6 +14,7 @@ const ProfileScreen = (props) => {
     const [currentPassword, setCurrentPassword] = useState("")
     const [matchPassword, setMatchPassword] = useState("")
     const [updatePassword, setUpdatePassword] = useState("")
+    
     const userSignin = useSelector(state => state.userSignin);
     const {userInfo } = userSignin;
 

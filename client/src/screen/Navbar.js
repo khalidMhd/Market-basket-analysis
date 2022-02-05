@@ -37,9 +37,9 @@ const Navbar = (props) => {
     toast.error(error.message);
   }
 
-  // useEffect(() =>{
-  //   dispatch(refreshUser())
-  // },[])
+  useEffect(() =>{
+    dispatch(refreshUser())
+  },[])
 
   return (
     <nav className="navbar navbar-expand-lg bg-white shadow-sm ">

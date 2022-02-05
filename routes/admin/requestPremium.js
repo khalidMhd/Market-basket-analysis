@@ -4,7 +4,7 @@ var bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 const userModel = require('../../models/user')
 const requestPremiumModel = require('../../models/requestPremium')
-const loginRequire = require('../../middleware/requireLogin')
+const adminLoginRequire = require('../../middleware/adminLoginRequire')
 const nodemailer = require('nodemailer')
 const crypto = require('crypto');
 const { google } = require('googleapis')
@@ -12,8 +12,8 @@ const sendMail = require('../../middleware/email');
 const userIdFromJWT = require('../../middleware/userIdJWT');
 
 // get request premium
-router.get('/request-premium',loginRequire, async (req, res) => {
-    requestPremiumModel.find().populate({ path: "user", select: '-password' }).then((result) => {
+router.get('/request-premium',adminLoginRequire, async (req, res) => {
+    requestPremiumModel.find().populate({ path: "user", select: '-password' }).sort({createdAt: -1}).then((result) => {
         if (result) {
             const filterPremium = result.filter((data) => {
                 return data?.user?.isPremium === false && data?.user?.isVerified === true
@@ -33,7 +33,7 @@ router.get('/request-premium',loginRequire, async (req, res) => {
 })
 
 // confirm premium
-router.post("/confirm-premium/:id",loginRequire, async (req, res) => {
+router.post("/confirm-premium/:id",adminLoginRequire, async (req, res) => {
     const clientId = req.params.id
     const adminId = req.body.adminId
     const updatePremium = await userModel.findOne({ _id: clientId, isVerified: true })
@@ -54,7 +54,7 @@ router.post("/confirm-premium/:id",loginRequire, async (req, res) => {
 })
 
 // confirm basic
-router.post("/confirm-basic/:id", async (req, res) => {
+router.post("/confirm-basic/:id",adminLoginRequire, async (req, res) => {
     const clientId = req.params.id
     const adminId = req.body.adminId
     const updateBasic = await userModel.findOne({ _id: clientId, isVerified: true })

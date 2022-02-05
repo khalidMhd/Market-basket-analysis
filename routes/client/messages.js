@@ -20,7 +20,7 @@ var upload = multer({
     storage: storage,
 })
 
-router.post('/message', upload.single('file'), async (req, res, next) => {
+router.post('/message',loginRequire, upload.single('file'), async (req, res, next) => {
     const { message } = req.body
     if (!message) {
         return res.status(422).json({ message: "Please fill all the fields!" })

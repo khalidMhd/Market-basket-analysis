@@ -9,10 +9,9 @@ const PremiumChartScreen = (props) => {
     const dispatch = useDispatch()
     const [chartSelect, setcChartSelect] = useState(1)
     var weeklyTitle = null
-
+    
     return (
         <> 
-
             <div className='d-flex justify-content-between'>
                 <div className=''>
                     <h3 className='text-center text-muted '>User Analytics</h3>

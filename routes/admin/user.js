@@ -4,7 +4,7 @@ var bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 const userModel = require('../../models/user')
 const requestPremiumModel = require('../../models/requestPremium')
-const loginRequire = require('../../middleware/requireLogin')
+const adminLoginRequire = require('../../middleware/adminLoginRequire')
 const nodemailer = require('nodemailer')
 const crypto = require('crypto');
 const { google } = require('googleapis')
@@ -12,8 +12,8 @@ const sendMail = require('../../middleware/email');
 const userIdFromJWT = require('../../middleware/userIdJWT');
 
 // get all user
-router.get("/user", (req, res) => {
-    userModel.find().then((result) => {
+router.get("/user",adminLoginRequire, (req, res) => {
+    userModel.find().sort({createdAt:-1}).then((result) => {
         res.status(200).json(result)
     }).catch((err) => {
         res.status(422).json({message:"something went wrong!"})
@@ -21,7 +21,7 @@ router.get("/user", (req, res) => {
 })
 
 //de-activate user
-router.post("/de-activate-user/:id", async (req, res) => {
+router.post("/de-activate-user/:id",adminLoginRequire, async (req, res) => {
     const clientId = req.params.id
     const deActivate = await userModel.findOne({ _id: clientId, isVerified: true })
     if (deActivate) {
@@ -37,7 +37,7 @@ router.post("/de-activate-user/:id", async (req, res) => {
     }
 })
 
-router.post("/activate-user/:id", async (req, res) => {
+router.post("/activate-user/:id",adminLoginRequire, async (req, res) => {
     const clientId = req.params.id
     const deActivate = await userModel.findOne({ _id: clientId, isVerified: true })
     if (deActivate) {

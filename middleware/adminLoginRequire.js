@@ -1,6 +1,6 @@
 var jwt = require('jsonwebtoken');
 const mongoose =  require('mongoose')
-const userModel = require('../models/user')
+const adminModel = require('../models/adminUser')
 
 module.exports = (req,res,next)=>{
     const {authorization} = req.headers
@@ -13,10 +13,11 @@ module.exports = (req,res,next)=>{
          if(err) {
            return res.status(401).json({message: "Un-authorized User"})
          }
+         console.log("payload", payload);
          const {_id} = payload
-         userModel.findById(_id).then(userData=>{
-            if (userData) {
-                req.user = userData
+         adminModel.findById(_id).then(adminData=>{
+             if (adminData) {
+                req.user = adminData
                 next()
              } else {
                 return res.status(401).json({message: "Un-authorized User!"})
