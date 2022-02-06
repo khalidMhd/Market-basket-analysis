@@ -53,7 +53,7 @@ const DashboardScreen = (props) => {
 
                         <div className="row d-flex ">
 
-                            <div className="col-sm mt-2">
+                            <div className="col-sm ">
                                 <div className="d-flex justify-content-between card shadow bg-white rounded single-chart" style={{ borderBottomColor: '#ff9f00', }}>
                                     <div>
                                         <svg viewBox="0 0 36 36" className="circular-chart orange">
@@ -78,7 +78,7 @@ const DashboardScreen = (props) => {
                                 </div>
                             </div>
 
-                            <div className="col-sm mt-2">
+                            <div className="col-sm ">
                                 <div className="d-flex justify-content-between card shadow bg-white rounded single-chart" style={{ borderBottomColor: '#4CC790', }}>
                                     <div>
                                         <svg viewBox="0 0 36 36" className="circular-chart green">
@@ -103,7 +103,7 @@ const DashboardScreen = (props) => {
                                 </div>
                             </div>
 
-                            <div className="col-sm mt-2">
+                            <div className="col-sm ">
                                 <div className="d-flex justify-content-between card shadow bg-white rounded single-chart " style={{ borderBottomColor: '#3c9ee5' }}>
                                     <div>
                                         <svg viewBox="0 0 36 36" className="circular-chart blue">
@@ -128,7 +128,7 @@ const DashboardScreen = (props) => {
                                 </div>
                             </div>
 
-                            <div className="col-sm mt-2">
+                            <div className="col-sm ">
                                 <div className="d-flex justify-content-between card shadow bg-white rounded single-chart" style={{ borderBottomColor: '#F75A5F', }}>
                                     <div>
                                         <svg viewBox="0 0 36 36" className="circular-chart red">
@@ -155,9 +155,9 @@ const DashboardScreen = (props) => {
 
                         </div>
 
-                        <div className="row mt-2">
+                        <div className="row mt-3">
                             <div className="col-sm">
-                                <div className="shadow bg-white rounded p-2">
+                                <div className="shadow bg-white rounded p-2" >
                                     <PremiumChartScreen />
                                 </div>
                             </div>

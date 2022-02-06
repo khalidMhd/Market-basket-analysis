@@ -9,9 +9,9 @@
 .circular-chart {
   display: block;
   position: absolute;
-  margin: 10px ;
+  margin: 8% ;
   max-width: 35%;
-  max-height: 250px;
+  max-height: 70%;
 }
 
 .circle-bg {
@@ -56,7 +56,7 @@
 }
 
 .svg-text { 
-  margin-left: 48%;
+  margin-left: 50%;
   margin-bottom: 10px;
 }
 
