@@ -1,72 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import '@fortawesome/fontawesome-free/css/all.css'
 import Navbar from './Navbar';
 import Chart from "react-google-charts";
 import FrequentChartScreen from './admin/chart.js/frequectChart';
+import { useSelector } from 'react-redux';
 
 const DetailScreen = (props) => {
     let serNo = 0
     const [visibility, setVisibility] = useState(true)
 
-    const frequentItemsets = [
-        [
-            "Abbasi Salan Masala 200g",
-            "MilkPak Full Cream 250ml"
-        ],
-        [
-            "Abbasi Salan Masala 200g",
-            "MilkPak Full Cream 250ml",
-            "White Sugar"
-        ],
-        [
-            "Lays French Cheese 20Rs",
-            "Candy Rs.5",
-            "Dall Mongi 500g"
-        ],
-        [
-            "Abbasi Salan Masala 200g",
-            "Dall Mongi 500g",
-            "White Sugar"
-        ],
-        [
-            "Abbasi Salan Masala 200g",
-            "Dall Mongi 500g",
-            "MilkPak Full Cream 250ml"
-        ],
-        [
-            "Abbasi Salan Masala 200g",
-            "Dall Mongi 500g",
-            "MilkPak Full Cream 250ml",
-            "White Sugar"
-        ],
-        [
-            "Lays French Cheese 20Rs",
-            "Lays Yogurt&Herb 20Rs",
-            "White Sugar"
-        ],
-        [
-            "Islamabad Tea 950g",
-            "White Sugar"
-        ],
-        [
-            "Butter Puff G HR",
-            "MilkPak Full Cream 250ml"
-        ],
-        [
-            "LiptonYellow Label Tea 190g",
-            "White Sugar"
-        ],
-        [
-            "Misk POP-UP ",
-            "Tapal Green Tea Lemon 30Bags"
-        ],
-        [
-            "Misk POP-UP ",
-            "Tapal Green Tea Lemon 30Bags",
-            "White Sugar"
-        ]
-    ]
+    const productAssociationtRed = useSelector(state => state.productAssociationtRed);
+    const { loading, frequentItems, error, success } = productAssociationtRed;
+
+    useEffect(() => {
+        if (!success) {
+            props.history.push("/")
+        }
+    }, [success])
 
     return (
         <>
@@ -86,7 +37,10 @@ const DetailScreen = (props) => {
                             </div>
                         </form>
                         <div className="mr-3">
-                            <button type="button" className="btn btn-success btn-sm" >
+                            <button type="button" onClick={() => window.location.reload()} className="btn btn-primary btn-sm mx-1" >
+                                <i className="fas fa-file "> Uplaod Another File </i>
+                            </button>
+                            <button type="button" className="btn btn-success btn-sm mx-1" >
                                 <i className="fas fa-download"> Export </i>
                             </button>
                         </div>
@@ -96,7 +50,7 @@ const DetailScreen = (props) => {
 
                         <ul className="nav nav-tabs md-tabs nav-justified rounded-lg mb-3" id="myTab" role="tablist">
                             <li className="nav-item waves-effect waves-light" onClick={() => setVisibility(true)}>
-                                <a className="nav-link active" id="table-association-tab-md" data-toggle="tab" href="#table-association-md" role="tab" aria-controls="table-association-md" aria-selected="true">Tablular View <span className="badge badge-primary"> {frequentItemsets?.length} </span></a>
+                                <a className="nav-link active" id="table-association-tab-md" data-toggle="tab" href="#table-association-md" role="tab" aria-controls="table-association-md" aria-selected="true">Tablular View <span className="badge badge-primary"> {frequentItems?.totalFrequentItemsets} </span></a>
                             </li>
 
                             <li className="nav-item waves-effect waves-light" onClick={() => setVisibility(false)}>
@@ -111,31 +65,22 @@ const DetailScreen = (props) => {
                                         <tr className='table-active'>
                                             <th scope="col">S No.</th>
                                             <th scope="col">Association Items</th>
-                                            <th scope="col">Order Frequency</th>
                                         </tr>
                                     </thead>
                                     <tbody id="myTable">
-                                        {frequentItemsets.map((data, index) =>
+                                        {frequentItems && frequentItems?.frequentItemsets.map((data, index) =>
                                             <tr>
                                                 <th scope="row">{serNo += 1}</th>
-                                                <td>{data.join(' -> ')}</td>
-                                                <td>{index * 2 + 3}</td>
+                                                <td>{data?.items?.join(' -> ')}</td>
                                             </tr>
                                         )}
                                     </tbody>
 
                                 </table>
-                                <div className="d-flex justify-content-end">
-                                    <ul className="pagination pagination-sm">
-                                        <li className="page-item"><button className="page-link">Previous</button></li>
-                                        <li className="page-item px-3 text-muted">3 of 100</li>
-                                        <li className="page-item"><button className="page-link">Next</button></li>
-                                    </ul>
-                                </div>
                             </div>
                             :
                             <div>
-                                <FrequentChartScreen frequentItemsets={frequentItemsets} />
+                                <FrequentChartScreen frequentItemsets={frequentItems?.frequentItemsets} />
                             </div>
                         }
                     </div>

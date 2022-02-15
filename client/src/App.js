@@ -25,7 +25,7 @@ function App() {
     <div className="">
       <>
         <Route exact path='/' component={StartScreen} />
-        <Route exact path='/detail' component={DetailScreen} />
+        <Route exact path='/frequent-itemset' component={DetailScreen} />
         <Route exact path='/contact' component={ContactScreen} />
         <Route exact path='/profile' component={ProfileScreen} />
         <Route exact path='/signin' component={ClientSigninScreen} />

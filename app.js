@@ -10,7 +10,6 @@ swaggerDocument = require('./swagger.json');
 const PORT =process.env.PORT || 5000
 const dotenv = require('dotenv').config();
 
-
 app.use(express.static(path.resolve('../server')));
 app.use(cors())
 app.use(express.json()) 

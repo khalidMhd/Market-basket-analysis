@@ -3,8 +3,8 @@ const Schema = mongoose.Schema
 
 const fileSchema = new mongoose.Schema({
     user: {type: Schema.Types.ObjectId, ref:"user"},
-    type: {type: Number, enum:{1, 2}, require: true,}, //1: json, 2: excel
-    file: {type: String, require: true},
+    type: {type: Number, require: true }, //1: excel, 2: json
+    file: {type: String, require: true },
     createdAt: {type: Date, default: Date.now}
 })
 

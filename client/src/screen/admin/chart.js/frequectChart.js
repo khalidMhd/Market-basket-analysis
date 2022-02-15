@@ -12,8 +12,8 @@ const FrequentChartScreen = (props) => {
         var data = []
         data.push(['Item', "Frequency"])
 
-        props?.frequentItemsets.map(item =>
-            data.push([item.toString(), item?.length])
+        props?.frequentItemsets && props?.frequentItemsets.map(item =>
+            data.push([item?.items.toString(), item?.items?.length])
         )
         return data
     }

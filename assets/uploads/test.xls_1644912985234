@@ -1,0 +1,188 @@
+﻿<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+  <Version>16.00</Version>
+ </DocumentProperties>
+ <OfficeDocumentSettings xmlns="urn:schemas-microsoft-com:office:office">
+  <Colors>
+   <Color>
+    <Index>1</Index>
+    <RGB>#FFFFC0</RGB>
+   </Color>
+   <Color>
+    <Index>2</Index>
+    <RGB>#FFFFFF</RGB>
+   </Color>
+   <Color>
+    <Index>3</Index>
+    <RGB>#000000</RGB>
+   </Color>
+   <Color>
+    <Index>4</Index>
+    <RGB>#154A93</RGB>
+   </Color>
+   <Color>
+    <Index>5</Index>
+    <RGB>#ECF4FF</RGB>
+   </Color>
+  </Colors>
+ </OfficeDocumentSettings>
+ <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+  <WindowHeight>7050</WindowHeight>
+  <WindowWidth>20490</WindowWidth>
+  <WindowTopX>32767</WindowTopX>
+  <WindowTopY>32767</WindowTopY>
+  <ProtectStructure>False</ProtectStructure>
+  <ProtectWindows>False</ProtectWindows>
+ </ExcelWorkbook>
+ <Styles>
+  <Style ss:ID="Default" ss:Name="Normal">
+   <Alignment ss:Vertical="Bottom"/>
+   <Borders/>
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
+   <Interior/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s62" ss:Name="Normal 2">
+   <Alignment ss:Vertical="Bottom"/>
+   <Borders/>
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
+   <Interior/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s64" ss:Parent="s62">
+   <Alignment ss:Vertical="Bottom"/>
+   <Borders/>
+   <Font ss:FontName="Microsoft Sans Serif" x:Family="Swiss" ss:Size="8"
+    ss:Color="#333399"/>
+   <Interior/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s65" ss:Parent="s62">
+   <Alignment ss:Vertical="Bottom"/>
+   <Borders/>
+   <Font ss:FontName="Microsoft Sans Serif" x:Family="Swiss" ss:Size="8"
+    ss:Color="#000000"/>
+   <Interior/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s67" ss:Parent="s62">
+   <Alignment ss:Vertical="Bottom"/>
+   <Borders/>
+   <Font ss:FontName="Microsoft Sans Serif" x:Family="Swiss" ss:Size="8"
+    ss:Color="#000000"/>
+   <Interior ss:Color="#ECF4FF" ss:Pattern="Solid"/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+ </Styles>
+ <Worksheet ss:Name="Sheet1">
+  <Table ss:ExpandedColumnCount="9" ss:ExpandedRowCount="13" x:FullColumns="1"
+   x:FullRows="1" ss:DefaultRowHeight="15">
+   <Column ss:Index="2" ss:AutoFitWidth="0" ss:Width="127.5"/>
+   <Column ss:AutoFitWidth="0" ss:Width="276"/>
+   <Column ss:AutoFitWidth="0" ss:Width="189"/>
+   <Column ss:Index="6" ss:AutoFitWidth="0" ss:Width="117"/>
+   <Column ss:AutoFitWidth="0" ss:Width="153.75"/>
+   <Column ss:AutoFitWidth="0" ss:Width="99.75"/>
+   <Column ss:AutoFitWidth="0" ss:Width="96.75"/>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s64"><Data ss:Type="String">Receipt</Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">Product Code</Data></Cell>
+    <Cell ss:StyleID="s64"><Data ss:Type="String">Product Name</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">116478</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="String">8964000346846</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="String">Dairy Omung 225 ml</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s67"><Data ss:Type="Number">116478</Data></Cell>
+    <Cell ss:StyleID="s67"><Data ss:Type="String">8964000346846</Data></Cell>
+    <Cell ss:StyleID="s67"><Data ss:Type="String">Dairy Omung 225 ml</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">116478</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="String">620514015408</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="String">National Iodized Salt 250g</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s67"><Data ss:Type="Number">116478</Data></Cell>
+    <Cell ss:StyleID="s67"><Data ss:Type="String">620514015408</Data></Cell>
+    <Cell ss:StyleID="s67"><Data ss:Type="String">National Iodized Salt 250g</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">116478</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="String">n10</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="String">Nswar</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s67"><Data ss:Type="Number">116479</Data></Cell>
+    <Cell ss:StyleID="s67"><Data ss:Type="String">8961008212272</Data></Cell>
+    <Cell ss:StyleID="s67"><Data ss:Type="String">Nestle Water 500ml</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">116480</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="String">8964002526321</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="String">Butter Puff G HR</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s67"><Data ss:Type="Number">116480</Data></Cell>
+    <Cell ss:StyleID="s67"><Data ss:Type="String">8964002755899</Data></Cell>
+    <Cell ss:StyleID="s67"><Data ss:Type="String">Sooper Half Roll</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">11680</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="String">8964002755875</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="String">Sooper Elaichi HR</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s67"><Data ss:Type="Number">116481</Data></Cell>
+    <Cell ss:StyleID="s67"><Data ss:Type="String">8961014106251</Data></Cell>
+    <Cell ss:StyleID="s67"><Data ss:Type="String">LiptonYellow Label Tea 475g</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">116481</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="String">8964000006108</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="String">Soya Supreme Cooking Oil 1Litter Bottel</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s67"><Data ss:Type="Number">116481</Data></Cell>
+    <Cell ss:StyleID="s67"><Data ss:Type="String">620514008790</Data></Cell>
+    <Cell ss:StyleID="s67"><Data ss:Type="String">National KArahi Gosht 94g</Data></Cell>
+   </Row>
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <PageSetup>
+    <Header x:Margin="0.3"/>
+    <Footer x:Margin="0.3"/>
+    <PageMargins x:Bottom="0.75" x:Left="0.7" x:Right="0.7" x:Top="0.75"/>
+   </PageSetup>
+   <Unsynced/>
+   <Print>
+    <ValidPrinterInfo/>
+    <HorizontalResolution>600</HorizontalResolution>
+    <VerticalResolution>600</VerticalResolution>
+   </Print>
+   <Selected/>
+   <Panes>
+    <Pane>
+     <Number>3</Number>
+     <ActiveRow>18</ActiveRow>
+     <ActiveCol>2</ActiveCol>
+    </Pane>
+   </Panes>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+</Workbook>

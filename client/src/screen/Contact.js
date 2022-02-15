@@ -53,9 +53,8 @@ const ContactScreen = (props) => {
 
 
                                 <div className="form-group custom-file mb-3">
-                                    <input onChange={(e) => setFile(e.target.files[0])} className="form-control-file rounded border-top-0 border-left-0 border-right-0 bg-light rounded" type="file" id="customFile" />
-                                    {/* <input onChange={(e) => setFile(e.target.files[0])} type="file" className="custom-file-input " id="customFile"  />
-                                    <label  className="form-control rounded border-top-0 border-left-0 border-right-0 custom-file-label bg-light rounded" for="customFile">Choose file (Optional) </label> */}
+                                    <input onChange={(e) => setFile(e.target.files[0])} type="file" className="custom-file-input " id="customFile"  />
+                                    <label  className="form-control rounded border-top-0 border-left-0 border-right-0 custom-file-label bg-light rounded" for="customFile">{file?  file?.name:  "Choose file (Optional)"} </label>
                                 </div>
 
                                 <div className="form-group">

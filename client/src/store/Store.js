@@ -12,6 +12,7 @@ import { adminChangePasswordReducer, adminSigninReducer, adminSignupReducer } fr
 import { messageListReducer } from '../reducer/admin/message'
 import { confirmBasicReducer, confirmPremiumReducer, premiumListReducer } from '../reducer/admin/premium'
 import { confirmActivateUserReducer, confirmDeActivateUserReducer, userListReducer } from '../reducer/admin/user'
+import { productAssociationtReducer } from '../reducer/association'
 
 const userInfo = Cookie.getJSON("userInfo") || null
 const adminInfo = Cookie.getJSON("adminInfo") || null
@@ -37,8 +38,9 @@ const reducer = combineReducers({
     confirmBasicRed: confirmBasicReducer,
     userListRed: userListReducer,
     confirmActivateUserRed: confirmActivateUserReducer,
-    confirmDeActivateUserRed: confirmDeActivateUserReducer
-
+    confirmDeActivateUserRed: confirmDeActivateUserReducer,
+    //product association
+    productAssociationtRed: productAssociationtReducer
 })
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
