@@ -10,7 +10,7 @@ const headers = {
 
 const productAssociationAction = (file) => async (dispatch) => {
   dispatch({ type: PRODUCT_ASSOCIATION_REQUEST, payload:{file}})
-  Axios.post('/api/fp-growth', file, { headers }).then(data => {
+  Axios.post('/api/fp-growth-excel', file, { headers }).then(data => {
     dispatch({ type: PRODUCT_ASSOCIATION_SUCCESS, payload: data.data })
   }).catch(error => {
     dispatch({ type: PRODUCT_ASSOCIATION_FAIL, payload: error.response.data })

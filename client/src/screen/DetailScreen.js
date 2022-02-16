@@ -68,7 +68,7 @@ const DetailScreen = (props) => {
                                         </tr>
                                     </thead>
                                     <tbody id="myTable">
-                                        {frequentItems && frequentItems?.frequentItemsets.map((data, index) =>
+                                        {frequentItems && frequentItems?.frequentItemsets?.map((data, index) =>
                                             <tr>
                                                 <th scope="row">{serNo += 1}</th>
                                                 <td>{data?.items?.join(' -> ')}</td>

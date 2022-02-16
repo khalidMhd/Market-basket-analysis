@@ -16,7 +16,9 @@ var storage = multer.diskStorage({
   },
 
   filename: function (req, file, cb) {
-    cb(null, file.originalname + "_" + Date.now())
+    const ext = file.mimetype.split('/')[1]
+
+    cb(null, `${file.originalname}_${Date.now()}`)
   }
 })
 
@@ -24,7 +26,7 @@ var upload = multer({
   storage: storage,
 })
 
-const filterDataset = async (file) => {
+const filterDatasetExcel = async (file) => {
   var output = [];
   var finalArray = [];
   var removeDuplicate = []
@@ -79,17 +81,63 @@ const filterDataset = async (file) => {
     })
 
     var totalFrequentItemsets = await filterRecord.length
-    const freqSet = {status:200, message: "Frequent itemsets found", totalFrequentItemsets, "frequentItemsets": filterRecord }
+    const freqSet = { status: 200, message: "Frequent itemsets found", totalFrequentItemsets, "frequentItemsets": filterRecord }
     // console.log(freqSet);
     return freqSet
 
   } else {
-    return message = {status: 422, message: "Invalid File Headers Name." }
+    return message = { status: 422, message: "Invalid File Headers Name." }
   }
 
 }
 
-router.post('/fp-growth', loginRequire, upload.single('file'), async (req, res, next) => {
+const filterDatasetJson = async (file) => {
+  var transactions = []
+  var removeDuplicate = []
+  var fpgrowth = new FPGrowth(.001);
+
+  try {
+    var dataset = JSON.parse(fs.readFileSync(file, 'utf8'));
+
+  } catch (err) {
+    return message = { status: 422, message: "Invalid File!" }
+  }
+
+  if (dataset[0].Product_Name !== undefined && dataset[0].Receipt !== undefined) {
+    await dataset.map((data) => transactions.push(data.Product_Name))
+
+    // remove duplicate items in same transactions
+    for (let i = 0; i < transactions.length; i++) {
+      await removeDuplicate.push(transactions[i].filter(function (value, index, array) {
+        return array.indexOf(value) === index;
+      }))
+    }
+
+    // return item greate than one
+    const maxArr = await removeDuplicate.filter((data) => {
+      return data.length > 1
+    })
+
+    // apply fg growth
+    const itemsets = await fpgrowth.exec(maxArr)
+
+    // return item greate than one
+    const filterRecord = await itemsets.filter((data) => {
+      return data.items.length > 1
+    })
+
+    var totalFrequentItemsets = await filterRecord.length
+    const freqSet = { status: 200, message: "Frequent itemsets found", totalFrequentItemsets, "frequentItemsets": filterRecord }
+    // console.log(freqSet);
+    return freqSet
+
+  } else {
+    return message = { status: 422, message: "Invalid File Headers Name." }
+  }
+
+}
+
+router.post('/fp-growth-excel', loginRequire, upload.single('file'), async (req, res, next) => {
 
   const { type, support } = req.body
 
@@ -107,7 +155,7 @@ router.post('/fp-growth', loginRequire, upload.single('file'), async (req, res, 
     }
     if (userData?.isPremium && userData) {
 
-      await filterDataset(req.file.path).then(data => {
+      await filterDatasetExcel(req.file.path).then(data => {
 
         if (data.status !== 200) {
           return res.status(422).json({ message: data?.message })
@@ -132,21 +180,29 @@ router.post('/fp-growth', loginRequire, upload.single('file'), async (req, res, 
     } else {
       if (userFileData?.length < 3) {
         if (fileSize < 12643778) {
-          await filterDataset(req.file.path).then(data => {
-            const fileModelDetails = new fileModel({
-              user: userData?._id,
-              file: req.file.path,
-              type: type
-            })
 
-            fileModelDetails.save().then((result) => {
-              return res.status(200).json(data)
-            }).catch((err) => {
-              res.status(422).json({ message: "Something went wrong!" })
-            });
+          await filterDatasetExcel(req.file.path).then(data => {
+
+            if (data.status !== 200) {
+              return res.status(422).json({ message: data?.message })
+            } else {
+              const fileModelDetails = new fileModel({
+                user: userData?._id,
+                file: req.file.path,
+                type: type
+              })
+
+              fileModelDetails.save().then((result) => {
+                return res.status(200).json(data)
+              }).catch((err) => {
+                res.status(422).json({ message: "Something went wrong!" })
+              });
+            }
+
           }).catch(err => {
             return res.status(422).json({ message: err })
           })
+
         } else {
           return res.status(422).json({ message: "File size exceeds the limit of 12 mb. Update to premium for larger files." })
         }
@@ -161,10 +217,92 @@ router.post('/fp-growth', loginRequire, upload.single('file'), async (req, res, 
   }
 })
 
-router.get('/fp-growth', async (req, res, next) => {
+router.post('/fp-growth-json', loginRequire, upload.single('file'), async (req, res, next) => {
+
+  const { type, support } = req.body
+
+  //file size 12643778
+  const fileSize = await parseInt(req.headers['content-length']);
+
+  if (req.file !== undefined && type) {
+    const pathfilter = req.file.path.split('\\').slice(0).join('/');
+  
+    const userId = await userIdFromJWT(req.headers.authorization)
+    const userData = await userModel.findOne({ _id: userId?._id, accStatus: true, isVerified: true })
+    const userFileData = await fileModel.find({ user: userId?._id })
+
+    if (!userData) {
+      return res.status(422).json({ message: "Invalid user!" })
+    }
+    if (userData?.isPremium && userData) {
+
+      await filterDatasetJson(pathfilter).then(data => {
+
+        if (data.status !== 200) {
+          return res.status(422).json({ message: data?.message })
+        } else {
+          const fileModelDetails = new fileModel({
+            user: userData?._id,
+            file: req.file.path,
+            type: type
+          })
+
+          fileModelDetails.save().then((result) => {
+            return res.status(200).json(data)
+          }).catch((err) => {
+            res.status(422).json({ message: "Something went wrong!" })
+          });
+        }
+
+      }).catch(err => {
+        return res.status(422).json({ message: err })
+      })
+
+    } else {
+      if (userFileData?.length < 3) {
+        if (fileSize < 12643778) {
+
+          await filterDatasetJson(pathfilter).then(data => {
+
+            if (data.status !== 200) {
+              return res.status(422).json({ message: data?.message })
+            } else {
+              const fileModelDetails = new fileModel({
+                user: userData?._id,
+                file: req.file.path,
+                type: type
+              })
+
+              fileModelDetails.save().then((result) => {
+                return res.status(200).json(data)
+              }).catch((err) => {
+                res.status(422).json({ message: "Something went wrong!" })
+              });
+            }
+
+          }).catch(err => {
+            return res.status(422).json({ message: err })
+          })
+
+        } else {
+          return res.status(422).json({ message: "File size exceeds the limit of 12 mb. Update to premium for larger files." })
+        }
+      } else {
+        return res.status(422).json({ message: "Your account free limit has been reached. Update to premium." })
+      }
+
+    }
+
+  } else {
+    return res.status(422).json({ message: "Fill all the fields!" })
+  }
+})
+
+router.get('/fp-growth-json', async (req, res, next) => {
+
   const dataset = require('../dataset/json/july-oct')
   // Execute Apriori with a minimum support of 40%.
-  var fpgrowth = new FPGrowth(.01);
+  var fpgrowth = new FPGrowth(.001);
 
   var transactions = []
   var removeDuplicate = []
@@ -196,11 +334,12 @@ router.get('/fp-growth', async (req, res, next) => {
   fpgrowth.exec(maxArr).then(async function (itemsets) {
     // Returns an array representing the frequent itemsets.
     var frequentItemsets = itemsets.items;
-    var totalFrequentItemsets = itemsets.length
     // return item greate than one
     const filterRecord = await itemsets.filter((data) => {
       return data.items.length > 1
     })
+
+    var totalFrequentItemsets = filterRecord.length
 
     return res.json({ totalFrequentItemsets, "frequentItemsets": filterRecord })
     // return res.json({ totalFrequentItemsets, itemsets})
