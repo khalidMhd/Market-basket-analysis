@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import '@fortawesome/fontawesome-free/css/all.css'
 import Navbar from './Navbar';
 import Chart from "react-google-charts";
 import FrequentChartScreen from './admin/chart.js/frequectChart';
 import { useSelector } from 'react-redux';
+import ReactHTMLTableToExcel from "react-html-table-to-excel";
+import $, { data } from 'jquery'
 
 const DetailScreen = (props) => {
+    const tableRef = useRef(null);
+
     let serNo = 0
     const [visibility, setVisibility] = useState(true)
 
@@ -18,6 +22,15 @@ const DetailScreen = (props) => {
             props.history.push("/")
         }
     }, [success])
+
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
 
     return (
         <>
@@ -40,9 +53,19 @@ const DetailScreen = (props) => {
                             <button type="button" onClick={() => window.location.reload()} className="btn btn-primary btn-sm mx-1" >
                                 <i className="fas fa-file "> Uplaod Another File </i>
                             </button>
-                            <button type="button" className="btn btn-success btn-sm mx-1" >
-                                <i className="fas fa-download"> Export </i>
-                            </button>
+
+                            <ReactHTMLTableToExcel
+                                id="test-table-xls-button"
+                                className="download-table-xls-button btn btn-success mx-1 fas fa-download "
+                                // className="download-table-xls-button"
+                                table="table-to-xls"
+                                filename="product-association"
+                                sheet="tablexls"
+                                style={{ "textDecoration": "none", "color": "#fff" }}
+                                buttonText=" Export "
+                            />
+        
+
                         </div>
                     </div>
 
@@ -60,7 +83,7 @@ const DetailScreen = (props) => {
 
                         {visibility ?
                             <div className='table-responsive '>
-                                <table className="table table-bordered table table-hover">
+                                <table ref={tableRef} id="table-to-xls" className="table table-bordered table table-hover">
                                     <thead>
                                         <tr className='table-active'>
                                             <th scope="col">S No.</th>

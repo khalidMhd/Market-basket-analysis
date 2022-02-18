@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import 'bootstrap/dist/css/bootstrap.css';
 import '@fortawesome/fontawesome-free/css/all.css'
 import Navbar from './Navbar';
+import $, { data } from 'jquery'
 
 const AdminDetailScreen = (props) => {
     const dispatch = useDispatch()
@@ -14,6 +15,16 @@ const AdminDetailScreen = (props) => {
     useEffect(() => {
         adminInfo ? props.history.push('/admin/detail') : props.history.push('/admin/signin')
     },[adminInfo])    
+
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+
     return (
         <div className='containerMain'>
             <Navbar />

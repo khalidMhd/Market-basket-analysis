@@ -10,10 +10,12 @@ import { productAssociationAction } from '../action/association';
 const StartScreen = (props) => {
     const dispatch = useDispatch()
     const [file, setFile] = useState("")
-    const [type, setType] = useState(1)
+    const [support, setSupport] = useState(1)
+    const [apiKey, setApiKey] = useState("fp-growth-excel")
+
     var formData = new FormData();
     formData.append('file', file);
-    formData.append('type', type);
+    formData.append('support', support);
 
     const userSignin = useSelector(state => state.userSignin);
     const { userInfo } = userSignin;
@@ -28,7 +30,7 @@ const StartScreen = (props) => {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        dispatch(productAssociationAction(formData))
+        dispatch(productAssociationAction(apiKey, formData))
     }
     // Axios.get("/api/getData").then((result) => {
     //     console.log(result);
@@ -64,10 +66,21 @@ const StartScreen = (props) => {
                                     {success && <div className="text-primary text-center h6">{props.history.push("/frequent-itemset")}</div>}
 
                                     <div className="form-group">
-                                        <select onChange={(e) => setType(e.target.value)} className="form-control border-top-0 border-left-0 border-right-0 bg-light rounded" id="exampleFormControlSelect1" required>
+                                        <select onChange={(e) => setApiKey(e.target.value)} className="form-control border-top-0 border-left-0 border-right-0 bg-light rounded" id="exampleFormControlSelect1" required>
                                             <option  disabled selected>Select File Type</option>
-                                            <option value={2}>JSON</option>
-                                            <option value={1}>Excel</option>
+                                            <option value="fp-growth-json">JSON</option>
+                                            <option value="fp-growth-excel">Excel</option>
+                                        </select>
+                                    </div>
+
+                                    <div className="form-group">
+                                        <select onChange={(e) => setSupport(e.target.value)} className="form-control border-top-0 border-left-0 border-right-0 bg-light rounded" id="exampleFormControlSelect1" required>
+                                            <option  disabled selected>Select Support</option>
+                                            <option value="1">10%</option>
+                                            <option value="2">20%</option>
+                                            <option value="3">30%</option>
+                                            <option value="4">40%</option>
+                                            <option value="5">50%</option>
                                         </select>
                                     </div>
 

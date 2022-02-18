@@ -26,11 +26,11 @@ var upload = multer({
   storage: storage,
 })
 
-const filterDatasetExcel = async (file) => {
+const filterDatasetExcel = async (support, file) => {
   var output = [];
   var finalArray = [];
   var removeDuplicate = []
-  var fpgrowth = new FPGrowth(.001);
+  var fpgrowth = new FPGrowth(`.00${support}`);
 
   try {
     var doc = await parser.parseXls2Json(file)
@@ -91,10 +91,10 @@ const filterDatasetExcel = async (file) => {
 
 }
 
-const filterDatasetJson = async (file) => {
+const filterDatasetJson = async (support, file) => {
   var transactions = []
   var removeDuplicate = []
-  var fpgrowth = new FPGrowth(.001);
+  var fpgrowth = new FPGrowth(`.00${support}`);
 
   try {
     var dataset = JSON.parse(fs.readFileSync(file, 'utf8'));
@@ -139,8 +139,8 @@ const filterDatasetJson = async (file) => {
 
 router.post('/fp-growth-excel', loginRequire, upload.single('file'), async (req, res, next) => {
 
-  const { type, support } = req.body
-
+  const { support } = req.body
+  const type = 1
   //file size 12643778
   const fileSize = await parseInt(req.headers['content-length']);
 
@@ -155,7 +155,7 @@ router.post('/fp-growth-excel', loginRequire, upload.single('file'), async (req,
     }
     if (userData?.isPremium && userData) {
 
-      await filterDatasetExcel(req.file.path).then(data => {
+      await filterDatasetExcel(support, req.file.path).then(data => {
 
         if (data.status !== 200) {
           return res.status(422).json({ message: data?.message })
@@ -181,7 +181,7 @@ router.post('/fp-growth-excel', loginRequire, upload.single('file'), async (req,
       if (userFileData?.length < 3) {
         if (fileSize < 12643778) {
 
-          await filterDatasetExcel(req.file.path).then(data => {
+          await filterDatasetExcel(support, req.file.path).then(data => {
 
             if (data.status !== 200) {
               return res.status(422).json({ message: data?.message })
@@ -219,7 +219,8 @@ router.post('/fp-growth-excel', loginRequire, upload.single('file'), async (req,
 
 router.post('/fp-growth-json', loginRequire, upload.single('file'), async (req, res, next) => {
 
-  const { type, support } = req.body
+  const { support } = req.body
+  const type = 2
 
   //file size 12643778
   const fileSize = await parseInt(req.headers['content-length']);
@@ -236,11 +237,12 @@ router.post('/fp-growth-json', loginRequire, upload.single('file'), async (req, 
     }
     if (userData?.isPremium && userData) {
 
-      await filterDatasetJson(pathfilter).then(data => {
+      await filterDatasetJson(support, pathfilter).then(data => {
 
         if (data.status !== 200) {
           return res.status(422).json({ message: data?.message })
         } else {
+
           const fileModelDetails = new fileModel({
             user: userData?._id,
             file: req.file.path,
@@ -262,7 +264,7 @@ router.post('/fp-growth-json', loginRequire, upload.single('file'), async (req, 
       if (userFileData?.length < 3) {
         if (fileSize < 12643778) {
 
-          await filterDatasetJson(pathfilter).then(data => {
+          await filterDatasetJson(support, pathfilter).then(data => {
 
             if (data.status !== 200) {
               return res.status(422).json({ message: data?.message })

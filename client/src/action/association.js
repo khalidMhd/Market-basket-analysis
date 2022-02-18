@@ -6,15 +6,15 @@ const userInfo = Cookie.getJSON("userInfo") || null
 const headers = {
   'Content-Type': 'application/json',
   "Authorization": userInfo?.token
-  }
+}
 
-const productAssociationAction = (file) => async (dispatch) => {
-  dispatch({ type: PRODUCT_ASSOCIATION_REQUEST, payload:{file}})
-  Axios.post('/api/fp-growth-excel', file, { headers }).then(data => {
+const productAssociationAction = (apiKey , file) => async (dispatch) => {
+  dispatch({ type: PRODUCT_ASSOCIATION_REQUEST, payload: { file } })
+  Axios.post(`/api/${apiKey}`, file, { headers }).then(data => {
     dispatch({ type: PRODUCT_ASSOCIATION_SUCCESS, payload: data.data })
   }).catch(error => {
     dispatch({ type: PRODUCT_ASSOCIATION_FAIL, payload: error.response.data })
   })
 }
 
-export {productAssociationAction}
+export { productAssociationAction }

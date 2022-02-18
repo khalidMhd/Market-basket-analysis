@@ -4,6 +4,7 @@ import '@fortawesome/fontawesome-free/css/all.css'
 import Navbar from './Navbar';
 import { useDispatch, useSelector } from 'react-redux';
 import { messageListAction } from '../../action/admin/message';
+import $, { data } from 'jquery'
 
 const AdminMessageScreen = (props) => {
     const dispatch = useDispatch()
@@ -19,6 +20,15 @@ const AdminMessageScreen = (props) => {
         adminInfo ? props.history.push('/admin/message') : props.history.push('/admin/signin')
         dispatch(messageListAction())
     }, [adminInfo])
+
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
 
     return (
         <div className='containerMain'>

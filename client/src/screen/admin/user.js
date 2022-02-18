@@ -9,6 +9,7 @@ import { confirmActivateUserAction, confirmDeactivateUserAction, userListAction 
 import { confirmBasicAction, confirmPremiumAction } from '../../action/admin/premium';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import $, { data } from 'jquery'
 
 const AdminUserScreen = (props) => {
     const dispatch = useDispatch()
@@ -31,13 +32,13 @@ const AdminUserScreen = (props) => {
 
     const confirmDeActivateUserRed = useSelector(state => state.confirmDeActivateUserRed)
     const { deActivateLoading, deActivateError, deActivateSuccess, conformDeActivateUser } = confirmDeActivateUserRed
-    
+
     const adminSignin = useSelector(state => state.adminSignin);
-	const {adminInfo } = adminSignin;
+    const { adminInfo } = adminSignin;
 
     useEffect(() => {
         adminInfo ? props.history.push('/admin/user') : props.history.push('/admin/signin')
-    },[adminInfo])
+    }, [adminInfo])
 
     if (premiumSuccess) {
         toast.success(confirmPremium.message);
@@ -107,6 +108,14 @@ const AdminUserScreen = (props) => {
         dispatch(confirmBasicAction(id))
     }
 
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
 
     return (
         <div className='containerMain'>

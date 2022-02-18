@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { confirmPremiumAction, premiumListAction } from '../../action/admin/premium';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import $, { data } from 'jquery'
 
 const RequestPremiumScreen = (props) => {
     const dispatch = useDispatch()
@@ -41,6 +42,15 @@ const RequestPremiumScreen = (props) => {
     const premiumHandler = (id) => {
         dispatch(confirmPremiumAction(id))
     }
+
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
 
     return (
         <div className='containerMain'>
