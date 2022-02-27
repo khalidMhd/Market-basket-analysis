@@ -38,13 +38,13 @@ let mailOptions = {
   },
 };
 
-// transporter.sendMail(mailOptions, (error, info) => {  
-//   if (error) {
-//     console.log(error);   // if anything goes wrong an error will show up in your terminal.
-//   } else {
-//       console.log("Message sent: %s", info.messageId);    // if it's a success, a confirmation will show up in your terminal.
-//     }
-// });
+transporter.sendMail(mailOptions, (error, info) => {  
+  if (error) {
+    console.log(error);   // if anything goes wrong an error will show up in your terminal.
+  } else {
+      console.log("Message sent: %s", info.messageId);    // if it's a success, a confirmation will show up in your terminal.
+    }
+});
 
 
 module.exports = router
