@@ -3,6 +3,7 @@ import Cookie from 'js-cookie'
 import {
   CONFIRM_ACTIVATE_USER_FAIL, CONFIRM_ACTIVATE_USER_REQUEST, CONFIRM_ACTIVATE_USER_SUCCESS,
   CONFIRM_DEACTIVATE_USER_FAIL, CONFIRM_DEACTIVATE_USER_REQUEST, CONFIRM_DEACTIVATE_USER_SUCCESS,
+  USERFILE_LIST_FAIL, USERFILE_LIST_REQUEST, USERFILE_LIST_SUCCESS,
   USER_LIST_FAIL, USER_LIST_REQUEST, USER_LIST_SUCCESS
 } from "../../contant/admin/user";
 
@@ -18,6 +19,15 @@ const userListAction = () => async (dispatch) => {
     dispatch({ type: USER_LIST_SUCCESS, payload: data.data })
   }).catch(error => {
     dispatch({ type: USER_LIST_FAIL, payload: error.response.data })
+  })
+}
+
+const userFileListAction = (id) => async (dispatch) => {
+  dispatch({ type: USERFILE_LIST_REQUEST, payload: { id } })
+  Axios.get('/api/admin/user-file/' + id, { headers }).then(data => {
+    dispatch({ type: USERFILE_LIST_SUCCESS, payload: data.data })
+  }).catch(error => {
+    dispatch({ type: USERFILE_LIST_FAIL, payload: error.response.data })
   })
 }
 
@@ -39,4 +49,7 @@ const confirmActivateUserAction = (id) => async (dispatch) => {
   })
 }
 
-export { userListAction, confirmDeactivateUserAction, confirmActivateUserAction }
+export {
+  userListAction, confirmDeactivateUserAction,
+  confirmActivateUserAction, userFileListAction
+}

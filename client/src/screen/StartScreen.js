@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from './Navbar';
 import uplaodImg from './assets/upload.png'
-import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { refreshUser } from '../action/user';
-import Axios from "axios";
 import { productAssociationAction } from '../action/association';
 
 const StartScreen = (props) => {
@@ -32,11 +30,6 @@ const StartScreen = (props) => {
         e.preventDefault()
         dispatch(productAssociationAction(apiKey, formData))
     }
-    // Axios.get("/api/getData").then((result) => {
-    //     console.log(result);
-    // }).catch((err) => {
-    //     console.log("err", err);
-    // });
 
     return (
         <>
@@ -67,7 +60,7 @@ const StartScreen = (props) => {
 
                                     <div className="form-group">
                                         <select onChange={(e) => setApiKey(e.target.value)} className="form-control border-top-0 border-left-0 border-right-0 bg-light rounded" id="exampleFormControlSelect1" required>
-                                            <option  disabled selected>Select File Type</option>
+                                            <option disabled selected>Select File Type</option>
                                             <option value="fp-growth-json">JSON</option>
                                             <option value="fp-growth-excel">Excel</option>
                                         </select>
@@ -75,7 +68,7 @@ const StartScreen = (props) => {
 
                                     <div className="form-group">
                                         <select onChange={(e) => setSupport(e.target.value)} className="form-control border-top-0 border-left-0 border-right-0 bg-light rounded" id="exampleFormControlSelect1" required>
-                                            <option  disabled selected>Select Support</option>
+                                            <option disabled selected>Select Support</option>
                                             <option value="1">10%</option>
                                             <option value="2">20%</option>
                                             <option value="3">30%</option>

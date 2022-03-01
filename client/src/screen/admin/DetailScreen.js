@@ -1,20 +1,33 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import 'bootstrap/dist/css/bootstrap.css';
 import '@fortawesome/fontawesome-free/css/all.css'
 import Navbar from './Navbar';
+import FrequentChartScreen from '../admin/chart.js/frequectChart';
+import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import $, { data } from 'jquery'
 
 const AdminDetailScreen = (props) => {
-    const dispatch = useDispatch()
+    const tableRef = useRef(null);
     let serNo = 0
-    
-	const adminSignin = useSelector(state => state.adminSignin);
-	const {adminInfo } = adminSignin;
+    const [visibility, setVisibility] = useState(true)
+
+    const productAssociationtRed = useSelector(state => state.productAssociationtRed);
+    const { loading, frequentItems, error, success } = productAssociationtRed;
+
+
+    const adminSignin = useSelector(state => state.adminSignin);
+    const { adminInfo } = adminSignin;
 
     useEffect(() => {
         adminInfo ? props.history.push('/admin/detail') : props.history.push('/admin/signin')
-    },[adminInfo])    
+    }, [adminInfo])
+
+    useEffect(() => {
+        if (!success) {
+            props.history.push("/admin/dashboard")
+        }
+    }, [success])
 
     $(document).ready(function () {
         $("#myInput").on("keyup", function () {
@@ -30,7 +43,7 @@ const AdminDetailScreen = (props) => {
             <Navbar />
             <main>
                 <div className="m-4">
-                    <div className='cart shadow bg-white rounded p-3'>
+                    <div className='cart shadow bg-white rounded p-3 '>
                         {/* <div>
                     <h5 className="text-muted">Title</h5>
                 </div> */}
@@ -44,46 +57,65 @@ const AdminDetailScreen = (props) => {
                                 </div>
                             </form>
                             <div className="mr-3">
-                                <button type="button" className="btn btn-success btn-sm" data-toggle="modal" data-target="#uploadFile">
-                                    <i className="fas fa-download"> Export </i>
+                                <button type="button" onClick={() => window.location.reload()} className="btn btn-primary btn-sm mx-1" >
+                                    <i className="fas fa-file "> Uplaod Another File </i>
                                 </button>
+
+                                <ReactHTMLTableToExcel
+                                    id="test-table-xls-button"
+                                    className="download-table-xls-button btn btn-success mx-1 fas fa-download "
+                                    // className="download-table-xls-button"
+                                    table="table-to-xls"
+                                    filename="product-association"
+                                    sheet="tablexls"
+                                    style={{ "textDecoration": "none", "color": "#fff" }}
+                                    buttonText=" Export "
+                                />
+
+
                             </div>
                         </div>
 
-                        <div className='table-responsive '>
-                            <table className="table table-bordered table table-hover">
-                                <thead>
-                                    <tr className='table-active'>
-                                        <th scope="col">S No.</th>
-                                        <th scope="col">Association Items</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="myTable">
-                                    <tr>
-                                        <th scope="row">{serNo += 1}</th>
-                                        <td>Bread, Milk</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">{serNo += 1}</th>
-                                        <td>Bread, Milk, Eggs</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">{serNo += 1}</th>
-                                        <td>Coke, Milk, Beer</td>
-                                    </tr>
-                                </tbody>
+                        <div>
 
-                            </table>
-                            <div className="d-flex justify-content-end">
-                                <ul className="pagination pagination-sm">
-                                    <li className="page-item"><button className="page-link">Previous</button></li>
-                                    <li className="page-item px-3 text-muted">3 of 100</li>
-                                    <li className="page-item"><button className="page-link">Next</button></li>
-                                </ul>
-                            </div>
+                            <ul className="nav nav-tabs md-tabs nav-justified rounded-lg mb-3" id="myTab" role="tablist">
+                                <li className="nav-item waves-effect waves-light" onClick={() => setVisibility(true)}>
+                                    <a className="nav-link active" id="table-association-tab-md" data-toggle="tab" href="#table-association-md" role="tab" aria-controls="table-association-md" aria-selected="true">Tablular View <span className="badge badge-primary"> {frequentItems?.totalFrequentItemsets} </span></a>
+                                </li>
+
+                                <li className="nav-item waves-effect waves-light" onClick={() => setVisibility(false)}>
+                                    <a className="nav-link" id="graph-association-tab-md" data-toggle="tab" href="#graph-association-md" role="tab" aria-controls="graph-association-md" aria-selected="false">Graphical View</a>
+                                </li>
+                            </ul>
+
+                            {visibility ?
+                                <div className='table-responsive '>
+                                    <table ref={tableRef} id="table-to-xls" className="table table-bordered table table-hover">
+                                        <thead>
+                                            <tr className='table-active'>
+                                                <th scope="col">S No.</th>
+                                                <th scope="col">Association Items</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="myTable">
+                                            {frequentItems && frequentItems?.frequentItemsets?.map((data, index) =>
+                                                <tr>
+                                                    <th scope="row">{serNo += 1}</th>
+                                                    <td>{data?.items?.join(' -> ')}</td>
+                                                </tr>
+                                            )}
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                                :
+                                <div>
+                                    <FrequentChartScreen frequentItemsets={frequentItems?.frequentItemsets} />
+                                </div>
+                            }
                         </div>
-                        
                     </div>
+
                 </div>
             </main>
         </div>

@@ -11,8 +11,9 @@ const PORT =process.env.PORT || 5000
 const dotenv = require('dotenv').config();
 
 app.use(express.static(path.resolve('../server')));
+app.use(express.static(__dirname+'../assets'));
 app.use(cors())
-app.use(express.json()) 
+app.use(express.json())
 
 app.use('/api', require('./routes/app'))
 app.use('/api', require('./routes/filter_dataset'))

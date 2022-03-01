@@ -10,6 +10,7 @@ import { confirmBasicAction, confirmPremiumAction } from '../../action/admin/pre
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import $, { data } from 'jquery'
+import { Link } from 'react-router-dom';
 
 const AdminUserScreen = (props) => {
     const dispatch = useDispatch()
@@ -252,6 +253,8 @@ const AdminUserScreen = (props) => {
                                                                     :
                                                                     <span className='fa fa-user-check mx-2 fa-lg text-success' style={{ cursor: "pointer" }} onClick={() => { if (window.confirm('Are you sure to activate this user?')) { activateHandler(data?._id) } }}></span>
                                                                 }
+
+                                                                <Link to={`/admin/user/file/${data?._id}`} className='fa fa-list fa-lg' ></Link>
 
                                                             </td>
                                                         </tr>

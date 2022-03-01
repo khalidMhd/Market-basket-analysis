@@ -5,6 +5,7 @@ var multer = require('multer')
 var parser = new (require('simple-excel-to-json').XlsParser)();
 const { FPGrowth, Itemset } = require('node-fpgrowth');
 const loginRequire = require('../middleware/requireLogin');
+const adminLoginRequire = require('../middleware/adminLoginRequire');
 const userIdFromJWT = require('../middleware/userIdJWT');
 const userModel = require('../models/user')
 const fileModel = require('../models/file')
@@ -16,14 +17,27 @@ var storage = multer.diskStorage({
   },
 
   filename: function (req, file, cb) {
-    const ext = file.mimetype.split('/')[1]
-
-    cb(null, `${file.originalname}_${Date.now()}`)
+    cb(null, Date.now() +"_" + file.originalname)
   }
 })
 
 var upload = multer({
   storage: storage,
+})
+
+// file upload json middleware
+var storageJson = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './assets/uploads')
+  },
+
+  filename: function (req, file, cb) {
+    cb(null, file.originalname+"_" +Date.now() )
+  }
+})
+
+var uploadJson = multer({
+  storage: storageJson,
 })
 
 const filterDatasetExcel = async (support, file) => {
@@ -95,7 +109,6 @@ const filterDatasetJson = async (support, file) => {
   var transactions = []
   var removeDuplicate = []
   var fpgrowth = new FPGrowth(`.00${support}`);
-
   try {
     var dataset = JSON.parse(fs.readFileSync(file, 'utf8'));
 
@@ -144,7 +157,7 @@ router.post('/fp-growth-excel', loginRequire, upload.single('file'), async (req,
   //file size 12643778
   const fileSize = await parseInt(req.headers['content-length']);
 
-  if (req.file !== undefined && type) {
+  if (req.file !== undefined && support) {
 
     const userId = await userIdFromJWT(req.headers.authorization)
     const userData = await userModel.findOne({ _id: userId?._id, accStatus: true, isVerified: true })
@@ -217,7 +230,7 @@ router.post('/fp-growth-excel', loginRequire, upload.single('file'), async (req,
   }
 })
 
-router.post('/fp-growth-json', loginRequire, upload.single('file'), async (req, res, next) => {
+router.post('/fp-growth-json', loginRequire, uploadJson.single('file'), async (req, res, next) => {
 
   const { support } = req.body
   const type = 2
@@ -225,9 +238,9 @@ router.post('/fp-growth-json', loginRequire, upload.single('file'), async (req, 
   //file size 12643778
   const fileSize = await parseInt(req.headers['content-length']);
 
-  if (req.file !== undefined && type) {
+  if (req.file !== undefined && support) {
     const pathfilter = req.file.path.split('\\').slice(0).join('/');
-  
+
     const userId = await userIdFromJWT(req.headers.authorization)
     const userData = await userModel.findOne({ _id: userId?._id, accStatus: true, isVerified: true })
     const userFileData = await fileModel.find({ user: userId?._id })
@@ -299,6 +312,53 @@ router.post('/fp-growth-json', loginRequire, upload.single('file'), async (req, 
     return res.status(422).json({ message: "Fill all the fields!" })
   }
 })
+
+//admin
+router.post('/admin/fp-growth-excel', adminLoginRequire, upload.single('file'), async (req, res, next) => {
+  const { support } = req.body
+
+  if (req.file !== undefined && support) {
+
+    await filterDatasetExcel(support, req.file.path).then(data => {
+
+      if (data.status !== 200) {
+        return res.status(422).json({ message: data?.message })
+      } else {
+        return res.status(200).json(data)
+      }
+
+    }).catch(err => {
+      return res.status(422).json({ message: err })
+    })
+
+  } else {
+    return res.status(422).json({ message: "Fill all the fields!" })
+  }
+})
+
+router.post('/admin/fp-growth-json', adminLoginRequire, uploadJson.single('file'), async (req, res, next) => {
+  const { support } = req.body
+console.log(req.file.path);
+  if (req.file !== undefined && support) {
+    const pathfilter = req.file.path.split('\\').slice(0).join('/');
+
+    await filterDatasetJson(support, pathfilter).then(data => {
+
+      if (data.status !== 200) {
+        return res.status(422).json({ message: data?.message })
+      } else {
+        return res.status(200).json(data)
+      }
+
+    }).catch(err => {
+      return res.status(422).json({ message: err })
+    })
+
+  } else {
+    return res.status(422).json({ message: "Fill all the fields!" })
+  }
+})
+
 
 router.get('/fp-growth-json', async (req, res, next) => {
 

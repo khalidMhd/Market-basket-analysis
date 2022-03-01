@@ -1,6 +1,7 @@
 import {
     CONFIRM_ACTIVATE_USER_FAIL, CONFIRM_ACTIVATE_USER_REQUEST, CONFIRM_ACTIVATE_USER_SUCCESS,
     CONFIRM_DEACTIVATE_USER_FAIL, CONFIRM_DEACTIVATE_USER_REQUEST, CONFIRM_DEACTIVATE_USER_SUCCESS,
+    USERFILE_LIST_FAIL, USERFILE_LIST_REQUEST, USERFILE_LIST_SUCCESS,
     USER_LIST_FAIL, USER_LIST_REQUEST, USER_LIST_SUCCESS
 } from "../../contant/admin/user";
 
@@ -16,12 +17,24 @@ function userListReducer(state = { userList: [] }, action) {
     }
 }
 
+function userFileListReducer(state = { userFileList: [] }, action) {
+    switch (action.type) {
+        case USERFILE_LIST_REQUEST:
+            return { loading: true, userFileList: [] }
+        case USERFILE_LIST_SUCCESS:
+            return { loading: false, userFileList: action.payload }
+        case USERFILE_LIST_FAIL:
+            return { loading: false, error: action.payload };
+        default: return state;
+    }
+}
+
 function confirmActivateUserReducer(state = { conformActivateUser: {} }, action) {
     switch (action.type) {
         case CONFIRM_ACTIVATE_USER_REQUEST:
             return { activateLoading: true, activateSuccess: false, conformActivateUser: {} }
         case CONFIRM_ACTIVATE_USER_SUCCESS:
-            return { activateLoading: false,activateSuccess: true, conformActivateUser: action.payload }
+            return { activateLoading: false, activateSuccess: true, conformActivateUser: action.payload }
         case CONFIRM_ACTIVATE_USER_FAIL:
             return { activateLoading: false, activateError: action.payload };
         default: return state;
@@ -42,5 +55,6 @@ function confirmDeActivateUserReducer(state = { conformDeActivateUser: {} }, act
 
 
 export {
-    userListReducer, confirmActivateUserReducer, confirmDeActivateUserReducer
+    userListReducer, confirmActivateUserReducer,
+    confirmDeActivateUserReducer, userFileListReducer
 };

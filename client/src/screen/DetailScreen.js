@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import '@fortawesome/fontawesome-free/css/all.css'
 import Navbar from './Navbar';
-import Chart from "react-google-charts";
 import FrequentChartScreen from './admin/chart.js/frequectChart';
 import { useSelector } from 'react-redux';
 import ReactHTMLTableToExcel from "react-html-table-to-excel";

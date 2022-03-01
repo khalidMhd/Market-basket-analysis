@@ -6,51 +6,89 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
 import Navbar from '../admin/Navbar';
 import uplaodImg from '../assets/upload.png'
+import { productAssociationAction } from '../../action/association';
 
 const UplaodFileScreen = (props) => {
     const dispatch = useDispatch()
-    
-	const adminSignin = useSelector(state => state.adminSignin);
-	const {adminInfo } = adminSignin;
+
+    const [file, setFile] = useState("")
+    const [support, setSupport] = useState(1)
+    const [apiKey, setApiKey] = useState("fp-growth-excel")
+
+    var formData = new FormData();
+    formData.append('file', file);
+    formData.append('support', support);
+
+    const productAssociationtRed = useSelector(state => state.productAssociationtRed);
+    const { loading, frequentItems, error, success } = productAssociationtRed;
+
+    const adminSignin = useSelector(state => state.adminSignin);
+    const { adminInfo } = adminSignin;
 
     useEffect(() => {
         adminInfo ? props.history.push('/admin/product-association') : props.history.push('/admin/signin')
-    },[adminInfo])
+    }, [adminInfo])
 
-    const submitHandler = () => {
-        props.history.push('/admin/detail')
+    const submitHandler = (e) => {
+        e.preventDefault()
+        dispatch(productAssociationAction(apiKey, formData))
     }
 
     return (
         <div className='containerMain'>
+
             <Navbar />
-            <main>
-                <div className="m-4">
-                    <div className='cart shadow bg-white rounded p-3 '>
+            <main>            <div className="m-4">
+                {loading ?
+                    <div className='text-center' style={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%"
+                    }}>
+                        <h6 className="">It take few minutes</h6>
+                        <div className="spinner-border text-primary" style={{ width: "50px", height: "50px" }} role="status">
+                            <div className="sr-only ">Loading...</div>
+                        </div>
+                    </div> :
+                    <div className='cart shadow bg-white rounded p-3  '>
                         <div className="row justify-content-around my-3">
                             <div className="col-sm-4 d-flex align-items-center justify-content-center">
                                 <img width="40%" src={uplaodImg} />
                             </div>
                             <div className="col-sm-6">
-                                <h3 className='text-muted text-center py-3'>Uplaod File </h3>
+                                <h3 className='text-muted text-center pb-3'>Uplaod File </h3>
 
-                                <form>
+                                <form onSubmit={submitHandler}>
+                                    {error && <div className="text-danger text-center h6">{error.message}</div>}
+                                    {success && <div className="text-primary text-center h6">{props.history.push("/admin/detail")}</div>}
+
                                     <div className="form-group">
-                                        <select className="form-control border-top-0 border-left-0 border-right-0 bg-light rounded" id="exampleFormControlSelect1" required>
-                                            <option value="" disabled selected>Select File Type</option>
-                                            <option value="">JSON</option>
-                                            <option value="">Excel</option>
+                                        <select onChange={(e) => setApiKey(e.target.value)} className="form-control border-top-0 border-left-0 border-right-0 bg-light rounded" id="exampleFormControlSelect1" required>
+                                            <option disabled selected>Select File Type</option>
+                                            <option value="fp-growth-json">JSON</option>
+                                            <option value="fp-growth-excel">Excel</option>
+                                        </select>
+                                    </div>
+
+                                    <div className="form-group">
+                                        <select onChange={(e) => setSupport(e.target.value)} className="form-control border-top-0 border-left-0 border-right-0 bg-light rounded" id="exampleFormControlSelect1" required>
+                                            <option disabled selected>Select Support</option>
+                                            <option value="1">10%</option>
+                                            <option value="2">20%</option>
+                                            <option value="3">30%</option>
+                                            <option value="4">40%</option>
+                                            <option value="5">50%</option>
                                         </select>
                                     </div>
 
                                     <div className="form-group custom-file mb-3">
-                                        <input type="file" className="custom-file-input" id="customFile" accept=".pdf" />
-                                        <label className="form-control rounded border-top-0 border-left-0 border-right-0 custom-file-label bg-light rounded" for="customFile">Choose file</label>
+                                        <input type="file" onChange={(e) => setFile(e.target.files[0])} className="custom-file-input" id="customFile" accept="" />
+                                        <label className="form-control rounded border-top-0 border-left-0 border-right-0 custom-file-label bg-light rounded" for="customFile">{file ? file?.name : "Choose file"} </label>
                                     </div>
 
 
                                     <div className="text-center">
-                                        <button onClick={submitHandler} type="button" className="btn btn-success">
+                                        <button type="submit" className="btn btn-success">
                                             <i className="fas fa-file"> Uplaod File </i>
                                         </button>
                                     </div>
@@ -59,7 +97,8 @@ const UplaodFileScreen = (props) => {
                             </div>
                         </div>
                     </div>
-                </div>
+                }
+            </div>
             </main>
         </div>
     )

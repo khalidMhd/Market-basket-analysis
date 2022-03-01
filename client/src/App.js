@@ -18,6 +18,7 @@ import ProfileScreen from './screen/Profile';
 import UplaodFileScreen from './screen/admin/UplaodFile';
 import RequestPremiumScreen from './screen/admin/RequestPremium';
 import VerifiedScreen from './screen/verified';
+import UserFileListScreen from './screen/admin/userFileList';
 
 function App() {
   var location = useLocation();
@@ -41,6 +42,7 @@ function App() {
         <Route exact path='/admin/product-association' component={UplaodFileScreen} />
         <Route exact path='/admin/detail' component={AdminDetailScreen} />
         <Route exact path='/admin/user' component={AdminUserScreen} />
+        <Route exact path='/admin/user/file/:id' component={UserFileListScreen} />
         <Route exact path='/admin/request-premium' component={RequestPremiumScreen} />
         <Route exact path='/admin/message' component={AdminMessageScreen} />
         <Route exact path='/admin/settings' component={SettingScreen} />
