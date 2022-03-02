@@ -5,7 +5,7 @@ import Navbar from './Navbar';
 import '../../App.css';
 import BootstrapSwitchButton from 'bootstrap-switch-button-react'
 import { useDispatch, useSelector } from 'react-redux';
-import { confirmActivateUserAction, confirmDeactivateUserAction, userListAction } from '../../action/admin/user';
+import { adminListAction, adminRefreshAction, confirmActivateUserAction, confirmAdminActivateUserAction, confirmAdminDeactivateUserAction, confirmDeactivateUserAction, userListAction } from '../../action/admin/user';
 import { confirmBasicAction, confirmPremiumAction } from '../../action/admin/premium';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -18,6 +18,7 @@ const AdminUserScreen = (props) => {
     let premiumSerNo = 0
     let basicSerNo = 0
     let deactivateSerNo = 0
+    let adminSerNo = 0
 
     const userListRed = useSelector(state => state.userListRed)
     const { loading, error, userList } = userListRed
@@ -36,6 +37,12 @@ const AdminUserScreen = (props) => {
 
     const adminSignin = useSelector(state => state.adminSignin);
     const { adminInfo } = adminSignin;
+
+    const adminListRed = useSelector(state => state.adminListRed);
+    const { adminList, adminListLoading, adminListError } = adminListRed;
+
+    const adminRefreshRed = useSelector(state => state.adminRefreshRed);
+    const { adminRefresh } = adminRefreshRed;
 
     useEffect(() => {
         adminInfo ? props.history.push('/admin/user') : props.history.push('/admin/signin')
@@ -79,6 +86,9 @@ const AdminUserScreen = (props) => {
 
     useEffect(() => {
         dispatch(userListAction())
+        dispatch(adminRefreshAction())
+        dispatch(adminListAction())
+
     }, [])
 
     const filterPremium = userList && userList.filter(user => {
@@ -100,6 +110,14 @@ const AdminUserScreen = (props) => {
 
     const activateHandler = (id) => {
         dispatch(confirmActivateUserAction(id))
+    }
+
+    const adminDeactivateHandler = (id) => {
+        dispatch(confirmAdminDeactivateUserAction(id))
+    }
+
+    const adminActivateHandler = (id) => {
+        dispatch(confirmAdminActivateUserAction(id))
     }
 
     const premiumHandler = (id) => {
@@ -143,9 +161,12 @@ const AdminUserScreen = (props) => {
                                     </div>
                                 </form>
                                 <div className="mr-3">
-                                    <button type="button" onClick={() => props.history.push('/admin/add-user')} className="btn btn-success btn-sm" data-toggle="modal" data-target="#uploadFile">
-                                        <i className="fas fa-user-plus"> Add user </i>
-                                    </button>
+                                    {
+                                        adminRefresh && adminRefresh?.accessLevel === 1 && <button type="button" onClick={() => props.history.push('/admin/add-user')} className="btn btn-success btn-sm" data-toggle="modal" data-target="#uploadFile">
+                                            <i className="fas fa-user-plus"> Add user </i>
+                                        </button>
+                                    }
+
                                 </div>
                             </div>
 
@@ -168,6 +189,12 @@ const AdminUserScreen = (props) => {
                                     <li className="nav-item waves-effect waves-light">
                                         <a className="nav-link" id="deactivate-tab-md" data-toggle="tab" href="#deactivate-md" role="tab" aria-controls="deactivate-md" aria-selected="false">Deactivate Users <span className="badge badge-primary"> {filterDelete?.length}</span></a>
                                     </li>
+                                    {
+                                        adminRefresh && adminRefresh?.accessLevel === 1 &&
+                                        <li className="nav-item waves-effect waves-light">
+                                            <a className="nav-link" id="admin-tab-md" data-toggle="tab" href="#admin-md" role="tab" aria-controls="admin-md" aria-selected="false">Admin Accounts <span className="badge badge-primary"> {adminList?.length}</span></a>
+                                        </li>
+                                    }
                                 </ul>
 
                                 <div className="tab-content card pt-2" id="myTabContentMD">
@@ -288,7 +315,7 @@ const AdminUserScreen = (props) => {
                                                 <tbody id="myTable">
                                                     {userList && filterPremium.map(data =>
                                                         <tr>
-                                                            <th scope="row">{allSerNo += 1}</th>
+                                                            <th scope="row">{premiumSerNo += 1}</th>
                                                             <td>{data?.name}</td>
                                                             <td>{data?.email}</td>
                                                             {data?.isPremium ?
@@ -353,7 +380,10 @@ const AdminUserScreen = (props) => {
                                                                     <span className='fa fa-user-minus mx-2 fa-lg text-danger' style={{ cursor: "pointer" }} onClick={() => { if (window.confirm('Are you sure to deactivate this user?')) { deactivateHandler(data?._id) } }}></span>
                                                                     :
                                                                     <span className='fa fa-user-check mx-2 fa-lg text-success' style={{ cursor: "pointer" }} onClick={() => { if (window.confirm('Are you sure to activate this user?')) { activateHandler(data?._id) } }}></span>
-                                                                }                                                            </td>
+                                                                }
+
+                                                                <Link to={`/admin/user/file/${data?._id}`} className='fa fa-list fa-lg' ></Link>
+                                                            </td>
                                                         </tr>
                                                     )}
                                                 </tbody>
@@ -385,7 +415,7 @@ const AdminUserScreen = (props) => {
                                                 <tbody id="myTable">
                                                     {userList && filterBasic.map(data =>
                                                         <tr>
-                                                            <th scope="row">{allSerNo += 1}</th>
+                                                            <th scope="row">{basicSerNo += 1}</th>
                                                             <td>{data?.name}</td>
                                                             <td>{data?.email}</td>
                                                             {data?.isPremium ?
@@ -450,7 +480,9 @@ const AdminUserScreen = (props) => {
                                                                     <span className='fa fa-user-minus mx-2 fa-lg text-danger' style={{ cursor: "pointer" }} onClick={() => { if (window.confirm('Are you sure to deactivate this user?')) { deactivateHandler(data?._id) } }}></span>
                                                                     :
                                                                     <span className='fa fa-user-check mx-2 fa-lg text-success' style={{ cursor: "pointer" }} onClick={() => { if (window.confirm('Are you sure to activate this user?')) { activateHandler(data?._id) } }}></span>
-                                                                }                                                            </td>
+                                                                }
+                                                                <Link to={`/admin/user/file/${data?._id}`} className='fa fa-list fa-lg' ></Link>
+                                                            </td>
                                                         </tr>
                                                     )}
                                                 </tbody>
@@ -482,7 +514,7 @@ const AdminUserScreen = (props) => {
                                                 <tbody id="myTable">
                                                     {userList && filterDelete.map(data =>
                                                         <tr>
-                                                            <th scope="row">{allSerNo += 1}</th>
+                                                            <th scope="row">{deactivateSerNo += 1}</th>
                                                             <td>{data?.name}</td>
                                                             <td>{data?.email}</td>
                                                             {data?.isPremium ? <td className='text-success'>Premium</td>
@@ -490,6 +522,7 @@ const AdminUserScreen = (props) => {
                                                             }
                                                             <td >
                                                                 <span className='fa fa-user-check mx-2 fa-lg text-success' style={{ cursor: "pointer" }} onClick={() => { if (window.confirm('Are you sure to activate this user?')) { activateHandler(data?._id) } }}></span>
+                                                                <Link to={`/admin/user/file/${data?._id}`} className='fa fa-list fa-lg' ></Link>
                                                             </td>
                                                         </tr>
                                                     )}
@@ -506,6 +539,51 @@ const AdminUserScreen = (props) => {
 
                                         </div>
                                     </div>
+
+                                    <div className="tab-pane fade show" id="admin-md" role="tabpanel" aria-labelledby="admin-tab-md">
+                                        <div className='table-responsive '>
+                                            <table className="table table-bordered table table-hover">
+                                                <thead>
+                                                    <tr className='table-active'>
+                                                        <th scope="col">S No.</th>
+                                                        <th scope="col">Name</th>
+                                                        <th scope="col">Email</th>
+                                                        <th scope="col">Type</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="myTable">
+                                                    {adminList && adminList.map(data =>
+                                                        <tr>
+                                                            <th scope="row">{adminSerNo += 1}</th>
+                                                            <td>{data?.name}</td>
+                                                            <td>{data?.email}</td>
+                                                            {data?.accessLevel === 1 ? <td className='text-success'>Super Admin</td>
+                                                                : <td className='text-primary'>Sub-Admin</td>
+                                                            }
+                                                            <td >
+                                                                {data.accStatus ?
+                                                                    <span className='fa fa-user-minus mx-2 fa-lg text-danger' style={{ cursor: "pointer" }} onClick={() => { if (window.confirm('Are you sure to deactivate this user?')) { adminDeactivateHandler(data?._id) } }}></span>
+                                                                    :
+                                                                    <span className='fa fa-user-check mx-2 fa-lg text-success' style={{ cursor: "pointer" }} onClick={() => { if (window.confirm('Are you sure to activate this user?')) { adminActivateHandler(data?._id) } }}></span>
+                                                                }
+                                                            </td>
+                                                        </tr>
+                                                    )}
+                                                </tbody>
+
+                                            </table>
+                                            <div className="d-flex justify-content-end">
+                                                <ul className="pagination pagination-sm">
+                                                    <li className="page-item"><button className="page-link">Previous</button></li>
+                                                    <li className="page-item px-3 text-muted">3 of 100</li>
+                                                    <li className="page-item"><button className="page-link">Next</button></li>
+                                                </ul>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
                                     <ToastContainer />
                                 </div>
                             </section>

@@ -1,6 +1,12 @@
 import Axios from "axios";
 import Cookie from 'js-cookie'
 import {
+  ADMIN_LIST_FAIL,
+  ADMIN_LIST_REQUEST,
+  ADMIN_LIST_SUCCESS,
+  ADMIN_REFRESH_FAIL,
+  ADMIN_REFRESH_REQUEST,
+  ADMIN_REFRESH_SUCCESS,
   CONFIRM_ACTIVATE_USER_FAIL, CONFIRM_ACTIVATE_USER_REQUEST, CONFIRM_ACTIVATE_USER_SUCCESS,
   CONFIRM_DEACTIVATE_USER_FAIL, CONFIRM_DEACTIVATE_USER_REQUEST, CONFIRM_DEACTIVATE_USER_SUCCESS,
   USERFILE_LIST_FAIL, USERFILE_LIST_REQUEST, USERFILE_LIST_SUCCESS,
@@ -22,12 +28,48 @@ const userListAction = () => async (dispatch) => {
   })
 }
 
+const adminListAction = () => async (dispatch) => {
+  dispatch({ type: ADMIN_LIST_REQUEST })
+  Axios.get('/api/admin/admin', { headers }).then(data => {
+    dispatch({ type: ADMIN_LIST_SUCCESS, payload: data.data })
+  }).catch(error => {
+    dispatch({ type: ADMIN_LIST_FAIL, payload: error.response.data })
+  })
+}
+
+const adminRefreshAction = () => async (dispatch) => {
+  dispatch({ type: ADMIN_REFRESH_REQUEST })
+  Axios.get('/api/admin/refresh-admin', { headers }).then(data => {
+    dispatch({ type: ADMIN_REFRESH_SUCCESS, payload: data.data })
+  }).catch(error => {
+    dispatch({ type: ADMIN_REFRESH_FAIL, payload: error.response.data })
+  })
+}
+
 const userFileListAction = (id) => async (dispatch) => {
   dispatch({ type: USERFILE_LIST_REQUEST, payload: { id } })
   Axios.get('/api/admin/user-file/' + id, { headers }).then(data => {
     dispatch({ type: USERFILE_LIST_SUCCESS, payload: data.data })
   }).catch(error => {
     dispatch({ type: USERFILE_LIST_FAIL, payload: error.response.data })
+  })
+}
+
+const confirmAdminDeactivateUserAction = (id) => async (dispatch) => {
+  dispatch({ type: CONFIRM_DEACTIVATE_USER_REQUEST, payload: { id } })
+  Axios.post('/api/admin/de-activate-admin/' + id, {}, { headers }).then(data => {
+    dispatch({ type: CONFIRM_DEACTIVATE_USER_SUCCESS, payload: data.data })
+  }).catch(error => {
+    dispatch({ type: CONFIRM_DEACTIVATE_USER_FAIL, payload: error.response.data })
+  })
+}
+
+const confirmAdminActivateUserAction = (id) => async (dispatch) => {
+  dispatch({ type: CONFIRM_ACTIVATE_USER_REQUEST, payload: { id } })
+  Axios.post('/api/admin/activate-admin/' + id, {}, { headers }).then(data => {
+    dispatch({ type: CONFIRM_ACTIVATE_USER_SUCCESS, payload: data.data })
+  }).catch(error => {
+    dispatch({ type: CONFIRM_ACTIVATE_USER_FAIL, payload: error.response.data })
   })
 }
 
@@ -50,6 +92,7 @@ const confirmActivateUserAction = (id) => async (dispatch) => {
 }
 
 export {
-  userListAction, confirmDeactivateUserAction,
-  confirmActivateUserAction, userFileListAction
+  userListAction, confirmDeactivateUserAction, adminListAction,
+  confirmActivateUserAction, userFileListAction, adminRefreshAction,
+  confirmAdminDeactivateUserAction, confirmAdminActivateUserAction
 }

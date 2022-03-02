@@ -60,7 +60,7 @@ const UserFileListScreen = (props) => {
                                 </form>
                             </div>
 
-                            {userFileList && userFileList?.length === 0 && <h5 className='text-center text-danger'>Premium request not yet!</h5>}
+                            {userFileList && userFileList?.length === 0 && <h5 className='text-center text-danger'>Data not yet!</h5>}
                             {error && <h5 className='text-center text-danger'> {error.message}</h5>}
 
                             <div className='table-responsive '>

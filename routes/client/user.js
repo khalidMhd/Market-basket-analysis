@@ -26,7 +26,7 @@ router.get('/refresh-user', loginRequire, (req, res) => {
         userIdFromJWT(req.headers.authorization).then((result) => {
             if (result._id) {
                 const _id = result._id
-                userModel.findOne({_id: _id}).select("isPremium accStatus isVerified name email").then((result) => {
+                userModel.findOne({ _id: _id }).select("isPremium accStatus isVerified name email").then((result) => {
                     res.status(200).json(result)
                 }).catch((err) => {
                     res.status(422).json({ message: "Something went wrong!" })

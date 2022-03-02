@@ -1,4 +1,10 @@
 import {
+    ADMIN_LIST_FAIL,
+    ADMIN_LIST_REQUEST,
+    ADMIN_LIST_SUCCESS,
+    ADMIN_REFRESH_FAIL,
+    ADMIN_REFRESH_REQUEST,
+    ADMIN_REFRESH_SUCCESS,
     CONFIRM_ACTIVATE_USER_FAIL, CONFIRM_ACTIVATE_USER_REQUEST, CONFIRM_ACTIVATE_USER_SUCCESS,
     CONFIRM_DEACTIVATE_USER_FAIL, CONFIRM_DEACTIVATE_USER_REQUEST, CONFIRM_DEACTIVATE_USER_SUCCESS,
     USERFILE_LIST_FAIL, USERFILE_LIST_REQUEST, USERFILE_LIST_SUCCESS,
@@ -12,6 +18,30 @@ function userListReducer(state = { userList: [] }, action) {
         case USER_LIST_SUCCESS:
             return { loading: false, userList: action.payload }
         case USER_LIST_FAIL:
+            return { loading: false, error: action.payload };
+        default: return state;
+    }
+}
+
+function adminListReducer(state = { adminList: [] }, action) {
+    switch (action.type) {
+        case ADMIN_LIST_REQUEST:
+            return { adminListLoading: true, adminList: [] }
+        case ADMIN_LIST_SUCCESS:
+            return { adminListLoading: false, adminList: action.payload }
+        case ADMIN_LIST_FAIL:
+            return { adminListLoading: false, adminListLError: action.payload };
+        default: return state;
+    }
+}
+
+function adminRefreshReducer(state = { adminRefresh: {} }, action) {
+    switch (action.type) {
+        case ADMIN_REFRESH_REQUEST:
+            return { loading: true, adminRefresh: {} }
+        case ADMIN_REFRESH_SUCCESS:
+            return { loading: false, adminRefresh: action.payload }
+        case ADMIN_REFRESH_FAIL:
             return { loading: false, error: action.payload };
         default: return state;
     }
@@ -55,6 +85,6 @@ function confirmDeActivateUserReducer(state = { conformDeActivateUser: {} }, act
 
 
 export {
-    userListReducer, confirmActivateUserReducer,
-    confirmDeActivateUserReducer, userFileListReducer
+    userListReducer, confirmActivateUserReducer, adminListReducer,
+    confirmDeActivateUserReducer, userFileListReducer, adminRefreshReducer
 };
