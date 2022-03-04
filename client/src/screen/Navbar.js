@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, NavLink } from 'react-router-dom'
 import ProfileImg from './assets/profile.png'
@@ -10,7 +10,7 @@ import { refreshUser } from '../action/user';
 
 const Navbar = (props) => {
   const dispatch = useDispatch()
-  
+
   const userSignin = useSelector(state => state.userSignin);
   const {userInfo } = userSignin;
   
@@ -32,9 +32,18 @@ const Navbar = (props) => {
 
   if (success) {
     toast.success(premiumReq.message);
+    setTimeout(
+      () => window.location.reload(), 
+      2000
+    );
   }
+
   if (error) {
     toast.error(error.message);
+    setTimeout(
+      () => window.location.reload(), 
+      2000
+    );
   }
 
   useEffect(() =>{

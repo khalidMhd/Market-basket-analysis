@@ -23,7 +23,7 @@ const StartScreen = (props) => {
 
     useEffect(() => {
         userInfo ? props.history.push('/') : props.history.push('/signin')
-        dispatch(refreshUser())
+        // dispatch(refreshUser())
     }, [userInfo])
 
     const submitHandler = (e) => {
