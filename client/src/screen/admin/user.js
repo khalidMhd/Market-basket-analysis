@@ -304,13 +304,7 @@ const AdminUserScreen = (props) => {
                                                 </tbody>
 
                                             </table>
-                                            <div className="d-flex justify-content-end">
-                                                <ul className="pagination pagination-sm">
-                                                    <li className="page-item"><button className="page-link">Previous</button></li>
-                                                    <li className="page-item px-3 text-muted">3 of 100</li>
-                                                    <li className="page-item"><button className="page-link">Next</button></li>
-                                                </ul>
-                                            </div>
+                                            
 
                                         </div>
                                     </div>
@@ -404,13 +398,7 @@ const AdminUserScreen = (props) => {
                                                 </tbody>
 
                                             </table>
-                                            <div className="d-flex justify-content-end">
-                                                <ul className="pagination pagination-sm">
-                                                    <li className="page-item"><button className="page-link">Previous</button></li>
-                                                    <li className="page-item px-3 text-muted">3 of 100</li>
-                                                    <li className="page-item"><button className="page-link">Next</button></li>
-                                                </ul>
-                                            </div>
+                                            
 
                                         </div>
                                     </div>
@@ -503,13 +491,7 @@ const AdminUserScreen = (props) => {
                                                 </tbody>
 
                                             </table>
-                                            <div className="d-flex justify-content-end">
-                                                <ul className="pagination pagination-sm">
-                                                    <li className="page-item"><button className="page-link">Previous</button></li>
-                                                    <li className="page-item px-3 text-muted">3 of 100</li>
-                                                    <li className="page-item"><button className="page-link">Next</button></li>
-                                                </ul>
-                                            </div>
+                                            
 
                                         </div>
                                     </div>
@@ -544,13 +526,7 @@ const AdminUserScreen = (props) => {
                                                 </tbody>
 
                                             </table>
-                                            <div className="d-flex justify-content-end">
-                                                <ul className="pagination pagination-sm">
-                                                    <li className="page-item"><button className="page-link">Previous</button></li>
-                                                    <li className="page-item px-3 text-muted">3 of 100</li>
-                                                    <li className="page-item"><button className="page-link">Next</button></li>
-                                                </ul>
-                                            </div>
+                                            
 
                                         </div>
                                     </div>
@@ -588,13 +564,7 @@ const AdminUserScreen = (props) => {
                                                 </tbody>
 
                                             </table>
-                                            <div className="d-flex justify-content-end">
-                                                <ul className="pagination pagination-sm">
-                                                    <li className="page-item"><button className="page-link">Previous</button></li>
-                                                    <li className="page-item px-3 text-muted">3 of 100</li>
-                                                    <li className="page-item"><button className="page-link">Next</button></li>
-                                                </ul>
-                                            </div>
+                                            
 
                                         </div>
                                     </div>
