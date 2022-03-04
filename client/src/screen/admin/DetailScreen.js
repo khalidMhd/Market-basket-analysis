@@ -72,7 +72,6 @@ const AdminDetailScreen = (props) => {
                                     buttonText=" Export "
                                 />
 
-
                             </div>
                         </div>
 

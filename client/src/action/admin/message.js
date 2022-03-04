@@ -1,6 +1,6 @@
 import Axios from "axios";
 import Cookie from 'js-cookie'
-import { MESSAGE_LIST_FAIL, MESSAGE_LIST_REQUEST, MESSAGE_LIST_SUCCESS } from "../../contant/admin/message";
+import { CONFIRM_MESSAE_READ_FAIL, CONFIRM_MESSAE_READ_REQUEST, CONFIRM_MESSAE_READ_SUCCESS, MESSAGE_LIST_FAIL, MESSAGE_LIST_REQUEST, MESSAGE_LIST_SUCCESS } from "../../contant/admin/message";
 
 const adminInfo = Cookie.getJSON("adminInfo") || null
 const headers = {
@@ -17,4 +17,14 @@ const messageListAction = () => async (dispatch) => {
   })
 }
 
-export {messageListAction}
+const confirmMsgReadAction = (id) => async (dispatch) => {
+  dispatch({ type: CONFIRM_MESSAE_READ_REQUEST, payload: { id } })
+  Axios.post('/api/admin/confirm-msg-read/' + id, {}, { headers }).then(data => {
+    dispatch({ type: CONFIRM_MESSAE_READ_SUCCESS, payload: data.data })
+  }).catch(error => {
+    dispatch({ type: CONFIRM_MESSAE_READ_FAIL, payload: error.response.data })
+  })
+}
+
+
+export {messageListAction, confirmMsgReadAction}

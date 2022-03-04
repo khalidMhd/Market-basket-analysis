@@ -13,4 +13,22 @@ router.get('/message',adminLoginRequire, (req, res) => {
     });
 })
 
+// confirm premium
+router.post("/confirm-msg-read/:id",adminLoginRequire, async (req, res) => {
+    const id = req.params.id
+    const readMessage = await messageModel.findOne({ _id: id })
+    if (readMessage) {
+        readMessage.isRead = true
+        readMessage.save().then(data => {
+            return res.status(200).json({ message: "Changes Updated" })
+        }).catch(err => {
+            return res.status(422).json({ message: "Something went wrong!" })
+        })
+    }
+    else {
+        return res.status(401).json({ message: "We were unable to update." })
+    }
+})
+
+
 module.exports = router

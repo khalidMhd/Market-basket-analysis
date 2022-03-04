@@ -3,8 +3,10 @@ import 'bootstrap/dist/css/bootstrap.css';
 import '@fortawesome/fontawesome-free/css/all.css'
 import Navbar from './Navbar';
 import { useDispatch, useSelector } from 'react-redux';
-import { messageListAction } from '../../action/admin/message';
+import { confirmMsgReadAction, messageListAction } from '../../action/admin/message';
 import $, { data } from 'jquery'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AdminMessageScreen = (props) => {
     const dispatch = useDispatch()
@@ -16,10 +18,25 @@ const AdminMessageScreen = (props) => {
     const messageListRed = useSelector(state => state.messageListRed);
     const { loading, error, messageList } = messageListRed;
 
+    const confirmMsgReadRed = useSelector(state => state.confirmMsgReadRed);
+    const { msgReadLoading, msgReadSuccess, msgConfirmRead, msgReadError } = confirmMsgReadRed;
+
+    if (msgReadSuccess) {
+        toast.success(msgConfirmRead.message);
+        window.location.reload()
+    }
+    if (msgReadError) {
+        toast.error(msgReadError.message);
+    }
+
     useEffect(() => {
         adminInfo ? props.history.push('/admin/message') : props.history.push('/admin/signin')
         dispatch(messageListAction())
     }, [adminInfo])
+
+    const readHandler = (id) => {
+        dispatch(confirmMsgReadAction(id))
+    }
 
     $(document).ready(function () {
         $("#myInput").on("keyup", function () {
@@ -68,14 +85,22 @@ const AdminMessageScreen = (props) => {
                                         {messageList && messageList.map(data =>
                                             <tr>
                                                 <th scope="row">{serNo += 1}</th>
-                                                <td>{data?.user?.name}</td>
+                                                <td>
+                                                    {data?.user?.name}  
+                                                    {data.isRead === false && <span class="badge badge-info">New </span>}
+
+                                                </td>
                                                 <td>{data?.user?.email}</td>
                                                 <td>{new Date(data?.createdAt).getDate() + '-' + new Date(data?.createdAt).getMonth() + '-' + new Date(data?.createdAt).getFullYear()}</td>
                                                 <td>
                                                     {/* <span className="fas fa-download fa-lg text-info" style={{ cursor: "pointer" }}></span> */}
                                                     <a href={`http://localhost:5000/${data?.file}`} download={`http://localhost:5000/${data?.file}`}><i class="fa fa-file-download fa-lg"></i></a>
                                                     <span className="fas fa-eye fa-lg text-success mx-2" data-toggle="modal" data-target={`#exampleModal${data?._id}`} style={{ cursor: "pointer" }} ></span>
+                                                    {data?.isRead === false &&
+                                                        <span className='fa fa-user-check fa-lg text-success' style={{ cursor: "pointer" }} onClick={() => { if (window.confirm('Mark as read?')) { readHandler(data?._id) } }}></span>
+                                                    }
                                                 </td>
+                                                {/* //model */}
                                                 <div class="modal fade" id={`exampleModal${data?._id}`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
@@ -108,6 +133,7 @@ const AdminMessageScreen = (props) => {
 
                             </div>
                         </div>
+                        <ToastContainer />
                     </div>
                 }
             </main>

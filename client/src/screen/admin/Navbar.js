@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useHistory } from "react-router-dom";
 import Cookie from 'js-cookie'
 import ProfileImg from '../assets/profile.png'
@@ -7,25 +7,49 @@ import 'bootstrap/js/dist/tab';
 import logo from '../assets/Logo.png'
 import '../style/Navbar.css'
 import '../style/Sidebar.css'
+import { premiumListAction } from "../../action/admin/premium";
+import { messageListAction } from "../../action/admin/message";
 
 const Navbar = () => {
     const history = useHistory()
     const adminSignin = useSelector(state => state.adminSignin);
-	const { loading, success, adminInfo, error } = adminSignin;
+    const { loading, success, adminInfo, error } = adminSignin;
+    const dispatch = useDispatch()
 
     const [sidebarOpen, setsidebarOpen] = useState(false);
+
+    const premiumListRed = useSelector(state => state.premiumListRed);
+    const { premiumList } = premiumListRed
+
+    const messageListRed = useSelector(state => state.messageListRed);
+    const { messageList } = messageListRed;
 
     const openSidebar = () => {
         setsidebarOpen(true);
     };
+
     const closeSidebar = () => {
         setsidebarOpen(false);
     };
 
     const logoutHandler = () => {
         Cookie.remove("adminInfo");
-        window.location.href='/admin/signin'
+        window.location.href = '/admin/signin'
     };
+
+    const premiumFilterMessage = premiumList && premiumList.filter(data => {
+        return data?.isRead === false
+    })
+
+    const messageFilterList = messageList && messageList.filter(data => {
+        return data?.isRead === false
+    })
+
+    useEffect(() => {
+        dispatch(premiumListAction())
+        dispatch(messageListAction())
+
+    }, [])
 
     return (
         <>
@@ -105,6 +129,10 @@ const Navbar = () => {
                 <div className="sidebar__menu">
                     <div className="sidebar__link active_menu_link">
                         <NavLink exact={true} to='/admin/request-premium' activeClassName='text-success'>
+                            {
+                                premiumList && premiumFilterMessage?.length != 0 &&
+                                <span class="badge badge-warning" style={{ marginLeft: "55px" }}>New {premiumFilterMessage?.length}</span>
+                            }
                             <i className="fas fa-crown icon"> </i>
                             <p>Request Premium</p>
                         </NavLink>
@@ -123,6 +151,10 @@ const Navbar = () => {
                 <div className="sidebar__menu">
                     <div className="sidebar__link active_menu_link">
                         <NavLink exact={true} to='/admin/message' activeClassName='text-success'>
+                            {
+                                messageList && messageFilterList?.length != 0 &&
+                                <span class="badge badge-warning" style={{ marginLeft: "55px" }}>New {messageFilterList?.length}</span>
+                            }
                             <i className="fa fa-comment icon"> </i>
                             <p>Message</p>
                         </NavLink>

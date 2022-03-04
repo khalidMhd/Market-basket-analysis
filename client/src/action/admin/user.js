@@ -7,7 +7,13 @@ import {
   ADMIN_REFRESH_FAIL,
   ADMIN_REFRESH_REQUEST,
   ADMIN_REFRESH_SUCCESS,
+  CONFIRM_ACTIVATE_ADMIN_FAIL,
+  CONFIRM_ACTIVATE_ADMIN_REQUEST,
+  CONFIRM_ACTIVATE_ADMIN_SUCCESS,
   CONFIRM_ACTIVATE_USER_FAIL, CONFIRM_ACTIVATE_USER_REQUEST, CONFIRM_ACTIVATE_USER_SUCCESS,
+  CONFIRM_DEACTIVATE_ADMIN_FAIL,
+  CONFIRM_DEACTIVATE_ADMIN_REQUEST,
+  CONFIRM_DEACTIVATE_ADMIN_SUCCESS,
   CONFIRM_DEACTIVATE_USER_FAIL, CONFIRM_DEACTIVATE_USER_REQUEST, CONFIRM_DEACTIVATE_USER_SUCCESS,
   USERFILE_LIST_FAIL, USERFILE_LIST_REQUEST, USERFILE_LIST_SUCCESS,
   USER_LIST_FAIL, USER_LIST_REQUEST, USER_LIST_SUCCESS
@@ -55,21 +61,21 @@ const userFileListAction = (id) => async (dispatch) => {
   })
 }
 
-const confirmAdminDeactivateUserAction = (id) => async (dispatch) => {
-  dispatch({ type: CONFIRM_DEACTIVATE_USER_REQUEST, payload: { id } })
+const confirmDeactivateAdminAction = (id) => async (dispatch) => {
+  dispatch({ type: CONFIRM_DEACTIVATE_ADMIN_REQUEST, payload: { id } })
   Axios.post('/api/admin/de-activate-admin/' + id, {}, { headers }).then(data => {
-    dispatch({ type: CONFIRM_DEACTIVATE_USER_SUCCESS, payload: data.data })
+    dispatch({ type: CONFIRM_DEACTIVATE_ADMIN_SUCCESS, payload: data.data })
   }).catch(error => {
-    dispatch({ type: CONFIRM_DEACTIVATE_USER_FAIL, payload: error.response.data })
+    dispatch({ type: CONFIRM_DEACTIVATE_ADMIN_FAIL, payload: error.response.data })
   })
 }
 
-const confirmAdminActivateUserAction = (id) => async (dispatch) => {
-  dispatch({ type: CONFIRM_ACTIVATE_USER_REQUEST, payload: { id } })
+const confirmActivateAdminAction = (id) => async (dispatch) => {
+  dispatch({ type: CONFIRM_ACTIVATE_ADMIN_REQUEST, payload: { id } })
   Axios.post('/api/admin/activate-admin/' + id, {}, { headers }).then(data => {
-    dispatch({ type: CONFIRM_ACTIVATE_USER_SUCCESS, payload: data.data })
+    dispatch({ type: CONFIRM_ACTIVATE_ADMIN_SUCCESS, payload: data.data })
   }).catch(error => {
-    dispatch({ type: CONFIRM_ACTIVATE_USER_FAIL, payload: error.response.data })
+    dispatch({ type: CONFIRM_ACTIVATE_ADMIN_FAIL, payload: error.response.data })
   })
 }
 
@@ -94,5 +100,5 @@ const confirmActivateUserAction = (id) => async (dispatch) => {
 export {
   userListAction, confirmDeactivateUserAction, adminListAction,
   confirmActivateUserAction, userFileListAction, adminRefreshAction,
-  confirmAdminDeactivateUserAction, confirmAdminActivateUserAction
+  confirmDeactivateAdminAction, confirmActivateAdminAction
 }

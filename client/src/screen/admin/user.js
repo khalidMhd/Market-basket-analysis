@@ -5,7 +5,7 @@ import Navbar from './Navbar';
 import '../../App.css';
 import BootstrapSwitchButton from 'bootstrap-switch-button-react'
 import { useDispatch, useSelector } from 'react-redux';
-import { adminListAction, adminRefreshAction, confirmActivateUserAction, confirmAdminActivateUserAction, confirmAdminDeactivateUserAction, confirmDeactivateUserAction, userListAction } from '../../action/admin/user';
+import { adminListAction, adminRefreshAction, confirmActivateAdminAction, confirmActivateUserAction, confirmAdminActivateUserAction, confirmAdminDeactivateUserAction, confirmDeactivateAdminAction, confirmDeactivateUserAction, userListAction } from '../../action/admin/user';
 import { confirmBasicAction, confirmPremiumAction } from '../../action/admin/premium';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -34,6 +34,12 @@ const AdminUserScreen = (props) => {
 
     const confirmDeActivateUserRed = useSelector(state => state.confirmDeActivateUserRed)
     const { deActivateLoading, deActivateError, deActivateSuccess, conformDeActivateUser } = confirmDeActivateUserRed
+
+    const confirmActivateAdminRed = useSelector(state => state.confirmActivateAdminRed)
+    const { adminActivateLoading, adminActivateError, adminActivateSuccess, conformActivateAdmin } = confirmActivateAdminRed
+
+    const confirmDeActivateAdminRed = useSelector(state => state.confirmDeActivateAdminRed)
+    const { adminDeActivateLoading, adminDeActivateError, adminDeActivateSuccess, conformDeActivateAdmin } = confirmDeActivateAdminRed
 
     const adminSignin = useSelector(state => state.adminSignin);
     const { adminInfo } = adminSignin;
@@ -75,13 +81,22 @@ const AdminUserScreen = (props) => {
         toast.error(activateError.message);
     }
 
-    if (deActivateSuccess) {
-        toast.success(conformDeActivateUser.message);
+    if (adminActivateSuccess) {
+        toast.success(conformActivateAdmin.message);
         window.location.reload()
     }
 
-    if (deActivateError) {
-        toast.error(deActivateError.message);
+    if (adminActivateError) {
+        toast.error(adminActivateError.message);
+    }
+
+    if (adminDeActivateSuccess) {
+        toast.success(conformDeActivateAdmin.message);
+        window.location.reload()
+    }
+
+    if (adminDeActivateError) {
+        toast.error(adminDeActivateError.message);
     }
 
     useEffect(() => {
@@ -113,11 +128,11 @@ const AdminUserScreen = (props) => {
     }
 
     const adminDeactivateHandler = (id) => {
-        dispatch(confirmAdminDeactivateUserAction(id))
+        dispatch(confirmDeactivateAdminAction(id))
     }
 
     const adminActivateHandler = (id) => {
-        dispatch(confirmAdminActivateUserAction(id))
+        dispatch(confirmActivateAdminAction(id))
     }
 
     const premiumHandler = (id) => {

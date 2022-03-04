@@ -2,6 +2,9 @@ import { failedToTransformError } from "simple-excel-to-json";
 import {
     CONFIRM_BASIC_FAIL, CONFIRM_BASIC_REQUEST, CONFIRM_BASIC_SUCCESS,
     CONFIRM_PREMIUM_FAIL, CONFIRM_PREMIUM_REQUEST, CONFIRM_PREMIUM_SUCCESS,
+    CONFIRM_READ_FAIL,
+    CONFIRM_READ_REQUEST,
+    CONFIRM_READ_SUCCESS,
     PREMIUM_LIST_FAIL, PREMIUM_LIST_REQUEST, PREMIUM_LIST_SUCCESS
 } from "../../contant/admin/premium";
 
@@ -42,6 +45,19 @@ function confirmBasicReducer(state = {}, action) {
     }
 }
 
+function confirmReadReducer(state = {}, action) {
+    switch (action.type) {
+        case CONFIRM_READ_REQUEST:
+            return { readLoading: true, readSuccess: false, }
+        case CONFIRM_READ_SUCCESS:
+            return { readLoading: false, readSuccess: true, confirmRead: action.payload }
+        case CONFIRM_READ_FAIL:
+            return { readLoading: false, readError: action.payload };
+        default: return state;
+    }
+}
+
 export {
-    premiumListReducer, confirmPremiumReducer, confirmBasicReducer
+    premiumListReducer, confirmPremiumReducer, confirmBasicReducer,
+    confirmReadReducer
 };

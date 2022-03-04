@@ -93,4 +93,38 @@ router.post("/activate-user/:id", adminLoginRequire, async (req, res) => {
     }
 })
 
+//de-activate admin
+router.post("/de-activate-admin/:id", adminLoginRequire, async (req, res) => {
+    const clientId = req.params.id
+    const deActivate = await adminModel.findOne({ _id: clientId})
+    if (deActivate) {
+        deActivate.accStatus = false
+        deActivate.save().then(data => {
+            return res.status(200).json({ message: "Admin De-activated" })
+        }).catch(err => {
+            return res.status(422).json({ message: "Something went wrong!" })
+        })
+    }
+    else {
+        return res.status(401).json({ message: "We were unable to update." })
+    }
+})
+
+//de-activate admin
+router.post("/activate-admin/:id", adminLoginRequire, async (req, res) => {
+    const clientId = req.params.id
+    const deActivate = await adminModel.findOne({ _id: clientId })
+    if (deActivate) {
+        deActivate.accStatus = true
+        deActivate.save().then(data => {
+            return res.status(200).json({ message: "Admin activated" })
+        }).catch(err => {
+            return res.status(422).json({ message: "Something went wrong!" })
+        })
+    }
+    else {
+        return res.status(401).json({ message: "We were unable to update." })
+    }
+})
+
 module.exports = router

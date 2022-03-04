@@ -5,7 +5,7 @@ import Navbar from './Navbar';
 import '../../App.css';
 import BootstrapSwitchButton from 'bootstrap-switch-button-react'
 import { useDispatch, useSelector } from 'react-redux';
-import { confirmPremiumAction, premiumListAction } from '../../action/admin/premium';
+import { confirmPremiumAction, confirmReadAction, premiumListAction } from '../../action/admin/premium';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import $, { data } from 'jquery'
@@ -20,16 +20,26 @@ const RequestPremiumScreen = (props) => {
     const confirmPremiumRed = useSelector(state => state.confirmPremiumRed);
     const { error: saveError, premiumSuccess, confirmPremium } = confirmPremiumRed
 
+    const confirmReadRed = useSelector(state => state.confirmReadRed);
+    const { readError, readSuccess, confirmRead } = confirmReadRed
+
     const adminSignin = useSelector(state => state.adminSignin);
     const { adminInfo } = adminSignin;
 
     if (premiumSuccess) {
         toast.success(confirmPremium.message);
         window.location.reload()
-
     }
     if (saveError) {
         toast.error(saveError.message);
+    }
+
+    if (readSuccess) {
+        toast.success(confirmRead.message);
+        window.location.reload()
+    }
+    if (readError) {
+        toast.error(readError.message);
     }
 
     useEffect(() => {
@@ -41,6 +51,10 @@ const RequestPremiumScreen = (props) => {
 
     const premiumHandler = (id) => {
         dispatch(confirmPremiumAction(id))
+    }
+
+    const readHandler = (id) => {
+        dispatch(confirmReadAction(id))
     }
 
     $(document).ready(function () {
@@ -55,7 +69,7 @@ const RequestPremiumScreen = (props) => {
     return (
         <div className='containerMain'>
 
-            <Navbar />
+            <Navbar/>
             <main>
                 {loading ?
                     <div class=" d-flex justify-content-center align-items-center h-100">
@@ -96,30 +110,38 @@ const RequestPremiumScreen = (props) => {
                                         {premiumList && premiumList.map(data =>
                                             <tr>
                                                 <th scope="row">{serNo += 1}</th>
-                                                <td>{data?.user?.name}</td>
+                                                <td>
+                                                    {data?.user?.name}
+                                                    {data.isRead === false && <span class="badge badge-info">New </span>}
+                                                </td>
                                                 <td>{data?.user?.email}</td>
                                                 <td>{new Date(data?.createdAt).getDate() + '-' + new Date(data?.createdAt).getMonth() + '-' + new Date(data?.createdAt).getFullYear()}</td>
-                                                <td onClick={() => { if (window.confirm('Change user account to premium?')) { premiumHandler(data?.user?._id) } }}>
-                                                    {data?.user?.isPremium ?
-                                                        <BootstrapSwitchButton
-                                                            checked={true}
-                                                            disabled={true}
-                                                            onlabel='Premium User'
-                                                            onstyle='success'
-                                                            offlabel='Basic User'
-                                                            offstyle='danger'
-                                                            style='w-100'
-                                                        />
-                                                        :
-                                                        <BootstrapSwitchButton
-                                                            checked={false}
-                                                            disabled={true}
-                                                            onlabel='Premium User'
-                                                            onstyle='success'
-                                                            offlabel='Basic User'
-                                                            offstyle='danger'
-                                                            style='w-100'
-                                                        />
+                                                <td >
+                                                    <span onClick={() => { if (window.confirm('Change user account to premium?')) { premiumHandler(data?.user?._id) } }}>
+                                                        {data?.user?.isPremium ?
+                                                            <BootstrapSwitchButton
+                                                                checked={true}
+                                                                disabled={true}
+                                                                onlabel='Premium User'
+                                                                onstyle='success'
+                                                                offlabel='Basic User'
+                                                                offstyle='danger'
+                                                                style='w-50'
+                                                            />
+                                                            :
+                                                            <BootstrapSwitchButton
+                                                                checked={false}
+                                                                disabled={true}
+                                                                onlabel='Premium User'
+                                                                onstyle='success'
+                                                                offlabel='Basic User'
+                                                                offstyle='danger'
+                                                                style='w-50'
+                                                            />
+                                                        }
+                                                    </span>
+                                                    {data?.isRead === false &&
+                                                        <span className='fa fa-user-check mx-2 fa-lg text-success' style={{ cursor: "pointer" }} onClick={() => { if (window.confirm('Mark as read?')) { readHandler(data?._id) } }}></span>
                                                     }
                                                 </td>
                                             </tr>

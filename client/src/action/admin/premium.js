@@ -1,6 +1,6 @@
 import Axios from "axios";
 import Cookie from 'js-cookie'
-import { CONFIRM_BASIC_FAIL, CONFIRM_BASIC_REQUEST, CONFIRM_BASIC_SUCCESS, CONFIRM_PREMIUM_FAIL, CONFIRM_PREMIUM_REQUEST, CONFIRM_PREMIUM_SUCCESS, PREMIUM_LIST_FAIL, PREMIUM_LIST_REQUEST, PREMIUM_LIST_SUCCESS } from "../../contant/admin/premium";
+import { CONFIRM_BASIC_FAIL, CONFIRM_BASIC_REQUEST, CONFIRM_BASIC_SUCCESS, CONFIRM_PREMIUM_FAIL, CONFIRM_PREMIUM_REQUEST, CONFIRM_PREMIUM_SUCCESS, CONFIRM_READ_FAIL, CONFIRM_READ_REQUEST, CONFIRM_READ_SUCCESS, PREMIUM_LIST_FAIL, PREMIUM_LIST_REQUEST, PREMIUM_LIST_SUCCESS } from "../../contant/admin/premium";
 
 const adminInfo = Cookie.getJSON("adminInfo") || null
 const headers = {
@@ -35,4 +35,16 @@ const confirmBasicAction = (id) => async (dispatch) => {
   })
 }
 
-export { premiumListAction, confirmPremiumAction, confirmBasicAction }
+const confirmReadAction = (id) => async (dispatch) => {
+  dispatch({ type: CONFIRM_READ_REQUEST, payload: { id } })
+  Axios.post('/api/admin/confirm-read/' + id, {}, { headers }).then(data => {
+    dispatch({ type: CONFIRM_READ_SUCCESS, payload: data.data })
+  }).catch(error => {
+    dispatch({ type: CONFIRM_READ_FAIL, payload: error.response.data })
+  })
+}
+
+export {
+  premiumListAction, confirmPremiumAction, confirmBasicAction,
+  confirmReadAction
+}

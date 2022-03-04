@@ -9,9 +9,9 @@ import { premiumRequestReducer } from '../reducer/premium'
 import { messageRequestReducer } from '../reducer/message'
 import { userRefreshReducer } from '../reducer/user'
 import { adminChangePasswordReducer, adminSigninReducer, adminSignupReducer } from '../reducer/admin/auth'
-import { messageListReducer } from '../reducer/admin/message'
-import { confirmBasicReducer, confirmPremiumReducer, premiumListReducer } from '../reducer/admin/premium'
-import { adminListReducer, adminRefreshReducer, confirmActivateUserReducer, confirmDeActivateUserReducer, userFileListReducer, userListReducer } from '../reducer/admin/user'
+import { confirmMsgReadReducer, messageListReducer } from '../reducer/admin/message'
+import { confirmBasicReducer, confirmPremiumReducer, confirmReadReducer, premiumListReducer } from '../reducer/admin/premium'
+import { adminListReducer, adminRefreshReducer, confirmActivateAdminReducer, confirmActivateUserReducer, confirmDeActivateAdminReducer, confirmDeActivateUserReducer, userFileListReducer, userListReducer } from '../reducer/admin/user'
 import { productAssociationtReducer } from '../reducer/association'
 
 const userInfo = Cookie.getJSON("userInfo") || null
@@ -33,17 +33,21 @@ const reducer = combineReducers({
     adminSignup: adminSignupReducer,
     adminChangePasswordRed: adminChangePasswordReducer,
     messageListRed: messageListReducer,
+    confirmMsgReadRed: confirmMsgReadReducer,
     premiumListRed: premiumListReducer,
     confirmPremiumRed: confirmPremiumReducer,
     confirmBasicRed: confirmBasicReducer,
+    confirmReadRed: confirmReadReducer,
     userListRed: userListReducer,
     userFileListRed: userFileListReducer,
     confirmActivateUserRed: confirmActivateUserReducer,
     confirmDeActivateUserRed: confirmDeActivateUserReducer,
+    confirmActivateAdminRed:confirmActivateAdminReducer, 
+    confirmDeActivateAdminRed: confirmDeActivateAdminReducer,
     adminRefreshRed: adminRefreshReducer,
     adminListRed: adminListReducer,
     //product association
-    productAssociationtRed: productAssociationtReducer
+    productAssociationtRed: productAssociationtReducer,
 })
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

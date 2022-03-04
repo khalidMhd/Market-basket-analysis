@@ -5,6 +5,7 @@ const messageSchema = new mongoose.Schema({
     user: {type: Schema.Types.ObjectId, ref:"user"},
     message: {type: String},
     file: {type: String},
+    isRead: {type: Boolean, default: false},
     createdAt: {type: Date, default: Date.now}
 })
 

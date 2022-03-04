@@ -33,6 +33,22 @@ router.get('/request-premium',adminLoginRequire, async (req, res) => {
 })
 
 // confirm premium
+router.post("/confirm-read/:id",adminLoginRequire, async (req, res) => {
+    const id = req.params.id
+    const readPremium = await requestPremiumModel.findOne({ _id: id })
+    if (readPremium) {
+        readPremium.isRead = true
+        readPremium.save().then(data => {
+            return res.status(200).json({ message: "Changes Updated" })
+        }).catch(err => {
+            return res.status(422).json({ message: "Something went wrong!" })
+        })
+    }
+    else {
+        return res.status(401).json({ message: "We were unable to update." })
+    }
+})
+
 router.post("/confirm-premium/:id",adminLoginRequire, async (req, res) => {
     const clientId = req.params.id
     const adminId = req.body.adminId
