@@ -105,7 +105,7 @@ const AdminMessageScreen = (props) => {
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel">User Name</h5>
+                                                                <h5 class="modal-title" id="exampleModalLabel">{data?.user?.name}</h5>
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
@@ -123,13 +123,13 @@ const AdminMessageScreen = (props) => {
                                     </tbody>
                                 </table>
 
-                                <div className="d-flex justify-content-end">
+                                {/* <div className="d-flex justify-content-end">
                                     <ul className="pagination pagination-sm">
                                         <li className="page-item"><button className="page-link">Previous</button></li>
                                         <li className="page-item px-3 text-muted">3 of 100</li>
                                         <li className="page-item"><button className="page-link">Next</button></li>
                                     </ul>
-                                </div>
+                                </div> */}
 
                             </div>
                         </div>

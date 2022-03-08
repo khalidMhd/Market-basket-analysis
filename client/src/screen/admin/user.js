@@ -81,6 +81,15 @@ const AdminUserScreen = (props) => {
         toast.error(activateError.message);
     }
 
+    if (deActivateSuccess) {
+        toast.success(conformDeActivateUser.message);
+        window.location.reload()
+    }
+
+    if (deActivateError) {
+        toast.error(deActivateError.message);
+    }
+
     if (adminActivateSuccess) {
         toast.success(conformActivateAdmin.message);
         window.location.reload()
@@ -304,7 +313,7 @@ const AdminUserScreen = (props) => {
                                                 </tbody>
 
                                             </table>
-                                            
+
 
                                         </div>
                                     </div>
@@ -398,7 +407,7 @@ const AdminUserScreen = (props) => {
                                                 </tbody>
 
                                             </table>
-                                            
+
 
                                         </div>
                                     </div>
@@ -491,7 +500,7 @@ const AdminUserScreen = (props) => {
                                                 </tbody>
 
                                             </table>
-                                            
+
 
                                         </div>
                                     </div>
@@ -526,7 +535,7 @@ const AdminUserScreen = (props) => {
                                                 </tbody>
 
                                             </table>
-                                            
+
 
                                         </div>
                                     </div>
@@ -564,7 +573,7 @@ const AdminUserScreen = (props) => {
                                                 </tbody>
 
                                             </table>
-                                            
+
 
                                         </div>
                                     </div>
