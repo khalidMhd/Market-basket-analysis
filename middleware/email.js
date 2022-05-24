@@ -2,7 +2,7 @@ const nodeMailer = require('nodemailer')
 
 SMPT_SERVICE = "gmail";
 SMPT_EMAIL = "webdev1137@gmail.com";
-SMPT_PASSWORD = "@Khalidmhd2115";
+SMPT_PASSWORD = "@Khalidwebdev21";
 SMPT_HOST = "smtp.gmail.com";
 SMPT_PORT = 587;
 

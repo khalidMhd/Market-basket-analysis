@@ -19,11 +19,12 @@ import UplaodFileScreen from './screen/admin/UplaodFile';
 import RequestPremiumScreen from './screen/admin/RequestPremium';
 import VerifiedScreen from './screen/verified';
 import UserFileListScreen from './screen/admin/userFileList';
+import GetPremiumScreen from './screen/GetPremium';
 
 function App() {
   var location = useLocation();
   return (
-    <div className="">
+    <div>
       <>
         <Route exact path='/' component={StartScreen} />
         <Route exact path='/frequent-itemset' component={DetailScreen} />
@@ -34,6 +35,7 @@ function App() {
         <Route exact path='/reset-password' component={ClientForgotPasswordScreen} />
         <Route exact path='/reset/:token' component={ClientNewPasswordScreen} />
         <Route exact path='/account/confirm/:token' component={VerifiedScreen} />
+        <Route exact path='/get-premium' component={GetPremiumScreen} />
       </>
       <div>
         <Route exact path='/admin/signin' component={SigninScreen} />

@@ -155,9 +155,7 @@ router.post('/fp-growth-excel', loginRequire, upload.single('file'), async (req,
 
   const { support } = req.body
   const type = 1
-  //file size 12643778
   const fileSize = await parseInt(req.headers['content-length']);
-
   if (req.file !== undefined && support) {
 
     const userId = await userIdFromJWT(req.headers.authorization)
@@ -193,7 +191,7 @@ router.post('/fp-growth-excel', loginRequire, upload.single('file'), async (req,
 
     } else {
       if (userFileData?.length < 3) {
-        if (fileSize < 12643778) {
+        if (fileSize < 5592690) {
 
           await filterDatasetExcel(support, req.file.path).then(data => {
 
@@ -218,7 +216,7 @@ router.post('/fp-growth-excel', loginRequire, upload.single('file'), async (req,
           })
 
         } else {
-          return res.status(422).json({ message: "File size exceeds the limit of 12 mb. Update to premium for larger files." })
+          return res.status(422).json({ message: "File size exceeds the limit of 6 mb. Update to premium for larger files." })
         }
       } else {
         return res.status(422).json({ message: "Your account free limit has been reached. Update to premium." })
@@ -276,7 +274,7 @@ router.post('/fp-growth-json', loginRequire, uploadJson.single('file'), async (r
 
     } else {
       if (userFileData?.length < 3) {
-        if (fileSize < 12643778) {
+        if (fileSize < 5591680) {
 
           await filterDatasetJson(support, pathfilter).then(data => {
 
@@ -301,7 +299,7 @@ router.post('/fp-growth-json', loginRequire, uploadJson.single('file'), async (r
           })
 
         } else {
-          return res.status(422).json({ message: "File size exceeds the limit of 12 mb. Update to premium for larger files." })
+          return res.status(422).json({ message: "File size exceeds the limit of 6 mb. Update to premium for larger files." })
         }
       } else {
         return res.status(422).json({ message: "Your account free limit has been reached. Update to premium." })

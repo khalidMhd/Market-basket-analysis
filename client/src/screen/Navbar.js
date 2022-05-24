@@ -12,10 +12,10 @@ const Navbar = (props) => {
   const dispatch = useDispatch()
 
   const userSignin = useSelector(state => state.userSignin);
-  const {userInfo } = userSignin;
-  
+  const { userInfo } = userSignin;
+
   const userRefreshRed = useSelector(state => state.userRefreshRed);
-  const {userRef } = userRefreshRed;
+  const { userRef } = userRefreshRed;
 
   const premiumRequestRed = useSelector(state => state.premiumRequestRed);
   const { loading, success, premiumReq, error } = premiumRequestRed;
@@ -33,7 +33,7 @@ const Navbar = (props) => {
   if (success) {
     toast.success(premiumReq.message);
     setTimeout(
-      () => window.location.reload(), 
+      () => window.location.reload(),
       2000
     );
   }
@@ -41,14 +41,14 @@ const Navbar = (props) => {
   if (error) {
     toast.error(error.message);
     setTimeout(
-      () => window.location.reload(), 
+      () => window.location.reload(),
       2000
     );
   }
 
-  useEffect(() =>{
+  useEffect(() => {
     dispatch(refreshUser())
-  },[])
+  }, [])
 
   return (
     <nav className="navbar navbar-expand-lg bg-white shadow-sm ">
@@ -62,7 +62,12 @@ const Navbar = (props) => {
           <li className="nav-item active">
             <NavLink to="/contact" exact={true} activeClassName='text-success' className="nav-link mb-0 h5  mx-2" >Get Support </NavLink>
           </li>
+          <li className="nav-item active">
+            <NavLink to="/get-premium" exact={true} activeClassName='text-success' className="nav-link mb-0 h5  mx-2" >Get Premium </NavLink>
+          </li>
         </ul>
+
+       
 
         {true &&
           <ul className="navbar-nav ml-auto">
@@ -76,20 +81,20 @@ const Navbar = (props) => {
                       <h5 className="card-title text-center">{userInfo?.user?.name}</h5>
                       <div className="card-body text-center">
                         {/* <NavLink to='/profile' className=" btn btn-info shadow rounded mr-2"> <i className="fas fa-user"></i></NavLink> */}
-                        <button onClick={() => { if (window.confirm('Are you sure you want to log out?')) {logoutHandler() }; }} className=" btn btn-danger shadow rounded"> <i className="fas fa-sign-out-alt"></i></button>
+                        <button onClick={() => { if (window.confirm('Are you sure you want to log out?')) { logoutHandler() }; }} className=" btn btn-danger shadow rounded"> <i className="fas fa-sign-out-alt"></i></button>
                         <Link to="/profile" exact={true} activeClassName='text-success' className=" btn btn-success shadow rounded mx-2"> <i className="fas fa-user-alt"></i></Link>
                       </div>
                     </div>
                   </div>
                 </span>
-                <span className="text-dark mx-2 h6"> {userRef?.isPremium === true &&<span className='fas fa-crown text-success'></span>} {userInfo?.user?.name}</span>
+                <span className="text-dark mx-2 h6"> {userRef?.isPremium === true && <span className='fas fa-crown text-success'></span>} {userInfo?.user?.name}</span>
               </div>
             </li>
             <li className="nav-item active my-1">
-              {userRef?.isPremium === false && <button onClick={() => { if (window.confirm('Request a Premium Account?')) { premiumHandler()} }} className=" btn btn-success shadow rounded mx-2"> <i className="fas fa-crown"></i></button>} 
+              {userRef?.isPremium === false && <button onClick={() => { if (window.confirm('Request a Premium Account?')) { premiumHandler() } }} className=" btn btn-success shadow rounded mx-2"> <i className="fas fa-crown"></i></button>}
             </li>
             <ToastContainer />
-          </ul> 
+          </ul>
         }
       </div>
     </nav>
