@@ -94,10 +94,10 @@ const AdminMessageScreen = (props) => {
                                                 <td>{new Date(data?.createdAt).getDate() + '-' + new Date(data?.createdAt).getMonth() + '-' + new Date(data?.createdAt).getFullYear()}</td>
                                                 <td>
                                                     {/* <span className="fas fa-download fa-lg text-info" style={{ cursor: "pointer" }}></span> */}
-                                                    <a href={`http://localhost:5000/${data?.file}`} download={`http://localhost:5000/${data?.file}`}><i class="fa fa-file-download fa-lg"></i></a>
+                                                    {/* <a href={`http://localhost:5000/${data?.file}`} download={`http://localhost:5000/${data?.file}`}><i class="fa fa-file-download fa-lg"></i></a> */}
                                                     <span className="fas fa-eye fa-lg text-success mx-2" data-toggle="modal" data-target={`#exampleModal${data?._id}`} style={{ cursor: "pointer" }} ></span>
                                                     {data?.isRead === false &&
-                                                        <span className='fa fa-user-check fa-lg text-success' style={{ cursor: "pointer" }} onClick={() => { if (window.confirm('Mark as read?')) { readHandler(data?._id) } }}></span>
+                                                        <button className='btn btn-info btn-sm' style={{ cursor: "pointer" }} onClick={() => { if (window.confirm('Mark as read?')) { readHandler(data?._id) } }}>Seen</button>
                                                     }
                                                 </td>
                                                 {/* //model */}

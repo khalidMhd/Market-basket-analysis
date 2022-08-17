@@ -46,12 +46,19 @@ router.post('/register', async (req, res) => {
                         <a href="http://${process.env.HOST}/account/confirm/${token}">http://${process.env.HOST}/account/confirm/${token}</a> </p>`
 
                         sendMail(email, html, subject).then(result => {
-                            console.log(result)
+                            if (result?.success === true) {
+                                return res.status(200).json({ message: "A verification mail has been sent.", token, user: { _id, name, email } })
+                            } else {
+                                userModel.findByIdAndDelete(_id).then(deleteUser => {
+                                    return res.status(422).json({ message: "Make sure your internet connection" })
+                                }).catch(err => {
+                                    return res.status(422).json({ message: "Make sure your internet connection." })
+                                })
+                            }
                         }).catch(err => {
                             console.log(err);
                             return res.status(422).json({ message: "Something went wrong!" })
                         })
-                        return res.status(200).json({ message: "A verification mail has been sent.", token, user: { _id, name, email } })
                     })
                 }).catch(err => {
                     return res.status(422).json({ message: "Something went wrong!!" })
@@ -132,7 +139,7 @@ router.post('/reset-password', (req, res) => {
     }
     crypto.randomBytes(32, (err, buffer) => {
         if (err) {
-            console.log("errrrrrr" + err)
+            return res.status(422).json({ message: "Something went wrong!" })
         }
         const token = buffer.toString("hex")
         userModel.findOne({ email: email.toLowerCase() }).then(user => {
@@ -141,21 +148,27 @@ router.post('/reset-password', (req, res) => {
             }
             user.resetToken = token
             user.expireToken = Date.now() + 3600000 // 1hour
-
-            user.save().then((result) => {
-                const html = `<p>We received a request to reset the password for your account.</p>
-                                <p>To reset your password, Click the bellow link.</p> 
-                                <h5><a href="http://localhost:3000/reset/${token}">Clink me, to reset password</a></h5>`
-                const subject = "Password Reset"
-                sendMail(email?.toLowerCase(), html, subject).then(result => {
-                    console.log(result)
-                }).catch(err => {
-                    return res.status(422).json({ message: "Something went wrong!" })
-                })
-                return res.status(200).json({ message: "Check your email" })
-            }).catch(error => {
+            const html = `<p>We received a request to reset the password for your account.</p>
+            <p>To reset your password, Click the bellow link.</p> 
+            <h5><a href="http://localhost:3000/reset/${token}">Clink me, to reset password</a></h5>`
+            const subject = "Password Reset"
+            sendMail(email?.toLowerCase(), html, subject).then(result => {
+                console.log("result", result?.success);
+                if (result?.success === true) {
+                    user.save().then((result) => {
+                        return res.status(200).json({ message: "A change password mail has been sent" })
+                    }).catch(error => {
+                        return res.status(422).json({ message: "Something went wrong!" })
+                    })
+                } else {
+                    return res.status(422).json({ message: "Make sure your internet connection" })
+                }
+            }).catch(err => {
+                console.log("err");
                 return res.status(422).json({ message: "Something went wrong!" })
             })
+
+
         }).catch(error => {
             return res.status(422).json({ message: "Something went wrong!" })
         })

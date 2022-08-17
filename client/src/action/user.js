@@ -10,7 +10,7 @@ const headers = {
 
 const refreshUser = () => async (dispatch) => {
   dispatch({ type: USER_REFRESH_REQUEST})
-  Axios.get('/api/refresh-user', { headers }).then(data => {
+  Axios.get('http://localhost:5000/api/refresh-user', { headers }).then(data => {
     dispatch({ type: USER_REFRESH_SUCCESS, payload: data.data })
   }).catch(error => {
     dispatch({ type: USER_REFRESH_FAIL, payload: error.response.data })

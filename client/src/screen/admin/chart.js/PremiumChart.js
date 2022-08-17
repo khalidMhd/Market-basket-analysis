@@ -127,7 +127,7 @@ const PremiumChartScreen = (props) => {
     return (
         <>
 
-            <div className='d-flex justify-content-between' >
+            <div className='row justify-content-between mx-2' >
                 <div className=''>
                     <h3 className='text-center text-muted '>User Analytics</h3>
                 </div>

@@ -10,7 +10,7 @@ const headers = {
 
 const productAssociationAction = (apiKey , file) => async (dispatch) => {
   dispatch({ type: PRODUCT_ASSOCIATION_REQUEST, payload: { file } })
-  Axios.post(`/api/${apiKey}`, file, { headers }).then(data => {
+  Axios.post(`http://localhost:5000/api/${apiKey}`, file, { headers }).then(data => {
     dispatch({ type: PRODUCT_ASSOCIATION_SUCCESS, payload: data.data })
   }).catch(error => {
     dispatch({ type: PRODUCT_ASSOCIATION_FAIL, payload: error.response.data })

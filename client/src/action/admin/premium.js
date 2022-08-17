@@ -10,7 +10,7 @@ const headers = {
 
 const premiumListAction = () => async (dispatch) => {
   dispatch({ type: PREMIUM_LIST_REQUEST })
-  Axios.get('/api/admin/request-premium', { headers }).then(data => {
+  Axios.get('http://localhost:5000/api/admin/request-premium', { headers }).then(data => {
     dispatch({ type: PREMIUM_LIST_SUCCESS, payload: data.data })
   }).catch(error => {
     dispatch({ type: PREMIUM_LIST_FAIL, payload: error.response.data })
@@ -19,7 +19,7 @@ const premiumListAction = () => async (dispatch) => {
 
 const confirmPremiumAction = (id) => async (dispatch) => {
   dispatch({ type: CONFIRM_PREMIUM_REQUEST, payload: { id } })
-  Axios.post('/api/admin/confirm-premium/' + id, {}, { headers }).then(data => {
+  Axios.post('http://localhost:5000/api/admin/confirm-premium/' + id, {}, { headers }).then(data => {
     dispatch({ type: CONFIRM_PREMIUM_SUCCESS, payload: data.data })
   }).catch(error => {
     dispatch({ type: CONFIRM_PREMIUM_FAIL, payload: error.response.data })
@@ -28,7 +28,7 @@ const confirmPremiumAction = (id) => async (dispatch) => {
 
 const confirmBasicAction = (id) => async (dispatch) => {
   dispatch({ type: CONFIRM_BASIC_REQUEST, payload: { id } })
-  Axios.post('/api/admin/confirm-basic/' + id, {}, { headers }).then(data => {
+  Axios.post('http://localhost:5000/api/admin/confirm-basic/' + id, {}, { headers }).then(data => {
     dispatch({ type: CONFIRM_BASIC_SUCCESS, payload: data.data })
   }).catch(error => {
     dispatch({ type: CONFIRM_BASIC_FAIL, payload: error.response.data })
@@ -37,7 +37,7 @@ const confirmBasicAction = (id) => async (dispatch) => {
 
 const confirmReadAction = (id) => async (dispatch) => {
   dispatch({ type: CONFIRM_READ_REQUEST, payload: { id } })
-  Axios.post('/api/admin/confirm-read/' + id, {}, { headers }).then(data => {
+  Axios.post('http://localhost:5000/api/admin/confirm-read/' + id, {}, { headers }).then(data => {
     dispatch({ type: CONFIRM_READ_SUCCESS, payload: data.data })
   }).catch(error => {
     dispatch({ type: CONFIRM_READ_FAIL, payload: error.response.data })

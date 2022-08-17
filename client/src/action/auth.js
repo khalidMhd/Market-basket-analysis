@@ -13,7 +13,7 @@ const headers = {
 
 const signin = (email, password) => async (dispatch) => {
   dispatch({ type: USER_SIGNIN_REQUEST, payload: { email, password } })
-  Axios.post('/api/login', { email, password }).then(data => {
+  Axios.post('http://localhost:5000/api/login', { email, password }).then(data => {
     dispatch({ type: USER_SIGNIN_SUCCESS, payload: data.data })
     Cookie.set('userInfo', JSON.stringify(data.data))
   }).catch(error => {
@@ -23,7 +23,7 @@ const signin = (email, password) => async (dispatch) => {
 
 const signup = (name, email, password) => async (dispatch) => {
   dispatch({ type: USER_SIGNUP_REQUEST, payload: { name, email, password } });
-  Axios.post("/api/register", { name, email, password }).then(data => {
+  Axios.post("http://localhost:5000/api/register", { name, email, password }).then(data => {
     dispatch({ type: USER_SIGNUP_SUCCESS, payload: data.data });
   }).catch(error => {
     dispatch({ type: USER_SIGNUP_FAIL, payload: error.response.data });
@@ -32,7 +32,7 @@ const signup = (name, email, password) => async (dispatch) => {
 
 const accountConformation = (token) => async (dispatch) => {
   dispatch({ type: USER_CONFORMATION_REQUEST, payload: { token } });
-  Axios.post("/api/confirmation/" + token).then(data => {
+  Axios.post("http://localhost:5000/api/confirmation/" + token).then(data => {
     dispatch({ type: USER_CONFORMATION_SUCCESS, payload: data.data });
   }).catch(error => {
     dispatch({ type: USER_CONFORMATION_FAIL, payload: error.response.data });
@@ -41,7 +41,7 @@ const accountConformation = (token) => async (dispatch) => {
 
 const forgotPassword = (email) => async (dispatch) => {
   dispatch({ type: USER_FORGOT_PASSWORD_REQUEST, payload: { email } });
-  Axios.post("/api/reset-password", {email}).then(data => {
+  Axios.post("http://localhost:5000/api/reset-password", {email}).then(data => {
     dispatch({ type: USER_FORGOT_PASSWORD_SUCCESS, payload: data.data });
   }).catch(error => {
     dispatch({ type: USER_FORGOT_PASSWORD_FAIL, payload: error.response.data });
@@ -50,7 +50,7 @@ const forgotPassword = (email) => async (dispatch) => {
 
 const newPassword = (password, token) => async (dispatch) => {
   dispatch({ type: USER_NEW_PASSWORD_REQUEST, payload: { password, token } });
-  Axios.post("/api/new-password", {password, token}).then(data => {
+  Axios.post("http://localhost:5000/api/new-password", {password, token}).then(data => {
     dispatch({ type: USER_NEW_PASSWORD_SUCCESS, payload: data.data });
   }).catch(error => {
     dispatch({ type: USER_NEW_PASSWORD_FAIL, payload: error.response.data });
@@ -59,7 +59,7 @@ const newPassword = (password, token) => async (dispatch) => {
 
 const changePassword = (id,password, newPassword) => async (dispatch) => {
   dispatch({ type: UPDATE_PASSWORD_REQUEST, payload: {id, password, newPassword } });
-  Axios.post("/api/change-password/"+id, {password, newPassword}, { headers }).then(data => {
+  Axios.post("http://localhost:5000/api/change-password/"+id, {password, newPassword}, { headers }).then(data => {
     dispatch({ type: UPDATE_PASSWORD_SUCCESS, payload: data.data });
   }).catch(error => {
     dispatch({ type: UPDATE_PASSWORD_FAIL, payload: error.response.data });

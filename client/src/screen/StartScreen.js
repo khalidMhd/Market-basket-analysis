@@ -52,7 +52,7 @@ const StartScreen = (props) => {
                                 <img width="40%" src={uplaodImg} />
                             </div>
                             <div className="col-sm-6">
-                                <h3 className='text-muted text-center pb-3'>Uplaod File </h3>
+                                <h3 className='text-muted text-center pb-3'>Import Dataset </h3>
 
                                 <form onSubmit={submitHandler}>
                                     {error && <div className="text-danger text-center h6">{error.message}</div>}
@@ -68,7 +68,7 @@ const StartScreen = (props) => {
 
                                     <div className="form-group">
                                         <select onChange={(e) => setSupport(e.target.value)} className="form-control border-top-0 border-left-0 border-right-0 bg-light rounded" id="exampleFormControlSelect1" required>
-                                            <option disabled selected>Select Support</option>
+                                            <option disabled selected>Select Support(Association Strength) </option>
                                             <option value="1">10%</option>
                                             <option value="2">20%</option>
                                             <option value="3">30%</option>

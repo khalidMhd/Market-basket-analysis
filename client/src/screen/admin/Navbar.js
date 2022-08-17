@@ -117,14 +117,14 @@ const Navbar = () => {
                     </div>
                 </div>
 
-                <div className="sidebar__menu">
+                {/* <div className="sidebar__menu">
                     <div className="sidebar__link active_menu_link">
                         <NavLink exact={true} to='/admin/product-association' activeClassName='text-success'>
                             <i className="fas fa-file-upload icon"> </i>
                             <p>Product Association</p>
                         </NavLink>
                     </div>
-                </div>
+                </div> */}
 
                 <div className="sidebar__menu">
                     <div className="sidebar__link active_menu_link">

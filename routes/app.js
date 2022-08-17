@@ -37,13 +37,16 @@ const sendEmail = async (options) => {
       console.log('Email sent: ' + info.response);
     }
   });
-
 };
 
 //  sendEmail({
 //   email: "khalidmhd1137@gmail.com",
-//   subject: `Ecommerce Password Recovery`,
+//   subject: ` Password Recovery`,
 //   message: "test message"
 // });
+
+
+
+
 
 module.exports = router

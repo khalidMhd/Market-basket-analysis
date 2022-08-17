@@ -10,7 +10,7 @@ const headers = {
 
 const premiumRequest = () => async (dispatch) => {
   dispatch({ type: USER_PREMIUM_REQUEST})
-  Axios.post('/api/request-premium', {}, { headers }).then(data => {
+  Axios.post('http://localhost:5000/api/request-premium', {}, { headers }).then(data => {
     dispatch({ type: USER_PREMIUM_SUCCESS, payload: data.data })
   }).catch(error => {
     dispatch({ type: USER_PREMIUM_FAIL, payload: error.response.data })

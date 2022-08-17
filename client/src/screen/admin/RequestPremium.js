@@ -141,7 +141,7 @@ const RequestPremiumScreen = (props) => {
                                                         }
                                                     </span>
                                                     {data?.isRead === false &&
-                                                        <span className='fa fa-user-check mx-2 fa-lg text-success' style={{ cursor: "pointer" }} onClick={() => { if (window.confirm('Mark as read?')) { readHandler(data?._id) } }}></span>
+                                                        <button className='btn btn-info  mx-2 ' style={{ cursor: "pointer" }} onClick={() => { if (window.confirm('Mark as read?')) { readHandler(data?._id) } }}>Seen</button>
                                                     }
                                                 </td>
                                             </tr>

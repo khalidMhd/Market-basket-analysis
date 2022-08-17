@@ -10,7 +10,7 @@ const headers = {
 
 const messageListAction = () => async (dispatch) => {
   dispatch({ type: MESSAGE_LIST_REQUEST})
-  Axios.get('/api/admin/message', { headers }).then(data => {
+  Axios.get('http://localhost:5000/api/admin/message', { headers }).then(data => {
     dispatch({ type: MESSAGE_LIST_SUCCESS, payload: data.data })
   }).catch(error => {
     dispatch({ type: MESSAGE_LIST_FAIL, payload: error.response.data })
@@ -19,7 +19,7 @@ const messageListAction = () => async (dispatch) => {
 
 const confirmMsgReadAction = (id) => async (dispatch) => {
   dispatch({ type: CONFIRM_MESSAE_READ_REQUEST, payload: { id } })
-  Axios.post('/api/admin/confirm-msg-read/' + id, {}, { headers }).then(data => {
+  Axios.post('http://localhost:5000/api/admin/confirm-msg-read/' + id, {}, { headers }).then(data => {
     dispatch({ type: CONFIRM_MESSAE_READ_SUCCESS, payload: data.data })
   }).catch(error => {
     dispatch({ type: CONFIRM_MESSAE_READ_FAIL, payload: error.response.data })

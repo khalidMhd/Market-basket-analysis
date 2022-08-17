@@ -2,7 +2,6 @@ const nodeMailer = require('nodemailer')
 
 SMPT_SERVICE = "gmail";
 SMPT_EMAIL = "webdev1137@gmail.com";
-SMPT_PASSWORD = "@Khalidwebdev21";
 SMPT_HOST = "smtp.gmail.com";
 SMPT_PORT = 587;
 
@@ -16,7 +15,7 @@ const sendMail = async (email, html, subject) => {
       service: SMPT_SERVICE,
       auth: {
         user: SMPT_EMAIL,
-        pass: SMPT_PASSWORD
+        pass: "obnruhczkwqzvlij"
       }
     })
 
@@ -29,11 +28,18 @@ const sendMail = async (email, html, subject) => {
     }
 
     const result = await transporter.sendMail(mailOptions);
-    return result;
+    console.log("result");
+    return {result, success:true};
 
   } catch (error) {
-    return error;
+    console.log("error");
+    return {error, success:false};
   }
 };
+
+
+// sendMail("toraca7105@agrolivana.com", "html", "subject")
+//   .then(data => console.log(data))
+//   .catch(err => console.log(err))
 
 module.exports = sendMail

@@ -53,7 +53,7 @@ const DashboardScreen = (props) => {
 
                         <div className="row d-flex ">
 
-                            <div className="col-sm ">
+                            <div className="col-sm my-1">
                                 <div className="d-flex justify-content-between card shadow bg-white rounded single-chart" style={{ borderBottomColor: '#ff9f00', }}>
                                     <div>
                                         <svg viewBox="0 0 36 36" className="circular-chart orange">
@@ -68,7 +68,7 @@ const DashboardScreen = (props) => {
                                             a 15.9155 15.9155 0 0 1 0 31.831
                                             a 15.9155 15.9155 0 0 1 0 -31.831"
                                             />
-                                            <text x="18" y="20.35" className="percentage"> {`${filterPremium?.length || 0}% `}</text>
+                                            <text x="18" y="20.35" className="percentage"> {`${filterPremium?.length || 0} `}</text>
                                         </svg>
                                     </div>
                                     <div className="svg-text">
@@ -78,7 +78,7 @@ const DashboardScreen = (props) => {
                                 </div>
                             </div>
 
-                            <div className="col-sm ">
+                            <div className="col-sm my-1">
                                 <div className="d-flex justify-content-between card shadow bg-white rounded single-chart" style={{ borderBottomColor: '#4CC790', }}>
                                     <div>
                                         <svg viewBox="0 0 36 36" className="circular-chart green">
@@ -93,7 +93,7 @@ const DashboardScreen = (props) => {
                                             a 15.9155 15.9155 0 0 1 0 31.831
                                             a 15.9155 15.9155 0 0 1 0 -31.831"
                                             />
-                                            <text x="18" y="20.35" className="percentage"> {`${userList?.length || 0}%`}</text>
+                                            <text x="18" y="20.35" className="percentage"> {`${userList?.length || 0}`}</text>
                                         </svg>
                                     </div>
                                     <div className="svg-text">
@@ -103,7 +103,7 @@ const DashboardScreen = (props) => {
                                 </div>
                             </div>
 
-                            <div className="col-sm ">
+                            <div className="col-sm my-1">
                                 <div className="d-flex justify-content-between card shadow bg-white rounded single-chart " style={{ borderBottomColor: '#3c9ee5' }}>
                                     <div>
                                         <svg viewBox="0 0 36 36" className="circular-chart blue">
@@ -118,7 +118,7 @@ const DashboardScreen = (props) => {
                                             a 15.9155 15.9155 0 0 1 0 31.831
                                             a 15.9155 15.9155 0 0 1 0 -31.831"
                                             />
-                                            <text x="18" y="20.35" className="percentage">{`${messageList?.length || 0}%`}</text>
+                                            <text x="18" y="20.35" className="percentage">{`${messageList?.length || 0}`}</text>
                                         </svg>
                                     </div>
                                     <div className="svg-text">
@@ -128,7 +128,7 @@ const DashboardScreen = (props) => {
                                 </div>
                             </div>
 
-                            <div className="col-sm ">
+                            <div className="col-sm my-1">
                                 <div className="d-flex justify-content-between card shadow bg-white rounded single-chart" style={{ borderBottomColor: '#F75A5F', }}>
                                     <div>
                                         <svg viewBox="0 0 36 36" className="circular-chart red">
@@ -143,7 +143,7 @@ const DashboardScreen = (props) => {
                                             a 15.9155 15.9155 0 0 1 0 31.831
                                             a 15.9155 15.9155 0 0 1 0 -31.831"
                                             />
-                                            <text x="18" y="20.35" className="percentage">{`${premiumList?.length || 0}%`}</text>
+                                            <text x="18" y="20.35" className="percentage">{`${premiumList?.length || 0}`}</text>
                                         </svg>
                                     </div>
                                     <div className="svg-text">
