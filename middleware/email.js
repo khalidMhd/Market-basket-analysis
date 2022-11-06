@@ -1,7 +1,7 @@
 const nodeMailer = require('nodemailer')
 
 SMPT_SERVICE = "gmail";
-SMPT_EMAIL = "webdev1137@gmail.com";
+SMPT_EMAIL = "";
 SMPT_HOST = "smtp.gmail.com";
 SMPT_PORT = 587;
 
@@ -15,12 +15,12 @@ const sendMail = async (email, html, subject) => {
       service: SMPT_SERVICE,
       auth: {
         user: SMPT_EMAIL,
-        pass: "obnruhczkwqzvlij"
+        pass: ""
       }
     })
 
     const mailOptions = {
-      from: "webdev1137@gmail.com",
+      from: "",
       to: email,
       subject: subject,
       text: 'Expert system',
